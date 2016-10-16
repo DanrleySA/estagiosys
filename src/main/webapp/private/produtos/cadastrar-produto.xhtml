@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        
+        <title>Cadastrar produto</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <p:link value="Listar produto" outcome="listar-produtos.xhtml"/>
+        <p:link value="Menu principal" outcome="/private/principal.xhtml"/>
+        <p:messages autoUpdate="true" closable="true" />
+        <p:panel>
+            <f:facet name="actions">
+                <p:link value="Listar Produtos"
+                        outcome="listar-produtos.xhtml" styleClass="link-navegacao" />
+            </f:facet>
+        </p:panel>
+        <h:form id="frm">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel value="Código: " for="cod"
+                               styleClass="label-form" />
+                <p:inputNumber id="cod"
+                               placeholder="Insira um código para o produto"
+                               required="true"
+                               requiredMessage="O campo 'Código' é obrigatório!"
+                               value="#{cadastroProdutoBean.produto.id}"
+                               style="width: 98%" />
+                <p:outputLabel value="Descrição: " for="desc"
+                               styleClass="label-form" />
+                <p:inputText id="desc"
+                             placeholder="Insira uma descrição para o produto"
+                             required="true"
+                             requiredMessage="O campo 'Descrição' é obrigatório!"
+                             value="#{cadastroProdutoBean.produto.descricao}"
+                             style="width: 98%" />
+
+                <p:outputLabel value="Preço: " for="prec"
+                               styleClass="label-form" />           
+                <p:inputNumber id="prec"
+                               placeholder="Insira um preço para o produto"
+                               required="true"
+                               requiredMessage="O campo 'Preço' é obrigatório!"
+                               value="#{cadastroProdutoBean.produto.preco}"
+                               style="width: 98%" />
+
+                <p:outputLabel value="Quantidade: " for="qtd"
+                               styleClass="label-form" />                
+                <p:inputNumber id="qtd"
+                               placeholder="Insira uma quantidade para o produto"
+                               required="true"
+                               requiredMessage="O campo 'Quantidade' é obrigatório!"
+                               value="#{cadastroProdutoBean.produto.qtdEstoque}"
+                               style="width: 98%" />
+
+                <p:commandButton value="Salvar" class=""
+                                 action="#{cadastroProdutoBean.salvar()}" icon="ui" update="frm"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
