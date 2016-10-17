@@ -1,7 +1,6 @@
 package br.edu.unicatolica.dao;
 
 import br.edu.unicatolica.entity.EntidadeBase;
-import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.hibernate.util.HibernateUtil;
 import java.io.Serializable;
 import org.hibernate.Session;

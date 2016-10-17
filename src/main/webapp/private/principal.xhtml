@@ -7,6 +7,9 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
+        <ui:define name="menu">
+            <ui:include src="/WEB-INF/templates/menu.xhtml"/>
+        </ui:define>
         <ui:define name="content">
             <h:outputText value="Bem vindo ao sistema de vendas e estoque"/>
         </ui:define>

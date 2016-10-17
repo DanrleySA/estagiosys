@@ -13,23 +13,12 @@
         
         <p:layout fullPage="true">
             
-            <p:layoutUnit position="north" size="150" header="Menu">
-                <h:form>  
-                    <p:growl id="messages"/>
-                    <p:menubar>
-                        <p:submenu label="Produto" icon="fa fa-database">
-                            <p:menuitem value="Novo" icon="fa fa-plus" url="/private/produtos/cadastrar-produto.xhtml"/>                           
-                            <p:menuitem value="Listar" icon="fa fa-list-ul" url="/private/produtos/listar-produtos.xhtml" />
-                        </p:submenu>
-                        <f:facet name="options">
-                            <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
-                        </f:facet>
-                    </p:menubar>
-                </h:form>
+            <p:layoutUnit position="north" size="90" header="Menu">
+                <ui:insert name="menu"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
-                <ui:insert name="content"/>
+                <ui:insert name="conteudo"/>
             </p:layoutUnit>
             
             <p:layoutUnit position="south" size="100" >

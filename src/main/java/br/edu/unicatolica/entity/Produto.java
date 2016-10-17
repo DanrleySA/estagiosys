@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -14,7 +15,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class Produto implements EntidadeBase, Serializable {
 
-    @Id
+    @Id    
+    @GeneratedValue
     private Long id;
     @NotBlank
     @Column(name = "descricao", length = 150, nullable = false)
