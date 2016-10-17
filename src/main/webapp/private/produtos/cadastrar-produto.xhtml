@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/layout.xhtml">
 
-    <h:head>
+    <ui:define name="menu">
+        <ui:include src="/WEB-INF/templates/menu.xhtml"/>
+    </ui:define>  
 
-        <title>Cadastrar produto</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <h:body>
-        <p:link value="Listar produto" outcome="listar-produtos.xhtml"/>
-        <p:link value="Menu principal" outcome="/private/principal.xhtml"/>
+    <ui:define name="conteudo">
+        
         <p:messages autoUpdate="true" closable="true" />
         <p:panel>
             <f:facet name="actions">
@@ -53,5 +53,6 @@
                                  action="#{cadastroProdutoBean.salvar()}" icon="ui" update="frm"/>
             </h:panelGrid>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+    
+</ui:composition>

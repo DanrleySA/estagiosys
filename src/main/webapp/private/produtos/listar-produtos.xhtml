@@ -20,18 +20,20 @@
 
             <h:form id="frm-produto">
                 <p:panelGrid columns="3">
-                    <p:inputText size="30" placeholder="Pesquisar por descrição" 
-                                 value="#{consultaProdutoBean.produtoFilter.descricao}"/>
+                    <p:inputText size="30" placeholder="Pesquisar por descrição"
+                                 value="#{consultaProdutoBean.produtoFilter.descricao}">
+                        <p:ajax event="keyup" update="tabela-produtos" listener="#{consultaProdutoBean.pesquisar()}"/>
+                    </p:inputText>
                     <p:spacer height="0" width="10" />
-                    <p:commandButton value="Pesquisar"
+                    <p:commandButton value="Pesquisar" id="pesq"
                                      icon="ui-icon-search"
                                      action="#{consultaProdutoBean.pesquisar()}"
-                                     update="tabela-produtos"/>  
+                                     update="tabela-produtos"/>                    
                 </p:panelGrid>
 
                 <p:dataTable id="tabela-produtos" 
                              value="#{consultaProdutoBean.produtos}"
-                             emptyMessage="Nenhum produto encontrado" rows="10"
+                             emptyMessage="Nenhum produto encontrado" rows="5"
                              reflow="true"
                              paginator="true" var="prod">
 
@@ -52,18 +54,19 @@
                             <p:commandButton id="editar-prod"
                                              icon="fa fa-pencil-square-o"
                                              oncomplete="PF('dlgEdicaoProduto').show()"
-                                             update="frm-dlg-edicao-produto:dlg-edicao-produto">
+                                             update=":frm-editar-produto:pnlEdicaoProduto">
                                 <f:setPropertyActionListener value="#{prod}"
-                                                             target="#{consultaProdutoBean.produtoSelecionado}" />
+                                                             target="#{cadastroProdutoBean.produto}" />
                             </p:commandButton>
 
                             <p:spacer width="10" />
 
                             <p:commandButton id="excluir-prod"
                                              icon="fa fa-trash-o"
-                                             oncomplete="PF('dlgEdicaoProduto').show()"                                             >
+                                             oncomplete="PF('dlgExcluirProduto').show();"
+                                             update=":frm-dlg-excluir-produto:pnlExcluirProduto">
                                 <f:setPropertyActionListener value="#{prod}"
-                                                             target="#{cadastroProdutoBean.produto}" />
+                                                             target="#{consultaProdutoBean.produtoSelecionado}" />
                             </p:commandButton>
                             <p:tooltip value="Editar" for="editar-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                         </center>
@@ -71,45 +74,79 @@
                 </p:dataTable>
             </h:form>
         </p:panel>
-        <h:form id="frm-dlg-edicao-produto">
-            
-            <p:dialog  widgetVar="dlgEdicaoProduto"
-                       resizable="false" id="dlg-edicao-produto" showEffect="clip"
-                       hideEffect="clip" modal="true" appendTo="@(body)" draggable="false" width="350"
-                       closable="true" closeOnEscape="true" responsive="true"
-                       header="Editar produto">
 
-                <h:panelGrid columns="1" style="width: 100%">
-                    <p:outputLabel value="Descrição do produto: "
-                                   for="descricao-edicao-produto" styleClass="label-form" />
-                    <p:inputText id="descricao-edicao-produto"
-                                 style="width: 100%; margin-top: 10px" required="true"
-                                 requiredMessage="O campo 'Descrição' é obrigatório!"
-                                 value="#{cadastroCategoriaBean.produto.descricao}"
-                                 placeholder="Insira uma descrição para o produto" />
-
-                    <center>
-                        <p:separator />
-
-                        <h:panelGrid columns="4">
-                            <p:commandButton id="update-produto"
-                                             value="Atualizar produto"
-                                             actionListener="#{cadastroProdutoBean.salvar()}"
-                                             action="#{cadastroProdutoBean.salvar()}" ajax="false"  
-                                             oncomplete="PF{'dlgEdicaoProduto').hide()" 
-                                             update="frm-produto:tabela-produtos"
-                                             icon="fa  fa-fw  fa-pencil" style="width:100%" />
-
-                            <p:spacer width="10" />
-
-                            <p:commandButton id="voltar" value="Voltar"
-                                             oncomplete="PF('dlgEdicaoProduto').hide();"
-                                             icon="fa  fa-fw  fa-mail-reply" styleClass="botao-voltar" />
-                        </h:panelGrid>
-                    </center>
+        <!-- DIALOGO EDIÇÃO PRODUTO -->
+        <p:dialog widgetVar="dlgEdicaoProduto"
+                  resizable="false" showEffect="clip" hideEffect="clip"
+                  modal="true" appendTo="@(body)" draggable="false" width="350"
+                  closable="true" closeOnEscape="true" responsive="true"
+                  header="Editar produto">
+            <h:form id="frm-editar-produto">
+                <h:panelGrid id="pnlEdicaoProduto" columns="2" cellpadding="5" style="width: 100%">
+                    <p:outputLabel for="desc" value="Descrição: " />
+                    <p:inplace id="desc" editor="true">
+                        <p:inputText value="#{cadastroProdutoBean.produto.descricao}" required="true" 
+                                     label="text" size="20" maxlength="50" />
+                    </p:inplace>
+                    <p:outputLabel for="prec" value="Preço: " />
+                    <p:inplace id="prec" editor="true">
+                        <p:inputText value="#{cadastroProdutoBean.produto.preco}" 
+                                     size="3" required="true" label="text" />
+                    </p:inplace>                    
+                    <p:outputLabel for="qtd" value="Quantidade: " />
+                    <p:inplace id="qtd" editor="true">
+                        <p:inputText value="#{cadastroProdutoBean.produto.qtdEstoque}" required="true" label="text" />
+                    </p:inplace>
                 </h:panelGrid>
-            </p:dialog>
-        </h:form >
+
+                <center>
+                    <p:separator/>
+                    <h:panelGrid columns="4">
+                        <p:commandButton id="update-produto" value="Atualizar"
+                                         actionListener="#{cadastroProdutoBean.salvar()}"
+                                         oncomplete="PF{'dlgEdicaoProduto').hide();" ajax="false"  
+                                         update=":frm-produto:tabela-produtos"
+                                         icon="fa  fa-fw  fa-pencil" style="width:100%" />
+
+                        <p:spacer width="10" />
+
+                        <p:commandButton id="voltar" value="Voltar"
+                                         oncomplete="PF('dlgEdicaoProduto').hide();"
+                                         icon="fa  fa-fw  fa-mail-reply" />
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+
+        <!-- DIALOGO EXCLUSAO PRODUTO -->
+        <p:dialog widgetVar="dlgExcluirProduto"
+                  resizable="false" closable="true" draggable="false" modal="true"
+                  appendTo="@(body)" showEffect="clip" hideEffect="clip"  width="500"
+                  closeOnEscape="true" responsive="true"
+                  header="Excluir Produto"> 
+
+            <h:form id="frm-dlg-excluir-produto">
+                <p:panelGrid id="pnlExcluirProduto" columns="1" style="width: 100%">
+                    <p:outputLabel value="Código"/>
+                    <h:outputText value="#{consultaProdutoBean.produtoSelecionado.id}"/>
+
+                    <p:outputLabel value="Descrição"/>
+                    <h:outputText value="#{consultaProdutoBean.produtoSelecionado.descricao}"/>
+                </p:panelGrid>   
+
+                <center>
+                    <p:separator/>
+                    <p:panelGrid columns="4">
+                        <p:commandButton value="Excluir" actionListener="#{consultaProdutoBean.remover()}"
+                                         oncomplete="PF('dlgExcluirProduto').hide();"
+                                         update=":frm-produto:tabela-produtos" ajax="false"/>
+
+                        <p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirProduto').hide();"/>
+                    </p:panelGrid>
+                </center>
+
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

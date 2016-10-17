@@ -12,6 +12,15 @@
 
     <h:body>
         <p:link value="Login" outcome="principal"/>
+        
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="username" required="true" label="username" />
+ 
+            <h:outputLabel for="password" value="Password:" />
+            <p:password id="password" value="password" required="true" label="password" /> 
+            
+        </h:panelGrid>
     </h:body>
 
 </html>
