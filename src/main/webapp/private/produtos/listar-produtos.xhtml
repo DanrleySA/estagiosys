@@ -13,11 +13,11 @@
     </ui:define>    
 
     <ui:define name="conteudo">        
-        <p:panel header="Listar Produtos" >
+        <p:panel header="Listar Produtos" style="text-align: center">
             <f:facet name="actions">
                 <p:spacer height="0" width="50" />
                 <p:commandButton value="Cadastrar produto"
-                                 icon="fa fa-plus"
+                                 icon="fa fa-plus" style="float: left"
                                  onclick="PF('dlgNovoProduto').show();">
 
                 </p:commandButton>
@@ -102,8 +102,8 @@
                                      size="3" required="true" label="text" />
                     </p:inplace>                    
                     <p:outputLabel for="qtd" value="Quantidade: " />
-                    <p:inplace id="qtd" editor="true">
-                        <p:inputText value="#{cadastroProdutoBean.produto.qtdEstoque}" required="true" label="text" />
+                    <p:inplace id="qtd" editor="true" >
+                        <p:inputText value="#{cadastroProdutoBean.produto.qtdEstoque}" required="true" label="text" size="3" />
                     </p:inplace>
                 </h:panelGrid>
 
@@ -112,7 +112,7 @@
                     <h:panelGrid columns="4">
                         <p:commandButton id="update-produto" value="Atualizar"
                                          actionListener="#{cadastroProdutoBean.salvar()}"
-                                         oncomplete="PF{'dlgEdicaoProduto').hide();" ajax="false"  
+                                         oncomplete="PF{'dlgEdicaoProduto').hide();"  
                                          update=":frm-produto:tabela-produtos"
                                          icon="fa  fa-fw  fa-pencil" style="width:100%" />
 
@@ -134,23 +134,23 @@
                   header="Excluir Produto"> 
 
             <h:form id="frm-dlg-excluir-produto">
-                <p:panelGrid id="pnlExcluirProduto" columns="1" style="width: 100%">
+                <h:panelGrid id="pnlExcluirProduto" columns="2" style="width: 100%" cellpadding="5">
                     <p:outputLabel value="Código"/>
                     <h:outputText value="#{consultaProdutoBean.produtoSelecionado.id}"/>
 
                     <p:outputLabel value="Descrição"/>
                     <h:outputText value="#{consultaProdutoBean.produtoSelecionado.descricao}"/>
-                </p:panelGrid>   
+                </h:panelGrid>   
 
                 <center>
                     <p:separator/>
-                    <p:panelGrid columns="4">
+                    <h:panelGrid columns="2">
                         <p:commandButton value="Excluir" actionListener="#{consultaProdutoBean.remover()}"
                                          oncomplete="PF('dlgExcluirProduto').hide();"
-                                         update=":frm-produto:tabela-produtos" ajax="false"/>
+                                         update=":frm-produto:tabela-produtos"/>
 
                         <p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirProduto').hide();"/>
-                    </p:panelGrid>
+                    </h:panelGrid>
                 </center>
             </h:form>
         </p:dialog>
@@ -168,23 +168,23 @@
                                  placeholder="Insira uma descrição para o produto"
                                  required="true"
                                  requiredMessage="O campo 'Descrição' é obrigatório!"
-                                 value="#{cadastroProdutoBean.produto.descricao}"/>
+                                 value="#{cadastroProdutoBean.produto.descricao}" />
 
                     <p:outputLabel value="Preço: " for="prec"/>
                     <p:inputNumber id="prec" value="#{cadastroProdutoBean.produto.preco}" 
                                    label="Preço" required="true" 
-                                   requiredMessage="O campo 'Preço' é obrigatório!">
+                                   requiredMessage="O campo 'Preço' é obrigatório!" size="3">
                     </p:inputNumber>
 
                     <p:outputLabel value="Quantidade: " for="qtd"/>
                     <p:inputText id="qtd" value="#{cadastroProdutoBean.produto.qtdEstoque}"
-                                 required="true" requiredMessage="O campo 'Quantidade' é obrigatório!">    
+                                 required="true" requiredMessage="O campo 'Quantidade' é obrigatório!" size="3">    
                         <p:keyFilter regEx="/[\d\-]/"/>
                     </p:inputText>
                 </h:panelGrid>
                 <center>
                     <p:separator/>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="3">
                         <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos" actionListener="#{consultaProdutoBean.pesquisar()}" />
                         <p:commandButton id="novo-produto" value="Cadastrar"
                                          actionListener="#{cadastroProdutoBean.salvar()}"
