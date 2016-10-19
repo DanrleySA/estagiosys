@@ -12,7 +12,7 @@
     </ui:define>  
 
     <ui:define name="conteudo">
-        
+
         <p:messages autoUpdate="true" closable="true" />
         <p:panel>
             <f:facet name="actions">
@@ -32,13 +32,7 @@
                              style="width: 98%" />
 
                 <p:outputLabel value="Preço: " for="prec"
-                               styleClass="label-form" />           
-                <p:inputNumber id="prec"
-                               placeholder="Insira um preço para o produto"
-                               required="true"
-                               requiredMessage="O campo 'Preço' é obrigatório!"
-                               value="#{cadastroProdutoBean.produto.preco}"
-                               style="width: 98%" />
+                               styleClass="label-form" />                  
 
                 <p:outputLabel value="Quantidade: " for="qtd"
                                styleClass="label-form" />                
@@ -54,5 +48,5 @@
             </h:panelGrid>
         </h:form>
     </ui:define>
-    
+
 </ui:composition>

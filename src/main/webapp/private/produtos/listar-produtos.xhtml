@@ -5,17 +5,23 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pe='http://primefaces.org/ui/extensions'
                 template="/WEB-INF/templates/layout.xhtml">
 
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menu.xhtml"/>
     </ui:define>    
 
-    <ui:define name="conteudo">
+    <ui:define name="conteudo">        
         <p:panel header="Listar Produtos" >
             <f:facet name="actions">
-                <p:link value="Novo Produto"
-                        outcome="cadastrar-produto.xhtml" styleClass="link-navegacao" />
+                <p:spacer height="0" width="50" />
+                <p:commandButton value="Cadastrar produto"
+                                 icon="fa fa-plus"
+                                 onclick="PF('dlgNovoProduto').show();">
+
+                </p:commandButton>
+                
             </f:facet>
 
             <h:form id="frm-produto">
@@ -33,7 +39,7 @@
 
                 <p:dataTable id="tabela-produtos" 
                              value="#{consultaProdutoBean.produtos}"
-                             emptyMessage="Nenhum produto encontrado" rows="5"
+                             emptyMessage="Nenhum produto encontrado" rows="9"
                              reflow="true"
                              paginator="true" var="prod">
 
@@ -69,6 +75,7 @@
                                                              target="#{consultaProdutoBean.produtoSelecionado}" />
                             </p:commandButton>
                             <p:tooltip value="Editar" for="editar-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
+                            <p:tooltip value="Excluir" for="excluir-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                         </center>
                     </p:column> 
                 </p:dataTable>
@@ -81,6 +88,7 @@
                   modal="true" appendTo="@(body)" draggable="false" width="350"
                   closable="true" closeOnEscape="true" responsive="true"
                   header="Editar produto">
+
             <h:form id="frm-editar-produto">
                 <h:panelGrid id="pnlEdicaoProduto" columns="2" cellpadding="5" style="width: 100%">
                     <p:outputLabel for="desc" value="Descrição: " />
@@ -144,10 +152,56 @@
                         <p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirProduto').hide();"/>
                     </p:panelGrid>
                 </center>
-
             </h:form>
         </p:dialog>
 
+        <!-- DIALOGO NOVO PRODUTO -->
+        <p:dialog widgetVar="dlgNovoProduto"
+                  resizable="false" closable="true" draggable="false" modal="true"
+                  appendTo="@(body)" showEffect="clip" hideEffect="clip"  width="500"
+                  closeOnEscape="true" responsive="true"
+                  header="Cadastrar Produto">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5">                    
+                    <p:outputLabel value="Descrição: " for="desc"/>
+                    <p:inputText id="desc" size="30" maxlength="50" 
+                                 placeholder="Insira uma descrição para o produto"
+                                 required="true"
+                                 requiredMessage="O campo 'Descrição' é obrigatório!"
+                                 value="#{cadastroProdutoBean.produto.descricao}"/>
+
+                    <p:outputLabel value="Preço: " for="prec"/>
+                    <p:inputNumber id="prec" value="#{cadastroProdutoBean.produto.preco}" 
+                                   label="Preço" required="true" 
+                                   requiredMessage="O campo 'Preço' é obrigatório!">
+                    </p:inputNumber>
+
+                    <p:outputLabel value="Quantidade: " for="qtd"/>
+                    <p:inputText id="qtd" value="#{cadastroProdutoBean.produto.qtdEstoque}"
+                                 required="true" requiredMessage="O campo 'Quantidade' é obrigatório!">    
+                        <p:keyFilter regEx="/[\d\-]/"/>
+                    </p:inputText>
+                </h:panelGrid>
+                <center>
+                    <p:separator/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton id="novo-produto" value="Cadastrar"
+                                         actionListener="#{cadastroProdutoBean.salvar()}"
+                                         oncomplete="PF('dlgNovoProduto').hide();"
+                                         update=":frm-produto:tabela-produtos"
+                                         ajax="false" 
+                                         icon="fa  fa-fw  fa-pencil" style="width:100%" />
+
+                        <p:commandButton id="voltar" value="Voltar"
+                                         oncomplete="PF('dlgNovoProduto').hide();"
+                                         icon="fa  fa-fw  fa-mail-reply">
+                        </p:commandButton>
+                    </h:panelGrid>
+                </center>
+
+            </h:form>
+
+        </p:dialog>
     </ui:define>
 </ui:composition>
 
