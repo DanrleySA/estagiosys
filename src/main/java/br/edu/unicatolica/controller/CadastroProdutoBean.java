@@ -1,11 +1,8 @@
 package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.ProdutoBO;
-import br.edu.unicatolica.dao.ProdutoDAO;
 import br.edu.unicatolica.entity.Produto;
-import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -18,9 +15,7 @@ import javax.faces.bean.ViewScoped;
 public class CadastroProdutoBean implements Serializable {
 
     private Produto produto;
-    private ConsultaProdutoBean consultaProdutoBean;
-    
-    
+
     public CadastroProdutoBean() {
         limpar();
     }
@@ -36,8 +31,6 @@ public class CadastroProdutoBean implements Serializable {
             // FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
         }
         limpar();
-        ArrayList<Produto> lista = (ArrayList<Produto>) ProdutoDAO.getInstance().getProdutosSemFiltro();
-        
     }
 
     private void limpar() {
@@ -52,16 +45,4 @@ public class CadastroProdutoBean implements Serializable {
         this.produto = produto;
     }
 
-    public ConsultaProdutoBean getConsultaProdutoBean() {
-        return consultaProdutoBean;
-    }
-
-    public void setConsultaProdutoBean(ConsultaProdutoBean consultaProdutoBean) {
-        this.consultaProdutoBean = consultaProdutoBean;
-    }
 }
-
-
-
-
-

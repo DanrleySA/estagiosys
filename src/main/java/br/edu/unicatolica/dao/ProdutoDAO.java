@@ -43,16 +43,6 @@ public class ProdutoDAO extends GenericoDAO<Produto> implements Serializable {
         } finally {
             session.close();
         }
-    }
-    
-    public List<Produto> getProdutosSemFiltro() {
-        Session session = HibernateUtil.geSessionFactory().openSession();
-        try {
-            Criteria criteria = session.createCriteria(Produto.class); 
-            
-            return (List<Produto>) criteria.list();
-        } finally {
-            session.close();
-        }
-    }
+    }    
+   
 }

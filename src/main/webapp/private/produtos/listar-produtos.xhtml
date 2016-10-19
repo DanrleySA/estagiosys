@@ -185,12 +185,14 @@
                 <center>
                     <p:separator/>
                     <h:panelGrid columns="2">
+                        <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos" actionListener="#{consultaProdutoBean.pesquisar()}" />
                         <p:commandButton id="novo-produto" value="Cadastrar"
                                          actionListener="#{cadastroProdutoBean.salvar()}"
-                                         oncomplete="PF('dlgNovoProduto').hide();"
-                                         update=":frm-produto:tabela-produtos"
-                                         ajax="false" 
-                                         icon="fa  fa-fw  fa-pencil" style="width:100%" />
+                                         oncomplete="aoSalvar()"                                          
+                                         onclick="PF('dlgNovoProduto').hide();"
+                                         icon="fa  fa-fw  fa-pencil" style="width:100%">
+                            
+                        </p:commandButton>
 
                         <p:commandButton id="voltar" value="Voltar"
                                          oncomplete="PF('dlgNovoProduto').hide();"
