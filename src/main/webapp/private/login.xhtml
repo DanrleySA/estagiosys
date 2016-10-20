@@ -10,31 +10,22 @@
 
     <h:body>
         <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
-            <center>
-                <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
-            </center>
 
-            <form  action="j_spring_security_check" method="post">
+            <!--            <form  action="j_spring_security_check" method="post">-->
+            <h:form>
                 <h:panelGrid columns="2" cellpadding="5"> 
                     <p:outputLabel for="j_username" value="Username: " />
-                    <p:inputText id="j_username" required="true"/>
+                    <p:inputText id="j_username" />
                     <p:outputLabel for="j_password" value="Password: " />
-                    <h:inputSecret id="j_password" required="true"/>
-                    <p:commandButton value="Entrar"/>
+                    <h:inputSecret id="j_password" />
                 </h:panelGrid>
-                <p:separator>
-                    <center>
-                        <h:panelGrid columns="1">
-                         <p:commandButton value="Entrar"/>
+                <!--</form>-->
+                <center>
+                    <h:panelGrid columns="1">
+                        <p:commandButton value="Entrar" action="#{loginBean.logar()}" />
                     </h:panelGrid>
-                    </center>
-                    
-            </form>
-        </p:dialog>
-
-
-
-
+                </center>    
+            </h:form>
+        </p:dialog>    
     </h:body>
-
 </html>
