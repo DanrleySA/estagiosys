@@ -1,5 +1,6 @@
 package br.edu.unicatolica.controller;
 
+import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Usuario;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +26,7 @@ public class UsuarioBean implements Serializable {
         if (context instanceof SecurityContext) {
             Authentication authentication = context.getAuthentication();
             if (authentication instanceof Authentication) {
-                usuario.setNome(((User) authentication.getPrincipal()).getUsername());
+                usuario = UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername());             
             }
         }
     }
