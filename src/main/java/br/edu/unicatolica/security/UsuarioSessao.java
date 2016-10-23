@@ -1,7 +1,7 @@
 package br.edu.unicatolica.security;
 
 import java.io.Serializable;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,8 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  * @author Danrley
  */
 @Named
-@RequestScoped
-public class UsuarioLogado implements Serializable{
+@javax.faces.bean.RequestScoped
+public class UsuarioSessao implements Serializable {
 
     public String getNomeUsuario() {
         String nome = null;
@@ -26,6 +26,7 @@ public class UsuarioLogado implements Serializable{
 
     private UsuarioSistema getUsuarioLogado() {
         UsuarioSistema usuario = null;
+
         UsernamePasswordAuthenticationToken auth
                 = (UsernamePasswordAuthenticationToken) FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
 
