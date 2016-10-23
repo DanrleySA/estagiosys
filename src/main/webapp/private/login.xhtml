@@ -4,27 +4,29 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Login</title>
     </h:head>
 
     <h:body>
         <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
-
-            <!--            <form  action="j_spring_security_check" method="post">-->
-            <h:form>
+            <center>
+                <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
+            </center>
+            <form action="j_spring_security_check" method="post">       
                 <h:panelGrid columns="2" cellpadding="5"> 
                     <p:outputLabel for="j_username" value="Username: " />
-                    <p:inputText id="j_username" />
+                    <p:inputText id="j_username" required="true"/>
                     <p:outputLabel for="j_password" value="Password: " />
-                    <h:inputSecret id="j_password" />
+                    <h:inputSecret id="j_password" required="true" />
                 </h:panelGrid>
-                <!--</form>-->
                 <center>
                     <h:panelGrid columns="1">
-                        <p:commandButton value="Entrar" action="#{loginBean.logar()}" />
+                        <p:commandButton value="Entrar"/>
                     </h:panelGrid>
                 </center>    
+            </form>
+            <h:form>
+               
             </h:form>
         </p:dialog>    
     </h:body>

@@ -39,7 +39,7 @@ public class GenericoDAO<T extends EntidadeBase> implements Serializable {
         }
     }
 
-    public T getCategoriaPorId(Class<T> classe, Long id) {
+    public T getEntidadePorId(Class<T> classe, Long id) {
         Session s = HibernateUtil.geSessionFactory().openSession();
         T t = null;
         try {

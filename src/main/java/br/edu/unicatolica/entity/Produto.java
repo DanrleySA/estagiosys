@@ -15,16 +15,12 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 public class Produto implements EntidadeBase, Serializable {
 
-    @Id    
-    @GeneratedValue
     private Long id;
-    @NotBlank
-    @Column(name = "descricao", length = 150, nullable = false)
     private String descricao;
     private Integer qtdEstoque;
     private Double preco;
     private String codigoBarras;
-
+    private Categoria categoria;
     public Produto() {
     }
 
@@ -36,6 +32,8 @@ public class Produto implements EntidadeBase, Serializable {
         this.codigoBarras = codigoBarras;
     }
 
+    @Id
+    @GeneratedValue
     @Override
     public Long getId() {
         return id;
@@ -45,6 +43,8 @@ public class Produto implements EntidadeBase, Serializable {
         this.id = id;
     }
 
+    @NotBlank
+    @Column(name = "descricao", length = 150, nullable = false)
     public String getDescricao() {
         return descricao;
     }

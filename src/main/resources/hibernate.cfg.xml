@@ -13,5 +13,7 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
     <mapping class="br.edu.unicatolica.entity.Produto"/>
+    <mapping class="br.edu.unicatolica.entity.Usuario"/>
+    <mapping class="br.edu.unicatolica.entity.Grupo"/>
   </session-factory>
 </hibernate-configuration>

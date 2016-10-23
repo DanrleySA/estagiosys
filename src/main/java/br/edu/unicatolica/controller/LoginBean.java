@@ -13,6 +13,6 @@ import javax.faces.bean.ViewScoped;
 public class LoginBean implements Serializable {
 
     public String logar(){
-        return "principal.xhtml";
+        return "/principal.xhtml";
     }
 }
