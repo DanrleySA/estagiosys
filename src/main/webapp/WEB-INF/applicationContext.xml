@@ -1,6 +1,6 @@
-<beans:beans xmlns="http://www.springframework.org/schema/security"
+<b:beans xmlns="http://www.springframework.org/schema/security"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:beans="http://www.springframework.org/schema/beans"
+         xmlns:b="http://www.springframework.org/schema/beans"
          xsi:schemaLocation=" http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
     http://www.springframework.org/schema/security 
@@ -10,29 +10,11 @@
     http://www.springframework.org/schema/mvc 
     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-    <beans:bean id="appUserDetailsService" class="br.edu.unicatolica.security.AppUserDetailsService"/>
-    
-    <beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
-      <beans:property name="accessDeniedHandler" ref="jsfAccessDeniedHandler"/>
-      <beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
-    </beans:bean>
-
-    <beans:bean id="jsfAccessDeniedHandler" class="br.edu.unicatolica.security.JsfAccessDeniedHandler">
-        <beans:property name="loginPath" value="/private/acesso-negado.xhtml" />
-        <beans:property name="contextRelative" value="true" />
-    </beans:bean>
-
-    <beans:bean id="authenticationEntryPoint" class="br.edu.unicatolica.security.JsfLoginUrlAuthenticationEntryPoint">
-        <beans:property name="loginFormUrl" value="/private/login.xhtml"/>
-        <beans:property name="redirectStrategy" ref="jsfRedirectStrategy" />
-    </beans:bean>
-
-    <beans:bean id="jsfRedirectStrategy" class="br.edu.unicatolica.security.JsfRedirectStrategy"/>
-    
+    <b:bean id="appUserDetailsService" class="br.edu.unicatolica.security.AppUserDetailsService"/>
+        
     <http pattern="/private/login.xhtml" security="none"/>
     <http pattern="/javax.faces.resource/**" security="none"/>
     <http auto-config="false" use-expressions="true">
-        <custom-filter ref="exceptionTranslationFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
         <intercept-url pattern="/private/principal.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/private/produtos/**" access="hasAnyRole('PROPRIETARIOS', 'ADMINISTRADORES')"/>
         <intercept-url pattern="/**" access="denyAll"/>
@@ -45,5 +27,5 @@
         <authentication-provider user-service-ref="appUserDetailsService">
         </authentication-provider>
     </authentication-manager>
-</beans:beans>
+</b:beans>
  
