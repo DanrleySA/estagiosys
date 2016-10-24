@@ -9,25 +9,20 @@
 
     <h:body>
         <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
-            <center>
-                <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
-            </center>
-            <form action="j_spring_security_check" method="post">       
+            <p:messages autoUpdate="true" closable="true"/>
+            <form action="/EstagioSys/j_spring_security_check" method="POST">       
                 <h:panelGrid columns="2" cellpadding="5"> 
-                    <p:outputLabel for="j_username" value="Username: " />
-                    <p:inputText id="j_username" required="true"/>
-                    <p:outputLabel for="j_password" value="Password: " />
-                    <h:inputSecret id="j_password" required="true" />
+                    <p:outputLabel for="j_username" value="Email: " />
+                    <p:inputText id="j_username" required="true" size="35"/>
+                    <p:outputLabel for="j_password" value="Senha: " />
+                    <p:password id="j_password" required="true" size="35" />
                 </h:panelGrid>
                 <center>
                     <h:panelGrid columns="1">
-                        <p:commandButton value="Entrar"/>
+                        <input type="submit" value="Entrar"/>
                     </h:panelGrid>
                 </center>    
             </form>
-            <h:form>
-               
-            </h:form>
         </p:dialog>    
     </h:body>
 </html>
