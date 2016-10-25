@@ -4,6 +4,6 @@ package br.edu.unicatolica.entity;
  *
  * @author Danrley
  */
-public class Categoria {
-    
+public enum FormaPagamento {
+    DINHEIRO, CARTAO_CREDITO, CARTAO_DEBITO
 }

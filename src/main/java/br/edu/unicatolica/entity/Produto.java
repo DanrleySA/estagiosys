@@ -1,11 +1,14 @@
 package br.edu.unicatolica.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -18,18 +21,9 @@ public class Produto implements EntidadeBase, Serializable {
     private Long id;
     private String descricao;
     private Integer qtdEstoque;
-    private Double preco;
-    private String codigoBarras;
-    private Categoria categoria;
-    public Produto() {
-    }
+    private BigDecimal valorUnitario;
 
-    public Produto(Long id, String descricao, Integer qtdEstoque, Double preco, String codigoBarras) {
-        this.id = id;
-        this.descricao = descricao;
-        this.qtdEstoque = qtdEstoque;
-        this.preco = preco;
-        this.codigoBarras = codigoBarras;
+    public Produto() {
     }
 
     @Id
@@ -53,6 +47,9 @@ public class Produto implements EntidadeBase, Serializable {
         this.descricao = descricao;
     }
 
+    @NotBlank
+    @Min(0)
+    @Column(nullable = false, length = 5)
     public Integer getQtdEstoque() {
         return qtdEstoque;
     }
@@ -61,20 +58,14 @@ public class Produto implements EntidadeBase, Serializable {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public Double getPreco() {
-        return preco;
+    @NotNull
+    @Column(nullable = false, precision = 10, scale = 2)
+    public BigDecimal getValorUnitario() {
+        return valorUnitario;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setValorUnitario(BigDecimal valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 
     @Override
