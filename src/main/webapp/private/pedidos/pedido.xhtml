@@ -10,9 +10,76 @@
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menu.xhtml"/>
     </ui:define>   
-    
+
     <ui:define name="conteudo">
-        Conteúdo de pedidos
+        <h:form id="frm-pedido">
+            <p:toolbar>
+                <f:facet name="left">
+                    <h:outputText value="Produtos"/>
+                </f:facet>
+            </p:toolbar>
+
+            <h:panelGrid columns="5" >
+                <p:inputText size="30" placeholder="Pesquisar por descrição"
+                             value="#{pedidoBean.produtoFilter.descricao}">
+                    <p:ajax event="keyup" update="tabela-produtos" listener="#{pedidoBean.pesquisar()}"/>
+                </p:inputText>
+                <p:spacer height="0" width="10" />
+                <p:commandButton value="Pesquisar" id="pesq"
+                                 icon="ui-icon-search"
+                                 action="#{pedidoBean.pesquisar()}"
+                                 update="tabela-produtos"/> 
+            </h:panelGrid>
+
+            <p:dataTable id="tabela-produtos" 
+                         value="#{pedidoBean.produtos}"
+                         emptyMessage="Nenhum produto encontrado" rows="9"
+                         reflow="true"
+                         paginator="true" var="prod">
+
+                <p:column headerText="Código" sortBy="#{prod.id}" width="50">                       
+                    <h:outputText  value="#{prod.id}"/>
+                </p:column>
+                <p:column headerText="Descrição" sortBy="#{prod.descricao}">
+                    <h:outputText value="#{prod.descricao}"/>
+                </p:column>
+                <p:column headerText="Preço" sortBy="#{prod.valorUnitario}" width="50">
+                    <h:outputText value="#{prod.valorUnitario}">
+                        <f:convertNumber pattern="0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Qtde" sortBy="#{prod.qtdEstoque}" width="50">
+                    <h:outputText value="#{prod.qtdEstoque}"/>
+                </p:column>
+                <p:column headerText="Ações" width="93">
+                    <p:commandButton value="Adicionar" actionListener="#{pedidoBean.adicionar(prod)}" update=":frm-pedido:tabela-itens" />
+                </p:column> 
+            </p:dataTable>
+            
+            <p:separator/>
+            
+            <p:dataTable id="tabela-itens" 
+                         value="#{pedidoBean.itens}"
+                         emptyMessage="Nenhum item no pedido" rows="5"
+                         reflow="true"
+                         paginator="true" var="item">
+
+                <p:column headerText="Produto" sortBy="#{item.produto.descricao}">
+                    <h:outputText value="#{item.produto.descricao}"/>
+                </p:column>
+                <p:column headerText="Valor parcial" sortBy="#{prod.valorUnitario}" width="50">
+                    <h:outputText value="#{item.valorUnitario}">
+                        <f:convertNumber pattern="0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Qtde" width="50">
+                    <h:outputText value="#{item.produto.qtdEstoque}"/>
+                </p:column>
+                <p:column headerText="Ações" width="93">
+                    <p:commandButton value="Remover" />
+                </p:column> 
+            </p:dataTable>
+        </h:form>
     </ui:define>
 
 </ui:composition>

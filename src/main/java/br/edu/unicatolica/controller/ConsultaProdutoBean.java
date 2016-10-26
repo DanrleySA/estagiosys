@@ -35,7 +35,7 @@ public class ConsultaProdutoBean implements Serializable {
     public void remover() {
         ProdutoBO.getInstance().remover(produtoSelecionado);
         produtos.remove(produtoSelecionado);
-        FacesUtil.addInfoMessage("Produto excluído com sucesso!");        
+        FacesUtil.addInfoMessage("Produto excluído com sucesso!");
     }
 
     public void pesquisar() {
