@@ -21,7 +21,7 @@
         </script>
 
         <h:form id="frm-pedido">
-            <p:growl autoUpdate="true" life="2000"/> 
+            <p:growl id="msgs" autoUpdate="true" life="2000"/> 
             <p:fieldset id="todosProdutos" legend="Produtos">
                 <h:panelGrid columns="5" >
                     <p:inputText size="30" placeholder="Pesquisar por descrição"
@@ -65,20 +65,27 @@
                     <h:outputText value="Coloque os itens aqui!"
                                   rendered="#{empty pedidoBean.itens}" style="font-size:24px;" />
 
-                    <p:dataTable id="itens-pedido-tabela" var="item"
+                    <p:dataTable id="itens-pedido-tabela" var="item" 
+                                 editable="true" editMode="cell"
                                  value="#{pedidoBean.itens}"
                                  rendered="#{not empty pedidoBean.itens}">
 
+                        <p:remoteCommand name="atualizarItens" update=":itens-pedido:itens-pedido-tabela" actionListener="#{pedidoBean.atualizarValorParcial()}"/>
+                        <p:ajax event="cellEdit" listener="#{pedidoBean.onCellEdit}" update=":frm-pedido:msgs" />
+                        
                         <p:column headerText="Descrição">
                             <h:outputText value="#{item.produto.descricao}" />
                         </p:column>
 
                         <p:column headerText="Qtde" width="10%">
-                            <h:outputText value="#{item.quantidade}" />
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.quantidade}"  /></f:facet>
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{item.quantidade}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Valor Parcial" width="10%">
-                            <h:outputText value="#{item.valorUnitario}" />
+                            <h:outputText id="valor-parcial" value="#{item.valorUnitario}" />
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>

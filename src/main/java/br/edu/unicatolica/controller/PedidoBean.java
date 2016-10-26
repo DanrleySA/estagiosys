@@ -6,11 +6,16 @@ import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.Entity;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.DragDropEvent;
 
 /**
@@ -44,8 +49,19 @@ public class PedidoBean implements Serializable {
         itens.add(item);
         produtosAux.remove(produto);
         produtos.remove(produto);
-        
+
         FacesUtil.addInfoMessage("Produto adicionado ao carrinho!");
+    }
+
+    public void atualizarValorParcial() {
+
+        for (Item item : itens) {
+            BigDecimal valor = item.getProduto().getValorUnitario();
+            Integer outroValor = new Integer(item.getQuantidade());
+            BigDecimal resultado = valor.multiply(BigDecimal.valueOf(outroValor.longValue()));
+
+            item.setValorUnitario(resultado);
+        }
     }
 
     public void adicionar(Produto produtoSelecionado) {
@@ -75,6 +91,17 @@ public class PedidoBean implements Serializable {
             produtoFilter = new ProdutoFilter();
         }
         return produtoFilter;
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Quantidade alterada", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        System.out.println(newValue);
     }
 
     public void setProdutoFilter(ProdutoFilter produtoFilter) {
