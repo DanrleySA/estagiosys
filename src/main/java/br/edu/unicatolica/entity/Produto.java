@@ -47,7 +47,7 @@ public class Produto implements EntidadeBase, Serializable {
         this.descricao = descricao;
     }
 
-    @NotBlank
+    @NotNull
     @Min(0)
     @Column(nullable = false, length = 5)
     public Integer getQtdEstoque() {

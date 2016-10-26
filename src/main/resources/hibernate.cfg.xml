@@ -4,19 +4,18 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sysdb</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/estagiodb?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">batman</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-        <mapping class="br.edu.unicatolica.entity.Usuario"/>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="br.edu.unicatolica.entity.Grupo"/>
-        <mapping class="br.edu.unicatolica.entity.Produto"/>
         <mapping class="br.edu.unicatolica.entity.Item"/>
         <mapping class="br.edu.unicatolica.entity.Pedido"/>
-        <mapping class="br.edu.unicatolica.entity.EnderecoEntrega"/>
+        <mapping class="br.edu.unicatolica.entity.Produto"/>
+        <mapping class="br.edu.unicatolica.entity.Usuario"/>
     </session-factory>
 </hibernate-configuration>

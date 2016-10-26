@@ -5,7 +5,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:pe='http://primefaces.org/ui/extensions'
                 template="/WEB-INF/templates/layout.xhtml">
 
     <ui:define name="menu">
@@ -42,17 +41,19 @@
                              reflow="true"
                              paginator="true" var="prod">
 
-                    <p:column headerText="Código" sortBy="#{prod.id}">                       
-                        <p:outputLabel value="#{prod.id}"/>
+                    <p:column headerText="Código" sortBy="#{prod.id}" width="50">                       
+                        <h:outputText  value="#{prod.id}"/>
                     </p:column>
                     <p:column headerText="Descrição" sortBy="#{prod.descricao}">
-                        <p:outputLabel value="#{prod.descricao}"/>
+                        <h:outputText value="#{prod.descricao}"/>
                     </p:column>
-                    <p:column headerText="Preço" sortBy="#{prod.preco}">
-                        <p:outputLabel value="#{prod.preco}"/>
+                    <p:column headerText="Preço" sortBy="#{prod.valorUnitario}" width="50">
+                        <h:outputText value="#{prod.valorUnitario}">
+                            <f:convertNumber pattern="0.00"/>
+                        </h:outputText>
                     </p:column>
-                    <p:column headerText="Quantidade" sortBy="#{prod.qtdEstoque}">
-                        <p:outputLabel value="#{prod.qtdEstoque}"/>
+                    <p:column headerText="Qtde" sortBy="#{prod.qtdEstoque}" width="50">
+                        <h:outputText value="#{prod.qtdEstoque}"/>
                     </p:column>
                     <p:column headerText="Ações" width="100">
                         <center>
@@ -97,7 +98,7 @@
                     </p:inplace>
                     <p:outputLabel value="Preço: " />
                     <p:inplace editor="true">
-                        <p:inputNumber value="#{cadastroProdutoBean.produto.preco}" 
+                        <p:inputNumber value="#{cadastroProdutoBean.produto.valorUnitario}" 
                                        size="3" required="true" label="text" requiredMessage="O campo 'Preço' é obrigatório!"/>
                     </p:inplace>                    
                     <p:outputLabel value="Quantidade: " />
@@ -170,9 +171,13 @@
                                  value="#{cadastroProdutoBean.produto.descricao}" />
 
                     <p:outputLabel value="Preço: " for="prec"/>
-                    <p:inputNumber id="prec" value="#{cadastroProdutoBean.produto.preco}" 
-                                   label="Preço" required="true" 
-                                   requiredMessage="O campo 'Preço' é obrigatório!" size="3"/>
+                    <p:inputText id="prec" value="#{cadastroProdutoBean.produto.valorUnitario}" 
+                                 label="Preço" required="true" 
+                                 requiredMessage="O campo 'Preço' é obrigatório!" size="10"
+                                 converterMessage="Informe um valor válido para o campo 'Preço'.">
+                        <f:convertNumber/>
+                    </p:inputText>
+
                     <p:outputLabel value="Quantidade: " />
                     <p:spinner value="#{cadastroProdutoBean.produto.qtdEstoque}" min="0" size="3"/>
                 </h:panelGrid>
@@ -194,9 +199,7 @@
                         </p:commandButton>
                     </h:panelGrid>
                 </center>
-
             </h:form>
-
         </p:dialog>
     </ui:define>
 </ui:composition>
