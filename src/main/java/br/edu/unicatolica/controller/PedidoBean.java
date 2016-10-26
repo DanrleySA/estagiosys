@@ -4,6 +4,7 @@ import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class PedidoBean implements Serializable {
         itens.add(item);
         produtosAux.remove(produto);
         produtos.remove(produto);
+        
+        FacesUtil.addInfoMessage("Produto adicionado ao carrinho!");
     }
 
     public void adicionar(Produto produtoSelecionado) {
