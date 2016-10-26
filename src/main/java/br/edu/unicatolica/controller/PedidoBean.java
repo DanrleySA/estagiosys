@@ -5,12 +5,12 @@ import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.event.DragDropEvent;
 
 /**
  *
@@ -24,10 +24,25 @@ public class PedidoBean implements Serializable {
     private List<Produto> produtos;
     private List<Item> itens;
     private Produto produtoSelecionado;
+    private List<Produto> produtosAux;
 
     @PostConstruct
     public void init() {
         pesquisar();
+        produtosAux = produtos;
+    }
+
+    public void onDrop(DragDropEvent ddEvent) {
+        Produto produto = ((Produto) ddEvent.getData());
+
+        Item item = new Item();
+        item.setProduto(produto);
+        item.setQuantidade(1);
+        item.setValorUnitario(produto.getValorUnitario());
+
+        itens.add(item);
+        produtosAux.remove(produto);
+        produtos.remove(produto);
     }
 
     public void adicionar(Produto produtoSelecionado) {
@@ -36,6 +51,16 @@ public class PedidoBean implements Serializable {
         item.setQuantidade(1);
         item.setValorUnitario(produtoSelecionado.getValorUnitario());
         itens.add(item);
+    }
+
+    public void atualizarListaProdutosFiltrados() {
+        List<Produto> aux = new ArrayList<>();
+        for (Produto produto : produtosAux) {
+            if (produto.getDescricao().contains(produtoFilter.getDescricao())) {
+                aux.add(produto);
+            }
+        }
+        produtos = aux;
     }
 
     public void pesquisar() {
@@ -78,6 +103,14 @@ public class PedidoBean implements Serializable {
 
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
+    }
+
+    public List<Produto> getProdutosAux() {
+        return produtosAux;
+    }
+
+    public void setProdutosAux(List<Produto> produtosAux) {
+        this.produtosAux = produtosAux;
     }
 
 }
