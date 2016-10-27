@@ -53,17 +53,6 @@ public class PedidoBean implements Serializable {
         FacesUtil.addInfoMessage("Produto adicionado ao carrinho!");
     }
 
-    public void atualizarValorParcial() {
-
-        for (Item item : itens) {
-            BigDecimal valor = item.getProduto().getValorUnitario();
-            Integer outroValor = new Integer(item.getQuantidade());
-            BigDecimal resultado = valor.multiply(BigDecimal.valueOf(outroValor.longValue()));
-
-            item.setValorUnitario(resultado);
-        }
-    }
-
     public void adicionar(Produto produtoSelecionado) {
         Item item = new Item();
         item.setProduto(produtoSelecionado);
@@ -100,8 +89,21 @@ public class PedidoBean implements Serializable {
         if (newValue != null && !newValue.equals(oldValue)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Quantidade alterada", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            atualizarValorParcial(event.getRowIndex());
+
         }
-        System.out.println(newValue);
+
+    }
+
+    public void atualizarValorParcial(Integer i) {
+
+        BigDecimal valor = itens.get(i).getProduto().getValorUnitario();
+        Integer outroValor = itens.get(i).getQuantidade();
+        BigDecimal resultado = valor.multiply(BigDecimal.valueOf(outroValor.longValue()));
+
+        itens.get(i).setValorUnitario(resultado);
+
     }
 
     public void setProdutoFilter(ProdutoFilter produtoFilter) {

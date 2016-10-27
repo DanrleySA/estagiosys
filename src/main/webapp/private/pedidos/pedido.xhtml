@@ -69,10 +69,10 @@
                                  editable="true" editMode="cell"
                                  value="#{pedidoBean.itens}"
                                  rendered="#{not empty pedidoBean.itens}">
-
-                        <p:remoteCommand name="atualizarItens" update=":itens-pedido:itens-pedido-tabela" actionListener="#{pedidoBean.atualizarValorParcial()}"/>
-                        <p:ajax event="cellEdit" listener="#{pedidoBean.onCellEdit}" update=":frm-pedido:msgs" />
                         
+                        
+                        <p:ajax event="cellEdit" listener="#{pedidoBean.onCellEdit}" update=":frm-pedido:msgs"/>
+
                         <p:column headerText="Descrição">
                             <h:outputText value="#{item.produto.descricao}" />
                         </p:column>
@@ -80,7 +80,9 @@
                         <p:column headerText="Qtde" width="10%">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.quantidade}"  /></f:facet>
-                                <f:facet name="input"><p:inputText id="modelInput" value="#{item.quantidade}" style="width:100%"/></f:facet>
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{item.quantidade}" style="width:100%">
+                                        <p:ajax event="change" process="@this" update="itens-pedido-tabela"/>
+                                    </p:inputText></f:facet>
                             </p:cellEditor>
                         </p:column>
 
