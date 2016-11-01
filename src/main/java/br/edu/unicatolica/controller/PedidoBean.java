@@ -1,6 +1,7 @@
 package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.ProdutoBO;
+import br.edu.unicatolica.dao.ProdutoDAO;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
@@ -86,14 +87,18 @@ public class PedidoBean implements Serializable {
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
 
+        Produto produto = ProdutoDAO.getInstance().getEntidadePorId(Produto.class,
+                itens.get(event.getRowIndex()).getProduto().getId());
+        
+        System.out.println(produto.getDescricao() +"\n"
+                + produto.getQtdEstoque());
+
         if (newValue != null && !newValue.equals(oldValue)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Quantidade alterada", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
             atualizarValorParcial(event.getRowIndex());
-
         }
-
     }
 
     public void atualizarValorParcial(Integer i) {

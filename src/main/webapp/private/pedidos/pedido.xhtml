@@ -44,7 +44,7 @@
                         <p:draggable for="dragIcon" revert="true" helper="clone" />
                     </p:column>
 
-                    <p:column headerText="Descrição" filterBy="#{prod.descricao}">
+                    <p:column headerText="Descrição">
                         <h:outputText value="#{prod.descricao}" />
                     </p:column>
 
@@ -53,7 +53,7 @@
                     </p:column>
 
                     <p:column headerText="Qtde" width="10%">
-                        <h:outputText value="#{prod.valorUnitario}" />
+                        <h:outputText value="#{prod.qtdEstoque}" />
                     </p:column>
 
                 </p:dataTable>
@@ -69,7 +69,6 @@
                                  editable="true" editMode="cell"
                                  value="#{pedidoBean.itens}"
                                  rendered="#{not empty pedidoBean.itens}">
-                        
                         
                         <p:ajax event="cellEdit" listener="#{pedidoBean.onCellEdit}" update=":frm-pedido:msgs"/>
 
