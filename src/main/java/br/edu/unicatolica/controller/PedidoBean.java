@@ -32,6 +32,7 @@ public class PedidoBean implements Serializable {
     private List<Item> itens;
     private Produto produtoSelecionado;
     private List<Produto> produtosAux;
+    private Item itemSelecionado;
 
     @PostConstruct
     public void init() {
@@ -62,6 +63,13 @@ public class PedidoBean implements Serializable {
         itens.add(item);
     }
 
+    public void remover(Item item) {
+        itens.remove(item);
+        produtos.add(item.getProduto());
+        
+        FacesUtil.addInfoMessage("Item removido do carrinho!");
+    }
+
     public void atualizarListaProdutosFiltrados() {
         List<Produto> aux = new ArrayList<>();
         for (Produto produto : produtosAux) {
@@ -83,32 +91,13 @@ public class PedidoBean implements Serializable {
         return produtoFilter;
     }
 
-    public void onCellEdit(CellEditEvent event) {
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
+    public void atualizar(Item item) {
 
-        Produto produto = ProdutoDAO.getInstance().getEntidadePorId(Produto.class,
-                itens.get(event.getRowIndex()).getProduto().getId());
-        
-        System.out.println(produto.getDescricao() +"\n"
-                + produto.getQtdEstoque());
-
-        if (newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Quantidade alterada", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-
-            atualizarValorParcial(event.getRowIndex());
-        }
-    }
-
-    public void atualizarValorParcial(Integer i) {
-
-        BigDecimal valor = itens.get(i).getProduto().getValorUnitario();
-        Integer outroValor = itens.get(i).getQuantidade();
+        BigDecimal valor = item.getProduto().getValorUnitario();
+        Integer outroValor = item.getQuantidade();
         BigDecimal resultado = valor.multiply(BigDecimal.valueOf(outroValor.longValue()));
 
-        itens.get(i).setValorUnitario(resultado);
-
+        item.setValorUnitario(resultado);
     }
 
     public void setProdutoFilter(ProdutoFilter produtoFilter) {
@@ -148,6 +137,14 @@ public class PedidoBean implements Serializable {
 
     public void setProdutosAux(List<Produto> produtosAux) {
         this.produtosAux = produtosAux;
+    }
+
+    public Item getItemSelecionado() {
+        return itemSelecionado;
+    }
+
+    public void setItemSelecionado(Item itemSelecionado) {
+        this.itemSelecionado = itemSelecionado;
     }
 
 }

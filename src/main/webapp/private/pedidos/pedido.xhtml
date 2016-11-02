@@ -66,27 +66,28 @@
                                   rendered="#{empty pedidoBean.itens}" style="font-size:24px;" />
 
                     <p:dataTable id="itens-pedido-tabela" var="item" 
-                                 editable="true" editMode="cell"
                                  value="#{pedidoBean.itens}"
                                  rendered="#{not empty pedidoBean.itens}">
-                        
-                        <p:ajax event="cellEdit" listener="#{pedidoBean.onCellEdit}" update=":frm-pedido:msgs"/>
 
                         <p:column headerText="Descrição">
                             <h:outputText value="#{item.produto.descricao}" />
                         </p:column>
 
                         <p:column headerText="Qtde" width="10%">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{item.quantidade}"  /></f:facet>
-                                <f:facet name="input"><p:inputText id="modelInput" value="#{item.quantidade}" style="width:100%">
-                                        <p:ajax event="change" process="@this" update="itens-pedido-tabela"/>
-                                    </p:inputText></f:facet>
-                            </p:cellEditor>
+                            <p:spinner id="minMax" value="#{item.quantidade}" size="1"
+                                       min="1" max="#{item.produto.qtdEstoque}">
+                                <p:ajax event="change" update="itens-pedido-tabela" listener="#{pedidoBean.atualizar(item)}"/>
+                            </p:spinner>
                         </p:column>
 
                         <p:column headerText="Valor Parcial" width="10%">
                             <h:outputText id="valor-parcial" value="#{item.valorUnitario}" />
+                        </p:column>
+
+                        <p:column headerText="Opção" width="9%">
+                            <p:commandButton value="Remover" 
+                                             actionListener="#{pedidoBean.remover(item)}"
+                                             update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>
