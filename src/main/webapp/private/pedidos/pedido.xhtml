@@ -87,9 +87,15 @@
                         <p:column headerText="Opção" width="9%">
                             <p:commandButton value="Remover" 
                                              actionListener="#{pedidoBean.remover(item)}"
-                                             update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
+                                             update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos @form"/>
                         </p:column>
                         
+                        <p:separator/>
+                        
+                        <f:facet name="footer">
+                            <h:outputText value="Subtotal: #{pedidoBean.pedido.valorTotal}"/>
+                        </f:facet>
+
                     </p:dataTable>
                 </p:outputPanel>
             </p:fieldset>

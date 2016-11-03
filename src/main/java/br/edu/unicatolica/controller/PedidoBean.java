@@ -3,11 +3,13 @@ package br.edu.unicatolica.controller;
 import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.dao.ProdutoDAO;
 import br.edu.unicatolica.entity.Item;
+import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -32,12 +34,13 @@ public class PedidoBean implements Serializable {
     private List<Item> itens;
     private Produto produtoSelecionado;
     private List<Produto> produtosAux;
-    private Item itemSelecionado;
+    private Pedido pedido = new Pedido();
 
     @PostConstruct
     public void init() {
         pesquisar();
         produtosAux = produtos;
+        pedido.setValorTotal(new BigDecimal(0.00D));
     }
 
     public void onDrop(DragDropEvent ddEvent) {
@@ -52,21 +55,22 @@ public class PedidoBean implements Serializable {
         produtosAux.remove(produto);
         produtos.remove(produto);
 
+        pedido.setValorTotal((itens.size() == 1) ? produto.getValorUnitario() : pedido.getValorTotal().add(produto.getValorUnitario()));
         FacesUtil.addInfoMessage("Produto adicionado ao carrinho!");
     }
 
-    public void adicionar(Produto produtoSelecionado) {
-        Item item = new Item();
-        item.setProduto(produtoSelecionado);
-        item.setQuantidade(1);
-        item.setValorUnitario(produtoSelecionado.getValorUnitario());
-        itens.add(item);
-    }
-
     public void remover(Item item) {
-        itens.remove(item);
+        int index = 0;
+        for (Item t : itens) {
+            if (t.getProduto().equals(item.getProduto())) {
+                break;
+            }
+            index++;
+        }
+        System.out.println(itens.get(index).getProduto().getDescricao());
+        itens.remove(index);
         produtos.add(item.getProduto());
-        
+        pedido.setValorTotal(pedido.getValorTotal().subtract(item.getValorUnitario()));
         FacesUtil.addInfoMessage("Item removido do carrinho!");
     }
 
@@ -92,12 +96,14 @@ public class PedidoBean implements Serializable {
     }
 
     public void atualizar(Item item) {
+        BigDecimal valorAntigo = item.getValorUnitario();
+        item.setValorUnitario(item.getProduto().getValorUnitario().multiply(new BigDecimal(item.getQuantidade())));
 
-        BigDecimal valor = item.getProduto().getValorUnitario();
-        Integer outroValor = item.getQuantidade();
-        BigDecimal resultado = valor.multiply(BigDecimal.valueOf(outroValor.longValue()));
-
-        item.setValorUnitario(resultado);
+        if (item.getValorUnitario().compareTo(valorAntigo) == 1) {
+            pedido.setValorTotal(pedido.getValorTotal().add(item.getValorUnitario().subtract(valorAntigo)));
+        } else {
+            pedido.setValorTotal(pedido.getValorTotal().subtract(valorAntigo.subtract(item.getValorUnitario())));
+        }
     }
 
     public void setProdutoFilter(ProdutoFilter produtoFilter) {
@@ -139,12 +145,16 @@ public class PedidoBean implements Serializable {
         this.produtosAux = produtosAux;
     }
 
-    public Item getItemSelecionado() {
-        return itemSelecionado;
+    public Pedido getPedido() {
+        if (pedido == null) {
+            pedido = new Pedido();
+            pedido.setValorTotal(new BigDecimal(0.00D));
+        }
+        return pedido;
     }
 
-    public void setItemSelecionado(Item itemSelecionado) {
-        this.itemSelecionado = itemSelecionado;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
 }

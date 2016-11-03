@@ -37,6 +37,10 @@ public class Pedido implements Serializable, EntidadeBase {
     private Usuario vendedor;
     private List<Item> itens = new ArrayList<>();
 
+    public Pedido() {
+        setValorTotal(new BigDecimal("0.00"));
+    }
+
     @Id
     @GeneratedValue
     @Override
