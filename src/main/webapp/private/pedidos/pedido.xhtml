@@ -96,10 +96,12 @@
                             <h:outputText value="Subtotal: #{pedidoBean.pedido.valorTotal}"/>
                         </f:facet>
                     </p:dataTable>
+
                     <h:panelGrid columns="2">
-                        <p:commandButton rendered="#{not empty pedidoBean.itens}" 
-                                         oncomplete="PF('dlg-confirmacao').show();"
-                                         value="Finalizar Venda"/>
+                        <p:commandButton value="Finalizar Venda"
+                                         onclick="#{pedidoBean.carregarDadosPedido()}"
+                                         oncomplete="PF('dlg-confirmacao').show();" update="dlg" 
+                                         rendered="#{not empty pedidoBean.itens}"/>
                     </h:panelGrid>
                 </p:outputPanel>
             </p:fieldset>
@@ -111,16 +113,21 @@
             </p:droppable>
         </h:form>
 
-        <p:dialog widgetVar="dlg-confirmacao" 
+        <p:dialog id="dlg" widgetVar="dlg-confirmacao" 
                   closable="true" appendTo="@(body)"
                   draggable="true" modal="true" 
                   showEffect="explode" hideEffect="clip"
                   resizable="false" header="Finalizar venda">
             <h:form>
-                <h:panelGrid columns="1">
+                <h:panelGrid columns="2">
                     <h:outputText value="Horário: "/>
+                    <h:outputText value="#{pedidoBean.pedido.dataCriacao}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
+                    </h:outputText>
                     <h:outputText value="Vendedor: "/>
+                    <h:outputText value="#{pedidoBean.pedido.vendedor.nome}"/>
                     <h:outputText value="Valor Total: "/>
+                    <h:outputText value="#{pedidoBean.pedido.valorTotal}"/>
                 </h:panelGrid>
                 <p:separator/>
                 <h:panelGrid columns="2">

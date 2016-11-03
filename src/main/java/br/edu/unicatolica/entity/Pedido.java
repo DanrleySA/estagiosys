@@ -61,7 +61,7 @@ public class Pedido implements Serializable, EntidadeBase {
         this.observacao = observacao;
     }
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    //@Column(nullable = false, precision = 10, scale = 2)
     public BigDecimal getValorFrete() {
         return valorFrete;
     }
@@ -70,7 +70,7 @@ public class Pedido implements Serializable, EntidadeBase {
         this.valorFrete = valorFrete;
     }
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    //@Column(nullable = false, precision = 10, scale = 2)
     public BigDecimal getValorDesconto() {
         return valorDesconto;
     }
@@ -98,8 +98,8 @@ public class Pedido implements Serializable, EntidadeBase {
         this.dataCriacao = dataCriacao;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    //@Enumerated(EnumType.STRING)
+    //@Column(nullable = false)
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
@@ -108,8 +108,8 @@ public class Pedido implements Serializable, EntidadeBase {
         this.formaPagamento = formaPagamento;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    //@Enumerated(EnumType.STRING)
+    //@Column(nullable = false)
     public StatusPedido getStatus() {
         return status;
     }
