@@ -89,14 +89,18 @@
                                              actionListener="#{pedidoBean.remover(item)}"
                                              update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos @form"/>
                         </p:column>
-                        
+
                         <p:separator/>
-                        
+
                         <f:facet name="footer">
                             <h:outputText value="Subtotal: #{pedidoBean.pedido.valorTotal}"/>
                         </f:facet>
-
                     </p:dataTable>
+                    <h:panelGrid columns="2">
+                        <p:commandButton rendered="#{not empty pedidoBean.itens}" 
+                                         oncomplete="PF('dlg-confirmacao').show();"
+                                         value="Finalizar Venda"/>
+                    </h:panelGrid>
                 </p:outputPanel>
             </p:fieldset>
             <p:droppable for="itens-pedido" tolerance="touch"
@@ -106,6 +110,25 @@
                         update="dropArea tabela-produtos" />
             </p:droppable>
         </h:form>
+
+        <p:dialog widgetVar="dlg-confirmacao" 
+                  closable="true" appendTo="@(body)"
+                  draggable="true" modal="true" 
+                  showEffect="explode" hideEffect="clip"
+                  resizable="false" header="Finalizar venda">
+            <h:form>
+                <h:panelGrid columns="1">
+                    <h:outputText value="Horário: "/>
+                    <h:outputText value="Vendedor: "/>
+                    <h:outputText value="Valor Total: "/>
+                </h:panelGrid>
+                <p:separator/>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Finalizar"/>
+                    <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao').hide();"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

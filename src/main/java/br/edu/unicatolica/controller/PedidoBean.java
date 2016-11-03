@@ -67,7 +67,6 @@ public class PedidoBean implements Serializable {
             }
             index++;
         }
-        System.out.println(itens.get(index).getProduto().getDescricao());
         itens.remove(index);
         produtos.add(item.getProduto());
         pedido.setValorTotal(pedido.getValorTotal().subtract(item.getValorUnitario()));
