@@ -28,6 +28,11 @@ public class PedidoBO implements Serializable {
         PedidoDAO.getInstance().salvarOuAtualizar(pedido);
     }
 
+    public Long salvar(Pedido pedido) {
+        Long codigo = PedidoBO.getInstance().salvar(pedido);
+        return codigo;
+    }
+
     public void remover(Pedido pedido) {
         PedidoDAO.getInstance().remover(pedido);
     }

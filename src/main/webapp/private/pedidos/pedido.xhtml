@@ -35,7 +35,7 @@
                                      update="tabela-produtos"/> 
                 </h:panelGrid>
                 <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
-                             paginator="true" reflow="true" rows="5"
+                             reflow="true" rows="4"
                              emptyMessage="Nenhum produto a ser adicionado no pedido."
                              value="#{pedidoBean.produtos}">
 
@@ -65,7 +65,9 @@
                     <h:outputText value="Coloque os itens aqui!"
                                   rendered="#{empty pedidoBean.itens}" style="font-size:24px;" />
 
-                    <p:dataTable id="itens-pedido-tabela" var="item" 
+                    <p:dataTable id="itens-pedido-tabela" var="item"
+                                 rows="5"
+                                 reflow="true"
                                  value="#{pedidoBean.itens}"
                                  rendered="#{not empty pedidoBean.itens}">
 
@@ -87,7 +89,7 @@
                         <p:column headerText="Opção" width="9%">
                             <p:commandButton value="Remover" 
                                              actionListener="#{pedidoBean.remover(item)}"
-                                             update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos @form"/>
+                                             update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
                         </p:column>
 
                         <p:separator/>
@@ -131,7 +133,11 @@
                 </h:panelGrid>
                 <p:separator/>
                 <h:panelGrid columns="2">
-                    <p:commandButton value="Finalizar"/>
+                    <p:commandButton value="Finalizar" 
+                                     actionListener="#{pedidoBean.salvar()}"
+                                     oncomplete="PF('dlg-confirmacao').hide();"
+                                     update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
+                    
                     <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao').hide();"/>
                 </h:panelGrid>
             </h:form>

@@ -1,5 +1,6 @@
 package br.edu.unicatolica.controller;
 
+import br.edu.unicatolica.bo.PedidoBO;
 import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Item;
@@ -43,9 +44,30 @@ public class PedidoBean implements Serializable {
         pedido.setValorTotal(new BigDecimal(0.00D));
     }
 
+    public void salvar() {
+        try {
+            for (Item t : itens) {
+                t.setPedido(pedido);
+                t.getProduto().setQtdEstoque(t.getProduto().getQtdEstoque() - t.getQuantidade());
+                ProdutoBO.getInstance().salvarOuAtualizar(t.getProduto());
+            }
+            pedido.setItens(itens);
+            PedidoBO.getInstance().salvarOuAtualizar(pedido);
+
+            pedido = new Pedido();
+            pesquisar();
+            produtosAux = produtos;
+            itens = new ArrayList<Item>();
+            
+            FacesUtil.addInfoMessage("Pedido realizado com sucesso!");
+        } catch (Exception e) {
+            FacesUtil.addErrorMessage("Erro ao realizar pedido! " + e.getMessage());
+        }
+    }
+
     public void carregarDadosPedido() {
         pedido.setDataCriacao(new Date());
-        
+
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));

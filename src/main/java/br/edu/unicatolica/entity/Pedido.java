@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,7 +43,7 @@ public class Pedido implements Serializable, EntidadeBase {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Override
     public Long getId() {
         return id;
@@ -50,33 +51,6 @@ public class Pedido implements Serializable, EntidadeBase {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Column(columnDefinition = "text")
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    //@Column(nullable = false, precision = 10, scale = 2)
-    public BigDecimal getValorFrete() {
-        return valorFrete;
-    }
-
-    public void setValorFrete(BigDecimal valorFrete) {
-        this.valorFrete = valorFrete;
-    }
-
-    //@Column(nullable = false, precision = 10, scale = 2)
-    public BigDecimal getValorDesconto() {
-        return valorDesconto;
-    }
-
-    public void setValorDesconto(BigDecimal valorDesconto) {
-        this.valorDesconto = valorDesconto;
     }
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -98,26 +72,6 @@ public class Pedido implements Serializable, EntidadeBase {
         this.dataCriacao = dataCriacao;
     }
 
-    //@Enumerated(EnumType.STRING)
-    //@Column(nullable = false)
-    public FormaPagamento getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    //@Enumerated(EnumType.STRING)
-    //@Column(nullable = false)
-    public StatusPedido getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusPedido status) {
-        this.status = status;
-    }
-
     @ManyToOne
     @JoinColumn(nullable = false)
     public Usuario getVendedor() {
@@ -137,6 +91,94 @@ public class Pedido implements Serializable, EntidadeBase {
         this.itens = itens;
     }
 
+//    @Column(columnDefinition = "text")
+//    public String getObservacao() {
+//        return observacao;
+//    }
+//
+//    public void setObservacao(String observacao) {
+//        this.observacao = observacao;
+//    }
+//
+//    //@Column(nullable = false, precision = 10, scale = 2)
+//    
+//    public BigDecimal getValorFrete() {
+//        return valorFrete;
+//    }
+//
+//    public void setValorFrete(BigDecimal valorFrete) {
+//        this.valorFrete = valorFrete;
+//    }
+//
+//    //@Column(nullable = false, precision = 10, scale = 2)
+//    
+//    public BigDecimal getValorDesconto() {
+//        return valorDesconto;
+//    }
+//
+//    public void setValorDesconto(BigDecimal valorDesconto) {
+//        this.valorDesconto = valorDesconto;
+//    }
+//
+//    @Column(nullable = false, precision = 10, scale = 2)
+//    public BigDecimal getValorTotal() {
+//        return valorTotal;
+//    }
+//
+//    public void setValorTotal(BigDecimal valorTotal) {
+//        this.valorTotal = valorTotal;
+//    }
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(nullable = false)
+//    public Date getDataCriacao() {
+//        return dataCriacao;
+//    }
+//
+//    public void setDataCriacao(Date dataCriacao) {
+//        this.dataCriacao = dataCriacao;
+//    }
+//
+//    //@Enumerated(EnumType.STRING)
+//    //@Column(nullable = false)
+//    
+//    public FormaPagamento getFormaPagamento() {
+//        return formaPagamento;
+//    }
+//
+//    public void setFormaPagamento(FormaPagamento formaPagamento) {
+//        this.formaPagamento = formaPagamento;
+//    }
+//
+//    //@Enumerated(EnumType.STRING)
+//    //@Column(nullable = false)
+//    
+//    public StatusPedido getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(StatusPedido status) {
+//        this.status = status;
+//    }
+//
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    public Usuario getVendedor() {
+//        return vendedor;
+//    }
+//
+//    public void setVendedor(Usuario vendedor) {
+//        this.vendedor = vendedor;
+//    }
+//
+//    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+//    public List<Item> getItens() {
+//        return itens;
+//    }
+//
+//    public void setItens(List<Item> itens) {
+//        this.itens = itens;
+//    }
     @Override
     public int hashCode() {
         int hash = 7;
