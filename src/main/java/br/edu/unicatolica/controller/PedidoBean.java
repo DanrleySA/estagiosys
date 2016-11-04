@@ -33,15 +33,13 @@ public class PedidoBean implements Serializable {
     private ProdutoFilter produtoFilter;
     private List<Produto> produtos;
     private List<Item> itens;
-    private Produto produtoSelecionado;
     private List<Produto> produtosAux;
-    private Pedido pedido = new Pedido();
+    private Pedido pedido;
 
     @PostConstruct
     public void init() {
         pesquisar();
         produtosAux = produtos;
-        pedido.setValorTotal(new BigDecimal(0.00D));
     }
 
     public void salvar() {
@@ -54,11 +52,8 @@ public class PedidoBean implements Serializable {
             pedido.setItens(itens);
             PedidoBO.getInstance().salvarOuAtualizar(pedido);
 
-            pedido = new Pedido();
-            pesquisar();
-            produtosAux = produtos;
-            itens = new ArrayList<Item>();
-            
+            limpar();
+
             FacesUtil.addInfoMessage("Pedido realizado com sucesso!");
         } catch (Exception e) {
             FacesUtil.addErrorMessage("Erro ao realizar pedido! " + e.getMessage());
@@ -114,10 +109,10 @@ public class PedidoBean implements Serializable {
     }
 
     public void pesquisar() {
-        produtos = ProdutoBO.getInstance().getProdutos(getProdutoFilter());
+        produtos = ProdutoBO.getInstance().getProdutosComEstoque();
     }
 
-    public void atualizar(Item item) {
+    public void atualizarValoresParciais(Item item) {
         BigDecimal valorAntigo = item.getValorUnitario();
         item.setValorUnitario(item.getProduto().getValorUnitario().multiply(new BigDecimal(item.getQuantidade())));
 
@@ -128,10 +123,16 @@ public class PedidoBean implements Serializable {
         }
     }
 
+    public void limpar() {
+        pedido = new Pedido();
+        pesquisar();
+        produtosAux = produtos;
+        itens = new ArrayList<Item>();
+    }
+
     public Pedido getPedido() {
         if (pedido == null) {
             pedido = new Pedido();
-            pedido.setValorTotal(new BigDecimal(0.00D));
         }
         return pedido;
     }
@@ -168,14 +169,6 @@ public class PedidoBean implements Serializable {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
-    }
-
-    public Produto getProdutoSelecionado() {
-        return produtoSelecionado;
-    }
-
-    public void setProdutoSelecionado(Produto produtoSelecionado) {
-        this.produtoSelecionado = produtoSelecionado;
     }
 
     public List<Produto> getProdutosAux() {

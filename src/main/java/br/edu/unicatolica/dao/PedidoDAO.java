@@ -26,23 +26,6 @@ public class PedidoDAO extends GenericoDAO<Pedido> implements Serializable {
         return instance;
     }
 
-    public Long salvarPedido(Pedido pedido) {
-        Long codigo = null;
-        Session s = HibernateUtil.geSessionFactory().openSession();
-        try {
-            s.getTransaction().begin();
-            codigo = (Long) s.save(pedido);
-            System.out.println(codigo);
-            s.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            s.getTransaction().rollback();
-        } finally {
-            s.close();
-        }
-        return codigo;
-    }
-
     public List<Pedido> getPedidos() {
         Session session = HibernateUtil.geSessionFactory().openSession();
         try {

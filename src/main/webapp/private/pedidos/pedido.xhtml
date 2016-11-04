@@ -35,7 +35,7 @@
                                      update="tabela-produtos"/> 
                 </h:panelGrid>
                 <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
-                             reflow="true" rows="4"
+                             reflow="true" rows="4" paginator="true"
                              emptyMessage="Nenhum produto a ser adicionado no pedido."
                              value="#{pedidoBean.produtos}">
 
@@ -78,7 +78,7 @@
                         <p:column headerText="Qtde" width="10%">
                             <p:spinner id="minMax" value="#{item.quantidade}" size="1"
                                        min="1" max="#{item.produto.qtdEstoque}">
-                                <p:ajax event="change" update="itens-pedido-tabela" listener="#{pedidoBean.atualizar(item)}"/>
+                                <p:ajax event="change" update="itens-pedido-tabela" listener="#{pedidoBean.atualizarValoresParciais(item)}"/>
                             </p:spinner>
                         </p:column>
 

@@ -37,4 +37,7 @@ public class ProdutoBO implements Serializable {
         return ProdutoDAO.getInstance().getProdutos(produtoFilter);
     }
 
+    public List<Produto> getProdutosComEstoque() {
+        return ProdutoDAO.getInstance().getProdutosComEstoque();
+    }
 }

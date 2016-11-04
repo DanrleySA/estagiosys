@@ -37,8 +37,8 @@ public class PedidoBO implements Serializable {
         PedidoDAO.getInstance().remover(pedido);
     }
 
-    public List<Pedido> getProdutos() {
-        return PedidoDAO.getInstance().getPedidos();
+    public List<Pedido> getPedidos() {
+        return PedidoDAO.getInstance().getListaEntidade(Pedido.class);
     }
 
 }
