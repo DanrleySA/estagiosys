@@ -37,6 +37,7 @@ public class CadastroProdutoBean implements Serializable {
         produto = new Produto();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="get and set">
     public Produto getProduto() {
         return produto;
     }
@@ -44,5 +45,5 @@ public class CadastroProdutoBean implements Serializable {
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
-
+//</editor-fold>
 }

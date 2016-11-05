@@ -10,6 +10,7 @@ public class ProdutoFilter implements Serializable {
 
     private String descricao;
 
+    //<editor-fold defaultstate="collapsed" desc="get and set">
     public String getDescricao() {
         return descricao;
     }
@@ -17,5 +18,5 @@ public class ProdutoFilter implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
+//</editor-fold>
 }

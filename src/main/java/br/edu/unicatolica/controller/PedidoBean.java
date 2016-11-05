@@ -108,10 +108,6 @@ public class PedidoBean implements Serializable {
         produtos = aux;
     }
 
-    public void pesquisar() {
-        produtos = ProdutoBO.getInstance().getProdutosComEstoque();
-    }
-
     public void atualizarValoresParciais(Item item) {
         BigDecimal valorAntigo = item.getValorUnitario();
         item.setValorUnitario(item.getProduto().getValorUnitario().multiply(new BigDecimal(item.getQuantidade())));
@@ -123,6 +119,10 @@ public class PedidoBean implements Serializable {
         }
     }
 
+    public void pesquisar() {
+        produtos = ProdutoBO.getInstance().getProdutosComEstoque();
+    }
+
     public void limpar() {
         pedido = new Pedido();
         pesquisar();
@@ -130,6 +130,7 @@ public class PedidoBean implements Serializable {
         itens = new ArrayList<Item>();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="get and set">
     public Pedido getPedido() {
         if (pedido == null) {
             pedido = new Pedido();
@@ -178,5 +179,5 @@ public class PedidoBean implements Serializable {
     public void setProdutosAux(List<Produto> produtosAux) {
         this.produtosAux = produtosAux;
     }
-
+//</editor-fold>
 }

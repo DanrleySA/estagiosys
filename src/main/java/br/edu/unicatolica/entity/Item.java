@@ -72,6 +72,8 @@ public class Item implements Serializable, EntidadeBase {
         this.pedido = pedido;
     }
 
+    
+    //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {
         int hash = 7;
@@ -96,5 +98,5 @@ public class Item implements Serializable, EntidadeBase {
         }
         return true;
     }
-
+//</editor-fold>
 }

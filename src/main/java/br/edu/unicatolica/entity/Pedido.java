@@ -179,6 +179,8 @@ public class Pedido implements Serializable, EntidadeBase {
 //    public void setItens(List<Item> itens) {
 //        this.itens = itens;
 //    }
+    
+    //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {
         int hash = 7;
@@ -203,5 +205,5 @@ public class Pedido implements Serializable, EntidadeBase {
         }
         return true;
     }
-
+//</editor-fold>
 }

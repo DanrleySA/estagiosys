@@ -47,6 +47,7 @@ public class Grupo implements Serializable, EntidadeBase {
         this.descricao = descricao;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {
         int hash = 3;
@@ -71,5 +72,5 @@ public class Grupo implements Serializable, EntidadeBase {
         }
         return true;
     }
-
+//</editor-fold>
 }

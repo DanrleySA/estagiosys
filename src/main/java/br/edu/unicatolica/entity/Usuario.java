@@ -75,6 +75,7 @@ public class Usuario implements Serializable, EntidadeBase {
         this.grupos = grupos;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {
         int hash = 7;
@@ -99,5 +100,5 @@ public class Usuario implements Serializable, EntidadeBase {
         }
         return true;
     }
-
+//</editor-fold>
 }
