@@ -35,10 +35,11 @@ public class PedidoBean implements Serializable {
     private List<Item> itens;
     private List<Produto> produtosAux;
     private Pedido pedido;
+    private List<Pedido> pedidos;
 
     @PostConstruct
     public void init() {
-        pesquisar();
+        pesquisarProdutos();
         produtosAux = produtos;
     }
 
@@ -112,25 +113,27 @@ public class PedidoBean implements Serializable {
         BigDecimal valorAntigo = item.getValorUnitario();
         item.setValorUnitario(item.getProduto().getValorUnitario().multiply(new BigDecimal(item.getQuantidade())));
 
-        if (item.getValorUnitario().compareTo(valorAntigo) == 1) {
-            pedido.setValorTotal(pedido.getValorTotal().add(item.getValorUnitario().subtract(valorAntigo)));
-        } else {
-            pedido.setValorTotal(pedido.getValorTotal().subtract(valorAntigo.subtract(item.getValorUnitario())));
-        }
+        pedido.setValorTotal(item.getValorUnitario().compareTo(valorAntigo) == 1
+                ? pedido.getValorTotal().add(item.getValorUnitario().subtract(valorAntigo))
+                : pedido.getValorTotal().subtract(valorAntigo.subtract(item.getValorUnitario())));
     }
 
-    public void pesquisar() {
+    public void pesquisarProdutos() {
         produtos = ProdutoBO.getInstance().getProdutosComEstoque();
+    }
+
+    public void pesquisarPedidos() {
+        pedidos = PedidoBO.getInstance().getPedidos();
     }
 
     public void limpar() {
         pedido = new Pedido();
-        pesquisar();
+        pesquisarProdutos();
         produtosAux = produtos;
         itens = new ArrayList<Item>();
     }
 
-    //<editor-fold defaultstate="collapsed" desc="get and set">
+    //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public Pedido getPedido() {
         if (pedido == null) {
             pedido = new Pedido();
@@ -179,5 +182,14 @@ public class PedidoBean implements Serializable {
     public void setProdutosAux(List<Produto> produtosAux) {
         this.produtosAux = produtosAux;
     }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 //</editor-fold>
+
 }
