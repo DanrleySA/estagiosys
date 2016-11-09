@@ -8,12 +8,12 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <div style="float: left; margin-left: 110px">
-        <h:form style="display: inline-block">  
+        <h:form>  
             <p:menubar>
                 <p:menuitem value="Home" icon="fa fa-home" url="/private/principal.xhtml"/>            
                 <p:menuitem value="Produto" icon="fa fa-coffee" url="/private/produtos/listar-produtos.xhtml"/> 
                 <p:submenu label="Pedido" icon="fa fa-cart-arrow-down">
-                    <p:menuitem value="Pesquisar" icon="ui-icon-search"/>
+                    <p:menuitem value="Pesquisar" icon="ui-icon-search" url="/private/pedidos/listar-pedidos.xhtml"/>
                     <p:submenu label="Registrar" icon="fa fa-cart-plus" >
                         <p:menuitem value="Novo" url="/private/pedidos/pedido.xhtml"/>
                     </p:submenu>

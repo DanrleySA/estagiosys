@@ -41,6 +41,7 @@ public class PedidoBean implements Serializable {
     public void init() {
         pesquisarProdutos();
         produtosAux = produtos;
+        pesquisarPedidos();
     }
 
     public void salvar() {

@@ -13,8 +13,33 @@
 
     <ui:define name="conteudo">
         <h:form>
-            <p:dataTable value="#{pedidoBean.}">
+            <p:dataTable value="#{pedidoBean.pedidos}"
+                         emptyMessage="Nenhum pedido encontrado"
+                         reflow="true" var="ped">
+
+                <p:column headerText="Código">
+                    <h:outputText value="#{ped.id}"/>
+                </p:column>
+
+                <p:column headerText="Vendedor">
+                    <h:outputText value="#{ped.vendedor.nome}"/>
+                </p:column>
+
+                <p:column headerText="Valor Total">
+                    <h:outputText value="#{ped.valorTotal}">
+                        <f:convertNumber currencySymbol="R$" pattern="0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Data e hora">
+                    <h:outputText value="#{ped.dataCriacao}">
+                        <f:convertDateTime pattern="HH:mm dd/mm/YYYY"/>
+                    </h:outputText>
+                </p:column>
                 
+                <p:column headerText="Situação">
+                    
+                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>
