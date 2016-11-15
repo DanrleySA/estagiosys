@@ -20,7 +20,7 @@
         <intercept-url pattern="/private/pedidos/**" access="hasAnyRole('PROPRIETARIOS', 'ADMINISTRADORES', 'VENDEDORES')"/>
         <intercept-url pattern="/**" access="denyAll"/>
         
-        <form-login login-page="/private/login.xhtml" default-target-url="/" always-use-default-target="true"/>
+        <form-login login-page="/private/login.xhtml" authentication-failure-url="/private/login.xhtml?erro=true" default-target-url="/" always-use-default-target="true"/>
         <logout logout-url="/j_spring_security_logout" invalidate-session="true"/>
     </http>
     

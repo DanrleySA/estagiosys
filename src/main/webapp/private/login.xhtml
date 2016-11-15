@@ -10,22 +10,24 @@
 
     <h:body>
         <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+            <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
+
             <h:form id="login" prependId="false"
                     onsubmit="action = '#{request.contextPath}/j_spring_security_check';">
-                <p:messages id="messages" autoUpdate="true" />
-                    <h:panelGrid columns="2" cellpadding="5"> 
-                        <h:outputLabel for="j_username" value="Email: " />
-                        <p:inputText id="j_username" required="true" size="35" 
-                                     requiredMessage="Campo 'Email' obrigatório!"/>
-                        <h:outputLabel for="j_password" value="Senha: " />
-                        <p:password id="j_password" required="true" size="35" 
-                                    requiredMessage="Campo 'Senha' obrigatório"/>
+
+                <h:panelGrid columns="2" cellpadding="5"> 
+                    <h:outputLabel for="j_username" value="Email: " />
+                    <p:inputText id="j_username" required="true" size="35" 
+                                 requiredMessage="Campo 'Email' obrigatório!"/>
+                    <h:outputLabel for="j_password" value="Senha: " />
+                    <p:password id="j_password" required="true" size="35" 
+                                requiredMessage="Campo 'Senha' obrigatório"/>
+                </h:panelGrid>
+                <center>
+                    <h:panelGrid columns="1">
+                        <p:commandButton value="Entrar" ajax="false"/>
                     </h:panelGrid>
-                    <center>
-                        <h:panelGrid columns="1">
-                            <p:commandButton value="Entrar" ajax="false"/>
-                        </h:panelGrid>
-                    </center>    
+                </center>    
             </h:form>
         </p:dialog>    
     </h:body>
