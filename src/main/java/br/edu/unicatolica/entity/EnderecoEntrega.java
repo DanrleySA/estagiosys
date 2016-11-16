@@ -18,7 +18,7 @@ public class EnderecoEntrega implements Serializable {
     private String uf;
     private String cep;
 
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     public String getLogradouro() {
         return logradouro;
     }
@@ -27,7 +27,6 @@ public class EnderecoEntrega implements Serializable {
         this.logradouro = logradouro;
     }
 
-    @Column(nullable = false)
     public String getNumero() {
         return numero;
     }
@@ -45,7 +44,7 @@ public class EnderecoEntrega implements Serializable {
         this.complemento = complemento;
     }
 
-    @Column(nullable = false, length = 60)
+    @Column(length = 60)
     public String getCidade() {
         return cidade;
     }
@@ -54,7 +53,7 @@ public class EnderecoEntrega implements Serializable {
         this.cidade = cidade;
     }
 
-    @Column(nullable = false, length = 60)
+    @Column(length = 60)
     public String getUf() {
         return uf;
     }
@@ -63,7 +62,7 @@ public class EnderecoEntrega implements Serializable {
         this.uf = uf;
     }
 
-    @Column(nullable = false, length = 9)
+    @Column(length = 9)
     public String getCep() {
         return cep;
     }

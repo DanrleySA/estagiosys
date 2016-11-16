@@ -25,19 +25,19 @@
             <p:fieldset id="todosProdutos" legend="Produtos">
                 <h:panelGrid columns="5" >
                     <p:inputText size="30" placeholder="Pesquisar por descrição"
-                                 value="#{pedidoBean.produtoFilter.descricao}">
-                        <p:ajax event="keyup" update="tabela-produtos" listener="#{pedidoBean.atualizarListaProdutosFiltrados()}"/>
+                                 value="#{cadastroPedidoBean.produtoFilter.descricao}">
+                        <p:ajax event="keyup" update="tabela-produtos" listener="#{cadastroPedidoBean.atualizarListaProdutosFiltrados()}"/>
                     </p:inputText>
                     <p:spacer height="0" width="10" />
                     <p:commandButton value="Pesquisar" id="pesq"
                                      icon="ui-icon-search"
-                                     action="#{pedidoBean.atualizarListaProdutosFiltrados()}"
+                                     action="#{cadastroPedidoBean.atualizarListaProdutosFiltrados()}"
                                      update="tabela-produtos"/> 
                 </h:panelGrid>
                 <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
                              reflow="true" rows="4" paginator="true"
                              emptyMessage="Nenhum produto a ser adicionado no pedido."
-                             value="#{pedidoBean.produtos}">
+                             value="#{cadastroPedidoBean.produtos}">
 
                     <p:column style="width:20px">
                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
@@ -63,13 +63,13 @@
                         style="margin-top:20px">
                 <p:outputPanel id="dropArea">
                     <h:outputText value="Coloque os itens aqui!"
-                                  rendered="#{empty pedidoBean.itens}" style="font-size:24px;" />
+                                  rendered="#{empty cadastroPedidoBean.itens}" style="font-size:24px;" />
 
                     <p:dataTable id="itens-pedido-tabela" var="item"
                                  rows="5"
                                  reflow="true"
-                                 value="#{pedidoBean.itens}"
-                                 rendered="#{not empty pedidoBean.itens}">
+                                 value="#{cadastroPedidoBean.itens}"
+                                 rendered="#{not empty cadastroPedidoBean.itens}">
 
                         <p:column headerText="Descrição">
                             <h:outputText value="#{item.produto.descricao}" />
@@ -88,29 +88,29 @@
 
                         <p:column headerText="Opção" width="9%">
                             <p:commandButton value="Remover" 
-                                             actionListener="#{pedidoBean.remover(item)}"
+                                             actionListener="#{cadastroPedidoBean.remover(item)}"
                                              update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
                         </p:column>
 
                         <p:separator/>
 
                         <f:facet name="footer">
-                            <h:outputText value="Subtotal: #{pedidoBean.pedido.valorTotal}"/>
+                            <h:outputText value="Subtotal: #{cadastroPedidoBean.pedido.valorTotal}"/>
                         </f:facet>
                     </p:dataTable>
 
                     <h:panelGrid columns="2">
                         <p:commandButton value="Finalizar Venda"
-                                         onclick="#{pedidoBean.carregarDadosPedido()}"
+                                         onclick="#{cadastroPedidoBean.carregarDadosPedido()}"
                                          oncomplete="PF('dlg-confirmacao').show();" update="dlg" 
-                                         rendered="#{not empty pedidoBean.itens}"/>
+                                         rendered="#{not empty cadastroPedidoBean.itens}"/>
                     </h:panelGrid>
                 </p:outputPanel>
             </p:fieldset>
             <p:droppable for="itens-pedido" tolerance="touch"
                          activeStyleClass="ui-state-highlight" datasource="tabela-produtos"
                          onDrop="handleDrop">
-                <p:ajax listener="#{pedidoBean.onDrop}" 
+                <p:ajax listener="#{cadastroPedidoBean.onDrop}" 
                         update="dropArea tabela-produtos" />
             </p:droppable>
         </h:form>
@@ -123,18 +123,18 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="Horário: "/>
-                    <h:outputText value="#{pedidoBean.pedido.dataCriacao}">
+                    <h:outputText value="#{cadastroPedidoBean.pedido.dataCriacao}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
                     </h:outputText>
                     <h:outputText value="Vendedor: "/>
-                    <h:outputText value="#{pedidoBean.pedido.vendedor.nome}"/>
+                    <h:outputText value="#{cadastroPedidoBean.pedido.vendedor.nome}"/>
                     <h:outputText value="Valor Total: "/>
-                    <h:outputText value="#{pedidoBean.pedido.valorTotal}"/>
+                    <h:outputText value="#{cadastroPedidoBean.pedido.valorTotal}"/>
                 </h:panelGrid>
                 <p:separator/>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Finalizar" 
-                                     actionListener="#{pedidoBean.salvar()}"
+                                     actionListener="#{cadastroPedidoBean.salvar()}"
                                      oncomplete="PF('dlg-confirmacao').hide();"
                                      update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 

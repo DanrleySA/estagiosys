@@ -22,7 +22,6 @@ public class MainTeste {
         u.setSenha("123");
         u.getGrupos().add(g);
         
-        GrupoDAO.getInstance().salvarOuAtualizar(g);
         UsuarioDAO.getInstance().salvarOuAtualizar(u);
     }
 }

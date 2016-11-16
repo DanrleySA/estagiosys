@@ -1,5 +1,7 @@
 package br.edu.unicatolica.entity;
 
+import br.edu.unicatolica.enumeration.FormaPagamento;
+import br.edu.unicatolica.enumeration.TipoPedido;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,12 +37,15 @@ public class Pedido implements Serializable, EntidadeBase {
     private BigDecimal valorTotal;
     private Date dataCriacao;
     private FormaPagamento formaPagamento;
-    private StatusPedido status;
     private Usuario vendedor;
-    private List<Item> itens = new ArrayList<>();
+    private List<Item> itens;
+    private TipoPedido tipo;
+    private EnderecoEntrega endereco;
+    private Mesa mesa;
 
     public Pedido() {
         setValorTotal(new BigDecimal("0.00"));
+        itens = new ArrayList<>();
     }
 
     @Id
@@ -91,95 +97,70 @@ public class Pedido implements Serializable, EntidadeBase {
         this.itens = itens;
     }
 
-//    @Column(columnDefinition = "text")
-//    public String getObservacao() {
-//        return observacao;
-//    }
-//
-//    public void setObservacao(String observacao) {
-//        this.observacao = observacao;
-//    }
-//
-//    //@Column(nullable = false, precision = 10, scale = 2)
-//    
-//    public BigDecimal getValorFrete() {
-//        return valorFrete;
-//    }
-//
-//    public void setValorFrete(BigDecimal valorFrete) {
-//        this.valorFrete = valorFrete;
-//    }
-//
-//    //@Column(nullable = false, precision = 10, scale = 2)
-//    
-//    public BigDecimal getValorDesconto() {
-//        return valorDesconto;
-//    }
-//
-//    public void setValorDesconto(BigDecimal valorDesconto) {
-//        this.valorDesconto = valorDesconto;
-//    }
-//
-//    @Column(nullable = false, precision = 10, scale = 2)
-//    public BigDecimal getValorTotal() {
-//        return valorTotal;
-//    }
-//
-//    public void setValorTotal(BigDecimal valorTotal) {
-//        this.valorTotal = valorTotal;
-//    }
-//
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @Column(nullable = false)
-//    public Date getDataCriacao() {
-//        return dataCriacao;
-//    }
-//
-//    public void setDataCriacao(Date dataCriacao) {
-//        this.dataCriacao = dataCriacao;
-//    }
-//
-//    //@Enumerated(EnumType.STRING)
-//    //@Column(nullable = false)
-//    
-//    public FormaPagamento getFormaPagamento() {
-//        return formaPagamento;
-//    }
-//
-//    public void setFormaPagamento(FormaPagamento formaPagamento) {
-//        this.formaPagamento = formaPagamento;
-//    }
-//
-//    //@Enumerated(EnumType.STRING)
-//    //@Column(nullable = false)
-//    
-//    public StatusPedido getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(StatusPedido status) {
-//        this.status = status;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(nullable = false)
-//    public Usuario getVendedor() {
-//        return vendedor;
-//    }
-//
-//    public void setVendedor(Usuario vendedor) {
-//        this.vendedor = vendedor;
-//    }
-//
-//    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-//    public List<Item> getItens() {
-//        return itens;
-//    }
-//
-//    public void setItens(List<Item> itens) {
-//        this.itens = itens;
-//    }
-    
+    @Column(columnDefinition = "text")
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    public BigDecimal getValorFrete() {
+        return valorFrete;
+    }
+
+    public void setValorFrete(BigDecimal valorFrete) {
+        this.valorFrete = valorFrete;
+    }
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    public BigDecimal getValorDesconto() {
+        return valorDesconto;
+    }
+
+    public void setValorDesconto(BigDecimal valorDesconto) {
+        this.valorDesconto = valorDesconto;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    public TipoPedido getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoPedido tipo) {
+        this.tipo = tipo;
+    }
+
+    @Embedded
+    public EnderecoEntrega getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(EnderecoEntrega endereco) {
+        this.endereco = endereco;
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Mesa mesa) {
+        this.mesa = mesa;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {

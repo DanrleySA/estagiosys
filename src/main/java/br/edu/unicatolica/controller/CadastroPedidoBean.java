@@ -28,20 +28,19 @@ import org.springframework.security.core.userdetails.User;
  */
 @ManagedBean
 @ViewScoped
-public class PedidoBean implements Serializable {
+public class CadastroPedidoBean implements Serializable {
 
     private ProdutoFilter produtoFilter;
     private List<Produto> produtos;
     private List<Item> itens;
     private List<Produto> produtosAux;
     private Pedido pedido;
-    private List<Pedido> pedidos;
 
     @PostConstruct
     public void init() {
         pesquisarProdutos();
         produtosAux = produtos;
-        pesquisarPedidos();
+        pedido = new Pedido();
     }
 
     public void salvar() {
@@ -123,10 +122,6 @@ public class PedidoBean implements Serializable {
         produtos = ProdutoBO.getInstance().getProdutosComEstoque();
     }
 
-    public void pesquisarPedidos() {
-        pedidos = PedidoBO.getInstance().getPedidos();
-    }
-
     public void limpar() {
         pedido = new Pedido();
         pesquisarProdutos();
@@ -184,13 +179,5 @@ public class PedidoBean implements Serializable {
         this.produtosAux = produtosAux;
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
 //</editor-fold>
-
 }

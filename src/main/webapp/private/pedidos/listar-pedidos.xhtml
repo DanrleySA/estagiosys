@@ -13,8 +13,9 @@
 
     <ui:define name="conteudo">
         <h:form>
-            <p:dataTable value="#{pedidoBean.pedidos}"
+            <p:dataTable value="#{consultaPedidoBean.pedidos}"
                          emptyMessage="Nenhum pedido encontrado"
+                         rows="10"
                          reflow="true" var="ped">
 
                 <p:column headerText="Código">
@@ -36,9 +37,9 @@
                         <f:convertDateTime pattern="HH:mm dd/mm/YYYY"/>
                     </h:outputText>
                 </p:column>
-                
+
                 <p:column headerText="Situação">
-                    
+
                 </p:column>
             </p:dataTable>
         </h:form>
