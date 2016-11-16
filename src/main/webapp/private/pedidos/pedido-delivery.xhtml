@@ -10,10 +10,92 @@
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menu.xhtml"/>
     </ui:define>
-    
+
     <ui:define name="conteudo">
-        <h:form>
-            
+        <h:form id="frm-pedido">
+            <p:growl id="msgs" autoUpdate="true" life="2000"/> 
+            <p:fieldset id="todosProdutos" legend="Produtos">
+                <h:panelGrid columns="5" >
+                    <p:inputText size="30" placeholder="Pesquisar por descrição"
+                                 value="#{cadastroPedidoDeliveryBean.produtoFilter.descricao}">
+                        <p:ajax event="keyup" update="tabela-produtos" listener="#{cadastroPedidoDeliveryBean.atualizarListaProdutosFiltrados()}"/>
+                    </p:inputText>
+                    <p:spacer height="0" width="10" />
+                    <p:commandButton value="Pesquisar" id="pesq"
+                                     icon="ui-icon-search"
+                                     action="#{cadastroPedidoDeliveryBean.atualizarListaProdutosFiltrados()}"
+                                     update="tabela-produtos"/> 
+                </h:panelGrid>
+                <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
+                             reflow="true" rows="1" paginator="true"
+                             emptyMessage="Nenhum produto a ser adicionado no pedido."
+                             value="#{cadastroPedidoDeliveryBean.produtos}">
+
+                    <p:column style="width:15px">
+                        <p:commandLink styleClass="fa fa-plus" 
+                                       style="text-decoration: none"
+                                       actionListener="#{cadastroPedidoDeliveryBean.adicionarItem(prod)}"
+                                       update="@form"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{prod.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Preço" width="10%">
+                        <h:outputText value="#{prod.valorUnitario}" />
+                    </p:column>
+
+                    <p:column headerText="Qtde" width="10%">
+                        <h:outputText value="#{prod.qtdEstoque}" />
+                    </p:column>
+
+                </p:dataTable>
+            </p:fieldset>
+
+            <p:fieldset id="itens-pedido" legend="Itens do pedido"
+                        style="margin-top:20px">
+
+                <h:outputText value="Coloque os itens aqui!"
+                              rendered="#{empty cadastroPedidoDeliveryBean.itens}" style="font-size:24px;" />
+
+                <p:dataTable id="itens-pedido-tabela" var="item"
+                             rows="5"
+                             reflow="true"
+                             value="#{cadastroPedidoDeliveryBean.itens}"
+                             rendered="#{not empty cadastroPedidoDeliveryBean.itens}">
+
+                    <p:column style="width:15px">
+                        <p:commandLink styleClass="fa fa-minus" 
+                                       style="text-decoration: none"
+                                       actionListener="#{cadastroPedidoDeliveryBean.removerItem(item)}"
+                                       update="@form"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{item.produto.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Qtde" width="10%">
+                        <p:spinner id="minMax" value="#{item.quantidade}" size="1"
+                                   min="1" max="#{item.produto.qtdEstoque}">
+                            <p:ajax event="change" update="itens-pedido-tabela" listener="#{cadastroPedidoDeliveryBean.atualizarValoresParciais(item)}"/>
+                        </p:spinner>
+                    </p:column>
+
+                    <p:column headerText="Valor Parcial" width="10%">
+                        <h:outputText id="valor-parcial" value="#{item.valorUnitario}" />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:outputText style="margin-right: 10px" 
+                                      value="Subtotal: #{cadastroPedidoDeliveryBean.pedido.valorTotal}"/>
+                        <p:commandButton value="Finalizar"/>
+                    </f:facet>
+                </p:dataTable>
+            </p:fieldset>
+
         </h:form>
     </ui:define>
+</ui:composition>
 
