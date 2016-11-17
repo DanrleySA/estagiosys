@@ -37,7 +37,7 @@ public class UsuarioBO implements Serializable {
         UsuarioDAO.getInstance().remover(usuario);
     }
 
-    public List<Usuario> getPedidos() {
+    public List<Usuario> getUsuarios() {
         return UsuarioDAO.getInstance().getListaEntidade(Usuario.class);
     }
 
