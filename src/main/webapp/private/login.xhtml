@@ -10,14 +10,9 @@
     </h:head>
 
     <h:body>
-
-<!--        <f:metadata>
-            <f:event listener="#{loginBean.preRender}" type="preRenderView"/>
-        </f:metadata>-->
-
         <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
             <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.invalid}" style="color: darkred"/>
-            <p:messages autoUpdate="true" closable="true"/>
+            <p:messages id="messages" autoUpdate="true" closable="true"/>
 
             <h:form id="login" prependId="false"
                     onsubmit="action = '#{request.contextPath}/j_spring_security_check';">
@@ -32,7 +27,7 @@
                 </h:panelGrid>
                 <center>
                     <h:panelGrid columns="1">
-                        <p:commandButton value="Entrar" action="#{loginBean.acessar()}" ajax="false" />
+                        <p:commandButton value="Entrar" ajax="false" />
                     </h:panelGrid>
                 </center>    
             </h:form>

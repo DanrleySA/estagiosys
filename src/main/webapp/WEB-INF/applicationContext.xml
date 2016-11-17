@@ -1,7 +1,8 @@
+
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:beans="http://www.springframework.org/schema/beans"
-         xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation=" http://www.springframework.org/schema/beans 
                               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                               http://www.springframework.org/schema/security 
                               http://www.springframework.org/schema/security/spring-security.xsd">
@@ -10,6 +11,8 @@
         
     <http pattern="/private/login.xhtml" security="none"/>
     <http pattern="/javax.faces.resource/**" security="none"/>
+    <http pattern="/resources/**" security="none"/>
+    
     <http auto-config="false" use-expressions="true">
         <intercept-url pattern="/private/principal.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/private/usuarios/**" access="hasAnyRole('PROPRIETARIOS')"/>
@@ -17,7 +20,8 @@
         <intercept-url pattern="/private/pedidos/**" access="hasAnyRole('PROPRIETARIOS', 'ADMINISTRADORES', 'VENDEDORES')"/>
         <intercept-url pattern="/**" access="denyAll"/>
         
-        <form-login login-page="/private/login.xhtml" authentication-failure-url="/private/login.xhtml?invalid=true" default-target-url="/" always-use-default-target="true"/>
+        <form-login login-page="/private/login.xhtml" authentication-failure-url="/private/login.xhtml?invalid=true" 
+                    default-target-url="/" always-use-default-target="true"/>
         <logout logout-url="/j_spring_security_logout" invalidate-session="true"/>
     </http>
     

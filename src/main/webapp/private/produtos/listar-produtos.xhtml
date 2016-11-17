@@ -58,23 +58,26 @@
                     </p:column>
                     <p:column headerText="Ações" width="100">
                         <center>
-                            <p:commandButton id="editar-prod"
-                                             icon="fa fa-pencil-square-o"
-                                             oncomplete="PF('dlgEdicaoProduto').show()"
-                                             update=":frm-editar-produto:pnlEdicaoProduto">
+                            <p:commandLink id="editar-prod"
+
+                                           oncomplete="PF('dlgEdicaoProduto').show()"
+                                           update=":frm-editar-produto:pnlEdicaoProduto">
+                                <i class="material-icons">mode_edit</i>
                                 <f:setPropertyActionListener value="#{prod}"
                                                              target="#{cadastroProdutoBean.produto}" />
-                            </p:commandButton>
+                            </p:commandLink>
 
                             <p:spacer width="10" />
 
-                            <p:commandButton id="excluir-prod"
-                                             icon="fa fa-trash-o"
-                                             oncomplete="PF('dlgExcluirProduto').show();"
-                                             update=":frm-dlg-excluir-produto:pnlExcluirProduto">
+                            <p:commandLink id="excluir-prod"
+                                           oncomplete="PF('dlgExcluirProduto').show();"
+                                           update=":frm-dlg-excluir-produto:pnlExcluirProduto">
+                                <i class="material-icons">delete_forever</i> 
                                 <f:setPropertyActionListener value="#{prod}"
                                                              target="#{consultaProdutoBean.produtoSelecionado}" />
-                            </p:commandButton>
+
+                            </p:commandLink>
+                                
                             <p:tooltip value="Editar" for="editar-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                             <p:tooltip value="Excluir" for="excluir-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                         </center>
@@ -148,9 +151,9 @@
                     <h:panelGrid columns="2">
                         <p:commandButton value="Excluir" actionListener="#{consultaProdutoBean.remover()}"
                                          oncomplete="PF('dlgExcluirProduto').hide();"
-                                         update=":frm-produto:tabela-produtos"/>
+                                         update=":frm-produto:tabela-produtos" styleClass="botao-confirmacao"/>
 
-                        <p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirProduto').hide();"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dlgExcluirProduto').hide();" styleClass="botao-cancelar"/>
                     </h:panelGrid>
                 </center>
             </h:form>
@@ -185,7 +188,7 @@
                 <center>
                     <p:separator/>
                     <h:panelGrid columns="3">
-                        <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos" actionListener="#{consultaProdutoBean.pesquisar()}" />
+                        <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos @this" actionListener="#{consultaProdutoBean.pesquisar()}" />
                         <p:commandButton id="novo-produto" value="Cadastrar"
                                          actionListener="#{cadastroProdutoBean.salvar()}"
                                          oncomplete="aoSalvar()"                                          

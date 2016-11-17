@@ -8,14 +8,15 @@
     <h:head>
         <title>Equals</title>
         <h:outputStylesheet library="css" name="layout.css"/>
+        <h:outputStylesheet library="iconfont" name="material-icons.css"/>
     </h:head>
     <h:body>
         <p:layout fullPage="true">            
-            <p:layoutUnit position="north" size="40" >
+            <p:layoutUnit position="north" size="50" style="border: none;">
                 <ui:insert name="menu"/>
             </p:layoutUnit>
 
-            <p:layoutUnit position="center">               
+            <p:layoutUnit position="center" style="border: none;">               
                 <ui:insert name="conteudo"/>
             </p:layoutUnit>      
         </p:layout>

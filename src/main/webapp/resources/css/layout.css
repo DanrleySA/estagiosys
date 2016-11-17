@@ -10,3 +10,96 @@
 .ui-widget, .ui-widget .ui-widget {
     font-size: 15px !important;
 }
+a{
+    text-decoration: none;
+}
+
+/* BOTÕES E LINKS */
+.botao-laranja {
+	background: rgba(249, 127, 52, 1) !important;
+	color: #fff !important;
+}
+
+.botao-laranja:hover {
+	background: rgba(252, 94, 0, 1) !important;
+	transition: none !important;
+}
+
+.botao-confirmacao {
+	background: #fff !important;
+	color: #008000 !important;
+}
+
+.botao-confirmacao:hover {
+	color: #fff !important;
+        background: #008000 !important;
+	transition: none !important;
+}
+
+.botao-cancelar {
+        color: #ef2929 !important;
+        background: #fff !important;
+}
+
+.botao-cancelar:hover {
+	background: #ef2929 !important;
+	color: #fff !important;
+	transition: none !important;
+}
+
+.botao-link-cancelar {
+	background: transparent !important;
+	color: #333 !important;
+	border: none;
+}
+
+.botao-link-cancelar:hover {
+	color: #fb5e00 !important;
+	transition: none !important;
+}
+
+.botao-voltar {
+	background: #fff !important;
+	color: #333 !important;
+}
+
+.botao-voltar:hover {
+	color: #000 !important;
+	transition: none !important;
+}
+
+.botao-continuar {
+	background: #fff !important;
+	color: #3f5a44 !important;
+	font-weight: bold;
+	border: none !important;
+	border-radius: none !important;
+}
+
+.botao-continuar:hover {
+	background: #d3d7cf !important;
+	transition: none !important;
+}
+
+.botao-fechar {
+	background: #fff !important;
+	color: #FB5E00 !important;
+	font-weight: bold;
+	border: none !important;
+	border-radius: none !important;
+}
+
+.botao-fechar:hover {
+	background: #d3d7cf !important;
+	transition: none !important;
+}
+
+.link-navegacao {
+	float: right;
+	font-weight: normal;
+	color: #427fed !important;
+}
+
+.link-navegacao:hover {
+	text-decoration: underline;
+}
