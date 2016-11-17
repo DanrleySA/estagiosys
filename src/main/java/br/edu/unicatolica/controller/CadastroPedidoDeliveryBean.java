@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +40,7 @@ public class CadastroPedidoDeliveryBean implements Serializable {
     private List<Item> itens;
     private List<Produto> produtosAux;
     private Pedido pedido;
+    private boolean skip;
 
     @PostConstruct
     public void init() {
@@ -125,6 +126,10 @@ public class CadastroPedidoDeliveryBean implements Serializable {
                 : pedido.getValorTotal().subtract(valorAntigo.subtract(item.getValorUnitario())));
     }
 
+    public void atualizarValorTotal() {
+
+    }
+
     public void pesquisarProdutos() {
         produtos = ProdutoBO.getInstance().getProdutosComEstoque();
     }
@@ -134,6 +139,15 @@ public class CadastroPedidoDeliveryBean implements Serializable {
         pesquisarProdutos();
         produtosAux = produtos;
         itens = new ArrayList<Item>();
+    }
+
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        } else {
+            return event.getNewStep();
+        }
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
@@ -181,4 +195,11 @@ public class CadastroPedidoDeliveryBean implements Serializable {
     }
 
 //</editor-fold>
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
 }

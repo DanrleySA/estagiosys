@@ -2,6 +2,7 @@ package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.entity.Produto;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,11 +25,11 @@ public class CadastroProdutoBean implements Serializable {
         if (produto.getId() == null) {
             ProdutoBO.getInstance().salvarOuAtualizar(produto);
 
-            //FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
+            FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
         } else {
             ProdutoBO.getInstance().salvarOuAtualizar(produto);
 
-            // FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
+            FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
         }
         limpar();
     }

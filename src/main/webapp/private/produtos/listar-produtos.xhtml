@@ -16,6 +16,7 @@
             <f:facet name="actions">
                 <p:spacer height="0" width="50" />
             </f:facet>
+            <p:growl autoUpdate="true" life="3000" />
             <h:form id="frm-produto">
                 <h:panelGrid columns="5" >
                     <p:inputText size="30" placeholder="Pesquisar por descrição"
@@ -189,6 +190,7 @@
                                          actionListener="#{cadastroProdutoBean.salvar()}"
                                          oncomplete="aoSalvar()"                                          
                                          onclick="PF('dlgNovoProduto').hide();"
+                                         update="@this"
                                          icon="fa  fa-fw  fa-pencil" style="width:100%">
 
                         </p:commandButton>

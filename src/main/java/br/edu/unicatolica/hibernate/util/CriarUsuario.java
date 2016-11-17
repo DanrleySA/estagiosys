@@ -1,6 +1,5 @@
 package br.edu.unicatolica.hibernate.util;
 
-import br.edu.unicatolica.dao.GrupoDAO;
 import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Grupo;
 import br.edu.unicatolica.entity.Usuario;
@@ -9,7 +8,7 @@ import br.edu.unicatolica.entity.Usuario;
  *
  * @author Danrley
  */
-public class MainTeste {
+public class CriarUsuario {
 
     public static void main(String[] args) {
         Grupo g = new Grupo();
