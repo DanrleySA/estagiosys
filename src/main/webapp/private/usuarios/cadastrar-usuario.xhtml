@@ -40,9 +40,10 @@
                                              requiredMessage="O campo 'Senha' é obrigatório!"
                                              placeholder="Insira uma senha"/>
 
-                                <p:selectOneMenu required="true" requiredMessage="Selecione uma categoria!">
-                                    <f:selectItems value="#{cadastroUsuarioBean.grupos}" var="grupos"
-                                                   itemValue="#{grupos}" itemLabel="#{grupos.descricao}"/>
+                                <p:outputLabel value="Tipo: "/>
+                                <p:selectOneMenu>
+                                    <f:selectItems value="#{cadastroUsuarioBean.tipoUsuario}" var="tipoUsuario" 
+                                                   itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.descricao}" />
                                 </p:selectOneMenu>
 
                                 <p:commandButton value="Salvar" icon="fa fa-floppy-o"

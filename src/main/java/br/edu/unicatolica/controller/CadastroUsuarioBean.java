@@ -7,10 +7,9 @@ package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.UsuarioBO;
 import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.enumeration.TipoUsuario;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -40,4 +39,7 @@ public class CadastroUsuarioBean implements Serializable {
         this.usuario = usuario;
     }
 
+    public TipoUsuario[] getTipoUsuario() {
+        return TipoUsuario.values();
+    }
 }
