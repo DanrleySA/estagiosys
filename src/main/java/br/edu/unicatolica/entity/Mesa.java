@@ -5,6 +5,7 @@
  */
 package br.edu.unicatolica.entity;
 
+import br.edu.unicatolica.enumeration.StatusMesa;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ public class Mesa implements Serializable, EntidadeBase {
 
     private Long id;
     private Integer numero;
+    private StatusMesa status;
 
     @Id
     @GeneratedValue
@@ -37,6 +39,14 @@ public class Mesa implements Serializable, EntidadeBase {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
+    }
+
+    public StatusMesa getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusMesa status) {
+        this.status = status;
     }
 
 }

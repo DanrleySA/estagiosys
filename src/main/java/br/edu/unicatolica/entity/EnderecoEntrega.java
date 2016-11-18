@@ -1,6 +1,6 @@
 package br.edu.unicatolica.entity;
 
-import br.edu.unicatolica.enumeration.UF;
+import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -16,7 +16,7 @@ public class EnderecoEntrega implements Serializable {
     private String numero;
     private String complemento;
     private String cidade;
-    private UF uf;
+    private UnidadeFederacao uf;
     private String cep;
 
     @Column(length = 150)
@@ -54,11 +54,11 @@ public class EnderecoEntrega implements Serializable {
         this.cidade = cidade;
     }
 
-    public UF getUf() {
+    public UnidadeFederacao getUf() {
         return uf;
     }
 
-    public void setUf(UF uf) {
+    public void setUf(UnidadeFederacao uf) {
         this.uf = uf;
     }
 

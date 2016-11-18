@@ -91,14 +91,26 @@
                     <f:facet name="footer">
                         <h:outputText style="margin-right: 10px" 
                                       value="Subtotal: #{cadastroPedidoDeliveryBean.pedido.valorTotal}"/>
+
                         <p:commandButton value="Finalizar" 
                                          onclick="#{cadastroPedidoDeliveryBean.carregarDadosPedido()}"
                                          update="dlg"
                                          oncomplete="PF('dlg-confirmacao').show();"/>
+<!--                                         oncomplete="if (#{cadastroPedidoDeliveryBean.pedido.tipo == 'DELIVERY'}) PF('dlg-confirmacao').show(); 
+                                         else PF('dlg-confirmaçao-mesa').show();"/>-->
                     </f:facet>
                 </p:dataTable>
             </p:fieldset>
         </h:form>
+
+        <p:dialog id="dlg2" widgetVar="dlg-confirmaçao-mesa"
+                  closable="true" appendTo="@(body)"
+                  draggable="true" modal="true" 
+                  showEffect="explode" hideEffect="clip"
+                  resizable="false" header="Finalizar venda">
+
+            <p:outputLabel value="Hello darkness my old friend."/>
+        </p:dialog>
 
         <p:dialog id="dlg" widgetVar="dlg-confirmacao" 
                   closable="true" appendTo="@(body)"
@@ -144,24 +156,12 @@
                             <p:outputLabel value="UF: "/>
                             <p:selectOneMenu>
                                 <f:selectItems value="#{cadastroPedidoDeliveryBean.UF}" var="uf" itemValue="#{uf}" itemLabel="#{uf}" />
-
                             </p:selectOneMenu>
                             <p:commandButton value="Salvar" action="#{cadastroPedidoDeliveryBean.salvar()}"/>
                             <p:outputLabel />
-
                         </h:panelGrid>
                     </p:tab>
-
                 </p:wizard>
-
-
-
-
-
-                <p:outputLabel/>
-
-
-
                 <p:separator/>
                 <h:panelGrid columns="2">
                     <p:commandButton value="Finalizar" 

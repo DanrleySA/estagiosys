@@ -9,6 +9,8 @@ import br.edu.unicatolica.bo.UsuarioBO;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -19,21 +21,23 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CadastroUsuarioBean implements Serializable {
-    
+
     private Usuario usuario;
 
-    public void salvar(){
+    public void salvar() {
         UsuarioBO.getInstance().salvarOuAtualizar(usuario);
         FacesUtil.addInfoMessage("Usuário cadastrado com sucesso");
     }
-    
+
     public Usuario getUsuario() {
+        if (usuario == null) {
+            usuario = new Usuario();
+        }
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
+
 }

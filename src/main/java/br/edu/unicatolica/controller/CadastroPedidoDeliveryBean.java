@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.PedidoBO;
@@ -11,8 +6,7 @@ import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Produto;
-import br.edu.unicatolica.enumeration.TipoPedido;
-import br.edu.unicatolica.enumeration.UF;
+import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
@@ -50,6 +44,7 @@ public class CadastroPedidoDeliveryBean implements Serializable {
         produtosAux = produtos;
         pedido = new Pedido();
         itens = new ArrayList<>();
+        System.out.println();
     }
 
     public void adicionarItem(Produto produto) {
@@ -103,8 +98,6 @@ public class CadastroPedidoDeliveryBean implements Serializable {
 
     public void carregarDadosPedido() {
         pedido.setDataCriacao(new Date());
-        pedido.setTipo(TipoPedido.DELIVERY);
-        pedido.setValorDesconto(new BigDecimal("0.00"));
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
@@ -197,9 +190,10 @@ public class CadastroPedidoDeliveryBean implements Serializable {
         this.produtosAux = produtosAux;
     }
 
-    public UF[] getUF(){
-        return UF.values();
+    public UnidadeFederacao[] getUF() {
+        return UnidadeFederacao.values();
     }
+
 //</editor-fold>
     public boolean isSkip() {
         return skip;

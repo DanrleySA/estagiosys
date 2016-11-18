@@ -1,17 +1,14 @@
 package br.edu.unicatolica.entity;
 
+import br.edu.unicatolica.enumeration.TipoUsuario;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 /**
  *
@@ -24,7 +21,7 @@ public class Usuario implements Serializable, EntidadeBase {
     private String nome;
     private String email;
     private String senha;
-    private List<Grupo> grupos = new ArrayList<>();
+    private TipoUsuario tipo;
 
     @Id
     @GeneratedValue
@@ -64,15 +61,14 @@ public class Usuario implements Serializable, EntidadeBase {
         this.senha = senha;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-    public List<Grupo> getGrupos() {
-        return grupos;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    public TipoUsuario getTipo() {
+        return tipo;
     }
 
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 
     //<editor-fold defaultstate="collapsed" desc="equals and hashCode">

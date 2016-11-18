@@ -1,8 +1,8 @@
 package br.edu.unicatolica.hibernate.util;
 
 import br.edu.unicatolica.dao.UsuarioDAO;
-import br.edu.unicatolica.entity.Grupo;
 import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.enumeration.TipoUsuario;
 
 /**
  *
@@ -11,16 +11,11 @@ import br.edu.unicatolica.entity.Usuario;
 public class CriarUsuario {
 
     public static void main(String[] args) {
-        Grupo g = new Grupo();
-        g.setNome("PROPRIETARIOS");
-        g.setDescricao("PROPRIETARIOS");
-        
-        Usuario u = new Usuario();
-        u.setEmail("dan@gmail.com");
-        u.setNome("Danrley");
-        u.setSenha("123");
-        u.getGrupos().add(g);
-        
-        UsuarioDAO.getInstance().salvarOuAtualizar(u);
+        Usuario usuario = new Usuario();
+        usuario.setEmail("dan@gmail.com");
+        usuario.setNome("Danrley");
+        usuario.setSenha("123");
+        usuario.setTipo(TipoUsuario.PROPRIETARIO);
+        UsuarioDAO.getInstance().salvarOuAtualizar(usuario);
     }
 }

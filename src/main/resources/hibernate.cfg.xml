@@ -52,7 +52,6 @@ Contributor(s):
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <mapping class="br.edu.unicatolica.entity.Produto"/>
-        <mapping class="br.edu.unicatolica.entity.Grupo"/>
         <mapping class="br.edu.unicatolica.entity.Item"/>
         <mapping class="br.edu.unicatolica.entity.Pedido"/>
         <mapping class="br.edu.unicatolica.entity.Usuario"/>

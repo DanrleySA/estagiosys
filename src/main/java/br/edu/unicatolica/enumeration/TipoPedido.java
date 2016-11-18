@@ -10,5 +10,15 @@ package br.edu.unicatolica.enumeration;
  * @author Danrley
  */
 public enum TipoPedido {
-    DELIVERY, MESA;
+    DELIVERY("Delivery"), MESA("Mesa");
+
+    private String descricao;
+
+    TipoPedido(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
