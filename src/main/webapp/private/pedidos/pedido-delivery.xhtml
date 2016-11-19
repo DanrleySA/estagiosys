@@ -103,34 +103,28 @@
             </p:fieldset>
         </h:form>
 
-        <p:dialog id="dlg2" widgetVar="dlg-confirmaçao-mesa"
-                  closable="true" appendTo="@(body)"
-                  draggable="true" modal="true" 
-                  showEffect="explode" hideEffect="clip"
-                  resizable="false" header="Finalizar venda">
-
-            <p:outputLabel value="Hello darkness my old friend."/>
-        </p:dialog>
-
         <p:dialog id="dlg" widgetVar="dlg-confirmacao" 
                   closable="true" appendTo="@(body)"
-                  draggable="true" modal="true" 
-                  showEffect="explode" hideEffect="clip"
-                  resizable="false" header="Finalizar venda">
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Finalizar venda" >
             <h:form>
 
                 <p:wizard widgetVar="wiz" >
                     <p:tab id="dados" title="Dados do pedido">
-                        <h:panelGrid columns="2">
-                            <p:outputLabel value="Data e hora"/>
+                        <h:panelGrid columns="5" style="width: 100%">
+
+
+                            <p:outputLabel value="Data e hora: "/>
                             <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.dataCriacao}">
                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
                             </h:outputText>
 
                             <h:outputText value="Vendedor: "/>
                             <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.vendedor.nome}"/>
+                            <br/>
 
-                            <p:outputLabel value="Valor frete:"/>
+                            <p:outputLabel value="Valor frete: "/>
                             <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
                                            required="true" requiredMessage="O campo 'Valor frete' é obrigatório!"
                                            decimalSeparator="," thousandSeparator="."
@@ -142,7 +136,7 @@
                             <h:outputText id="valorTotal" value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
                                 <f:convertNumber type="currency"/>
                             </h:outputText>
-
+                            <br/>
                             <p:outputLabel value="Forma de pagamento: "/>
                             <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
                                 <f:selectItem itemLabel="Dinheiro" itemValue="DINHEIRO"/>
@@ -150,29 +144,57 @@
                                 <f:selectItem itemLabel="Cartão de débito" itemValue="CARTAO_DEBITO"/>
                             </p:selectOneMenu> 
                         </h:panelGrid>
+                        <h:panelGrid columns="2" style="width: 100%">
+                            <p:outputLabel value="Observação: "/>
+                            <p:inputTextarea rows="6" cols="33" maxlength="255"/>
+                        </h:panelGrid>
                     </p:tab>
 
-                    <p:tab id="endereco" title="Endereço">
-                        <h:panelGrid>
+                    <p:tab id="endereco" title="Endereço" >
+                        <h:panelGrid columns="8" style="width: 100%">
                             <p:outputLabel value="UF: "/>
-                            <p:selectOneMenu>
+                            <p:selectOneMenu required="true">
                                 <f:selectItems value="#{cadastroPedidoDeliveryBean.UF}" var="uf" 
                                                itemValue="#{uf}" itemLabel="#{uf}" />
                             </p:selectOneMenu>
-                            <p:commandButton value="Salvar" action="#{cadastroPedidoDeliveryBean.salvar()}"/>
-                            <p:outputLabel />
+                            <p:outputLabel value="CEP: "/>
+                            <p:inputMask value="#{cadastroPedidoDeliveryBean.pedido.endereco.cep}" 
+                                         mask="99999-999" size="5"/>
+
+                            <p:outputLabel value="Cidade: "/>
+                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"/>
+
+                            <p:outputLabel value="Número: "/>
+                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.numero}"
+                                         size="3" maxlength="6">
+                                <p:keyFilter regEx="/[\d\-]/"/>
+                            </p:inputText>
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="4" style="width: 100%">
+                            <p:outputLabel value="Logradouro: "/>
+                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.logradouro}"
+                                         required="true" requiredMessage="O campo 'Logradouro' é obrigatório!"
+                                         maxlength="150" size="30" />
+
+                            <p:outputLabel value="Complemento: "/>
+                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.complemento}"
+                                         maxlength="150" size="16"/>
                         </h:panelGrid>
                     </p:tab>
                 </p:wizard>
                 <p:separator/>
-                <h:panelGrid columns="2">
-                    <p:commandButton value="Finalizar" 
-                                     actionListener="#{cadastroPedidoDeliveryBean.salvar()}"
-                                     oncomplete="PF('dlg-confirmacao').hide();"
-                                     update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
+                <center>
+                    <h:panelGrid columns="3">
+                        <p:commandButton value="Finalizar" 
+                                         actionListener="#{cadastroPedidoDeliveryBean.salvar()}"
+                                         oncomplete="PF('dlg-confirmacao').hide();"
+                                         update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 
-                    <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao').hide();"/>
-                </h:panelGrid>
+                        <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao').hide();"/>
+                    </h:panelGrid>
+                </center>
+
             </h:form>
         </p:dialog>
     </ui:define>

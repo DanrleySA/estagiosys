@@ -11,6 +11,7 @@ import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,6 +98,7 @@ public class CadastroPedidoDeliveryBean implements Serializable {
     }
 
     public void carregarDadosPedido() {
+        pedido.setValorFrete(new BigDecimal("0.00"));
         pedido.setDataCriacao(new Date());
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();

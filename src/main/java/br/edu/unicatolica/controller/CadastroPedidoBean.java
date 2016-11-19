@@ -63,7 +63,7 @@ public class CadastroPedidoBean implements Serializable {
 
     public void carregarDadosPedido() {
         pedido.setDataCriacao(new Date());
-
+        
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
