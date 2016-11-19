@@ -129,16 +129,15 @@
 
                                 <p:outputLabel value="Valor frete: "/>
                                 <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
-                                               required="true" requiredMessage="O campo 'Valor frete' é obrigatório!"
                                                decimalSeparator="," thousandSeparator="."
                                                size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
-                                    <p:ajax event="change" update="valorTotal" listener="#{cadastroPedidoDeliveryBean.atualizarValorTotal()}"/>
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Desconto "/>
-                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.valorDesconto}">
-                                    <f:convertNumber type="currency"/>
-                                </h:outputText>
+                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorDesconto}" 
+                                               decimalSeparator="," thousandSeparator="."
+                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                </p:inputNumber>
 
                                 <h:outputText value="Valor Total: "/>
                                 <h:outputText id="valorTotal" value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
@@ -177,11 +176,11 @@
 
                             <p:outputLabel value="Cidade: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"
-                                         size="15"/>
+                                         size="15" required="true" requiredMessage="Campo 'Cidade' obrigatório!"/>
 
                             <p:outputLabel value="Número: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.numero}"
-                                         size="3" maxlength="6">
+                                         size="3" maxlength="6" required="true" requiredMessage="Campo 'Número' obrigatório!">
                                 <p:keyFilter regEx="/[\d\-]/"/>
                             </p:inputText>
 
