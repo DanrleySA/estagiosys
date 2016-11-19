@@ -107,53 +107,67 @@
                   closable="true" appendTo="@(body)"
                   draggable="true" modal="true" width="700"
                   showEffect="clip" hideEffect="clip"
-                  resizable="false" header="Finalizar venda" >
+                  resizable="false" header="Finalizar venda">
             <h:form>
 
                 <p:wizard widgetVar="wiz" >
                     <p:tab id="dados" title="Dados do pedido">
-                        <h:panelGrid columns="5" style="width: 100%">
+                        <div class="ui-fluid">
+                            <p:messages autoUpdate="false" />
 
+                            <p:panelGrid id="masterPanel" columns="4"
+                                         layout="grid" styleClass="ui-panelgrid-blank" 
+                                         style="margin-top: 20px; margin-bottom: 10px">
 
-                            <p:outputLabel value="Data e hora: "/>
-                            <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.dataCriacao}">
-                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
-                            </h:outputText>
+                                <p:outputLabel value="Data e hora: "/>
+                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.dataCriacao}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
+                                </h:outputText>
 
-                            <h:outputText value="Vendedor: "/>
-                            <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.vendedor.nome}"/>
-                            <br/>
+                                <h:outputText value="Vendedor: "/>
+                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.vendedor.nome}"/>
 
-                            <p:outputLabel value="Valor frete: "/>
-                            <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
-                                           required="true" requiredMessage="O campo 'Valor frete' é obrigatório!"
-                                           decimalSeparator="," thousandSeparator="."
-                                           size="15" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
-                                <p:ajax event="change" update="valorTotal" listener="#{cadastroPedidoDeliveryBean.atualizarValorTotal()}"/>
-                            </p:inputNumber>
+                                <p:outputLabel value="Valor frete: "/>
+                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
+                                               required="true" requiredMessage="O campo 'Valor frete' é obrigatório!"
+                                               decimalSeparator="," thousandSeparator="."
+                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                    <p:ajax event="change" update="valorTotal" listener="#{cadastroPedidoDeliveryBean.atualizarValorTotal()}"/>
+                                </p:inputNumber>
 
-                            <h:outputText value="Valor Total: "/>
-                            <h:outputText id="valorTotal" value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
-                                <f:convertNumber type="currency"/>
-                            </h:outputText>
-                            <br/>
-                            <p:outputLabel value="Forma de pagamento: "/>
-                            <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
-                                <f:selectItem itemLabel="Dinheiro" itemValue="DINHEIRO"/>
-                                <f:selectItem itemLabel="Cartão de crédito" itemValue="CARTAO_CREDITO"/>
-                                <f:selectItem itemLabel="Cartão de débito" itemValue="CARTAO_DEBITO"/>
-                            </p:selectOneMenu> 
-                        </h:panelGrid>
-                        <h:panelGrid columns="2" style="width: 100%">
-                            <p:outputLabel value="Observação: "/>
-                            <p:inputTextarea rows="6" cols="33" maxlength="255"/>
-                        </h:panelGrid>
+                                <h:outputText value="Valor Desconto "/>
+                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.valorDesconto}">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+
+                                <h:outputText value="Valor Total: "/>
+                                <h:outputText id="valorTotal" value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+
+                                <p:outputLabel value="Forma de pagamento: "/>
+                                <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
+                                    <f:selectItem itemLabel="Dinheiro" itemValue="DINHEIRO"/>
+                                    <f:selectItem itemLabel="Cartão de crédito" itemValue="CARTAO_CREDITO"/>
+                                    <f:selectItem itemLabel="Cartão de débito" itemValue="CARTAO_DEBITO"/>
+                                </p:selectOneMenu> 
+                            </p:panelGrid>
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
+                                <p:outputLabel value="Observação: "/>
+                                <p:inputTextarea rows="8" cols="33" maxlength="255"/>
+                            </p:panelGrid>
+                        </div>
+
                     </p:tab>
 
                     <p:tab id="endereco" title="Endereço" >
-                        <h:panelGrid columns="8" style="width: 100%">
+
+                        <p:panelGrid id="endereco-grid" columns="4"
+                                     layout="grid" styleClass="ui-panelgrid-blank" 
+                                     style="margin-top: 20px; margin-bottom: 10px">
+
                             <p:outputLabel value="UF: "/>
-                            <p:selectOneMenu required="true">
+                            <p:selectOneMenu required="true" >
                                 <f:selectItems value="#{cadastroPedidoDeliveryBean.UF}" var="uf" 
                                                itemValue="#{uf}" itemLabel="#{uf}" />
                             </p:selectOneMenu>
@@ -162,7 +176,8 @@
                                          mask="99999-999" size="5"/>
 
                             <p:outputLabel value="Cidade: "/>
-                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"/>
+                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"
+                                         size="15"/>
 
                             <p:outputLabel value="Número: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.numero}"
@@ -170,17 +185,15 @@
                                 <p:keyFilter regEx="/[\d\-]/"/>
                             </p:inputText>
 
-                        </h:panelGrid>
-                        <h:panelGrid columns="4" style="width: 100%">
                             <p:outputLabel value="Logradouro: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.logradouro}"
                                          required="true" requiredMessage="O campo 'Logradouro' é obrigatório!"
-                                         maxlength="150" size="30" />
+                                         maxlength="150" size="15" />
 
                             <p:outputLabel value="Complemento: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.complemento}"
-                                         maxlength="150" size="16"/>
-                        </h:panelGrid>
+                                         maxlength="150" size="15"/>      
+                        </p:panelGrid>
                     </p:tab>
                 </p:wizard>
                 <p:separator/>

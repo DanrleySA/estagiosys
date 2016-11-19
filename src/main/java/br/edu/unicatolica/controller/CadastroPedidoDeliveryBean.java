@@ -99,6 +99,7 @@ public class CadastroPedidoDeliveryBean implements Serializable {
 
     public void carregarDadosPedido() {
         pedido.setValorFrete(new BigDecimal("0.00"));
+        pedido.setValorDesconto(new BigDecimal("0.00"));
         pedido.setDataCriacao(new Date());
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
