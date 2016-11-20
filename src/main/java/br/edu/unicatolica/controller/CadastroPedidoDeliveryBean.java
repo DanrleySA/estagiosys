@@ -3,15 +3,17 @@ package br.edu.unicatolica.controller;
 import br.edu.unicatolica.bo.PedidoBO;
 import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.dao.UsuarioDAO;
+import br.edu.unicatolica.entity.EnderecoEntrega;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Produto;
+import br.edu.unicatolica.enumeration.FormaPagamento;
+import br.edu.unicatolica.enumeration.TipoPedido;
 import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,9 +99,9 @@ public class CadastroPedidoDeliveryBean implements Serializable {
         }
     }
 
-    public void carregarDadosPedido() {
-        pedido.setValorFrete(new BigDecimal("0.00"));
-        pedido.setValorDesconto(new BigDecimal("0.00"));
+    public void carregarDadosPedidoDelivery() {
+        pedido.setTipo(TipoPedido.DELIVERY);
+        pedido.setEndereco(new EnderecoEntrega());
         pedido.setDataCriacao(new Date());
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -195,6 +197,10 @@ public class CadastroPedidoDeliveryBean implements Serializable {
 
     public UnidadeFederacao[] getUF() {
         return UnidadeFederacao.values();
+    }
+
+    public FormaPagamento[] getFormaPagamento() {
+        return FormaPagamento.values();
     }
 
 //</editor-fold>

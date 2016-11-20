@@ -45,6 +45,8 @@ public class Pedido implements Serializable, EntidadeBase {
 
     public Pedido() {
         setValorTotal(new BigDecimal("0.00"));
+        setValorFrete(new BigDecimal("0.00"));
+        setValorDesconto(new BigDecimal("0.00"));
         itens = new ArrayList<>();
     }
 

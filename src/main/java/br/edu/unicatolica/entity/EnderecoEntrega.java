@@ -4,6 +4,8 @@ import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 /**
  *
@@ -54,6 +56,7 @@ public class EnderecoEntrega implements Serializable {
         this.cidade = cidade;
     }
 
+    @Enumerated(EnumType.STRING)
     public UnidadeFederacao getUf() {
         return uf;
     }

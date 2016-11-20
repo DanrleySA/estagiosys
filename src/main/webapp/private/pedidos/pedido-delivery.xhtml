@@ -93,7 +93,7 @@
                                       value="Subtotal: #{cadastroPedidoDeliveryBean.pedido.valorTotal}"/>
 
                         <p:commandButton value="Finalizar" 
-                                         onclick="#{cadastroPedidoDeliveryBean.carregarDadosPedido()}"
+                                         onclick="#{cadastroPedidoDeliveryBean.carregarDadosPedidoDelivery()}"
                                          update="dlg"
                                          oncomplete="PF('dlg-confirmacao').show();"/>
 <!--                                         oncomplete="if (#{cadastroPedidoDeliveryBean.pedido.tipo == 'DELIVERY'}) PF('dlg-confirmacao').show(); 
@@ -146,14 +146,14 @@
 
                                 <p:outputLabel value="Forma de pagamento: "/>
                                 <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
-                                    <f:selectItem itemLabel="Dinheiro" itemValue="DINHEIRO"/>
-                                    <f:selectItem itemLabel="Cartão de crédito" itemValue="CARTAO_CREDITO"/>
-                                    <f:selectItem itemLabel="Cartão de débito" itemValue="CARTAO_DEBITO"/>
+                                    <f:selectItems value="#{cadastroPedidoDeliveryBean.formaPagamento}"
+                                                   var="formaPagamento" itemValue="#{formaPagamento}" itemLabel="#{formaPagamento.descricao}"/>
                                 </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
                                 <p:outputLabel value="Observação: "/>
-                                <p:inputTextarea rows="8" cols="33" maxlength="255"/>
+                                <p:inputTextarea value="#{cadastroPedidoDeliveryBean.pedido.observacao}" 
+                                                 rows="8" cols="33" maxlength="255"/>
                             </p:panelGrid>
                         </div>
 
@@ -166,13 +166,13 @@
                                      style="margin-top: 20px; margin-bottom: 10px">
 
                             <p:outputLabel value="UF: "/>
-                            <p:selectOneMenu required="true" >
+                            <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.endereco.uf}" required="true" >
                                 <f:selectItems value="#{cadastroPedidoDeliveryBean.UF}" var="uf" 
                                                itemValue="#{uf}" itemLabel="#{uf}" />
                             </p:selectOneMenu>
                             <p:outputLabel value="CEP: "/>
                             <p:inputMask value="#{cadastroPedidoDeliveryBean.pedido.endereco.cep}" 
-                                         mask="99999-999" size="5"/>
+                                         mask="99999-999" size="5" converter="cepConverter"/>
 
                             <p:outputLabel value="Cidade: "/>
                             <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"
