@@ -45,14 +45,8 @@ public class CadastroPedidoBean implements Serializable {
 
     public void salvar() {
         try {
-            for (Item t : itens) {
-                t.setPedido(pedido);
-                t.getProduto().setQtdEstoque(t.getProduto().getQtdEstoque() - t.getQuantidade());
-                ProdutoBO.getInstance().salvarOuAtualizar(t.getProduto());
-            }
             pedido.setItens(itens);
             PedidoBO.getInstance().salvarOuAtualizar(pedido);
-
             limpar();
 
             FacesUtil.addInfoMessage("Pedido realizado com sucesso!");
@@ -63,7 +57,7 @@ public class CadastroPedidoBean implements Serializable {
 
     public void carregarDadosPedido() {
         pedido.setDataCriacao(new Date());
-        
+
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
