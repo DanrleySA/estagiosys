@@ -1,5 +1,6 @@
 package br.edu.unicatolica.entity;
 
+import br.edu.unicatolica.exception.NegocioException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -24,6 +25,16 @@ public class Produto implements EntidadeBase, Serializable {
     private BigDecimal valorUnitario;
 
     public Produto() {
+    }
+
+    public void atualizarEstoque(Integer quantidade) {
+        int novaQuantidade = getQtdEstoque() - quantidade;
+
+        if (novaQuantidade < 0) {
+            throw new NegocioException("Não existe no estoque " + quantidade
+                    + " itens do produto " + getDescricao() + "!");
+        }
+        setQtdEstoque(novaQuantidade);
     }
 
     @Id
