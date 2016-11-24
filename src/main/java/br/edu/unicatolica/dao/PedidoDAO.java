@@ -25,14 +25,5 @@ public class PedidoDAO extends GenericoDAO<Pedido> implements Serializable {
         }
         return instance;
     }
-
-    public List<Pedido> getPedidos() {
-        Session session = HibernateUtil.geSessionFactory().openSession();
-        try {
-            Criteria criteria = session.createCriteria(Pedido.class);
-            return criteria.list();
-        } finally {
-            session.close();
-        }
-    }
+   
 }

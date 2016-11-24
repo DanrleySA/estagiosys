@@ -10,7 +10,8 @@
     </h:head>
 
     <h:body>
-        <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+        <p:dialog header="Login" visible="true" closable="false" 
+                  draggable="false" resizable="false" width="420" responsive="true">
             <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.invalid}" style="color: darkred"/>
             <p:messages id="messages" autoUpdate="true" closable="true"/>
 

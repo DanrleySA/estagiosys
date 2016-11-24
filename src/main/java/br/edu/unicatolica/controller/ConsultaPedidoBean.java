@@ -26,7 +26,6 @@ public class ConsultaPedidoBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        pedidos = new ArrayList<>();
         pesquisarPedidos();
     }
 
@@ -35,6 +34,9 @@ public class ConsultaPedidoBean implements Serializable {
     }
 
     public List<Pedido> getPedidos() {
+        if (pedidos == null) {
+            pedidos = new ArrayList<>();
+        }
         return pedidos;
     }
 

@@ -8,12 +8,12 @@ import br.edu.unicatolica.enumeration.TipoUsuario;
  *
  * @author Danrley
  */
-public class CriarUsuario {
+public class CriaUsuario {
 
     public static void main(String[] args) {
         Usuario usuario = new Usuario();
-        usuario.setEmail("dan@gmail.com");
-        usuario.setNome("Danrley");
+        usuario.setEmail("usu1@gmail.com");
+        usuario.setNome("Usuario1");
         usuario.setSenha("123");
         usuario.setTipo(TipoUsuario.PROPRIETARIO);
         UsuarioDAO.getInstance().salvarOuAtualizar(usuario);

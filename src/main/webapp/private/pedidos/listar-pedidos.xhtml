@@ -15,7 +15,7 @@
         <h:form>
             <p:dataTable value="#{consultaPedidoBean.pedidos}"
                          emptyMessage="Nenhum pedido encontrado"
-                         rows="10"
+                         rows="10" paginator="true" paginatorPosition="bottom"
                          reflow="true" var="ped">
 
                 <p:column headerText="Código">
@@ -38,9 +38,6 @@
                     </h:outputText>
                 </p:column>
 
-                <p:column headerText="Situação">
-
-                </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

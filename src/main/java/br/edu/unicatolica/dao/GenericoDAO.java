@@ -53,11 +53,9 @@ public class GenericoDAO<T extends EntidadeBase> implements Serializable {
 
     public List<T> getListaEntidade(Class<T> classe) {
         Session session = HibernateUtil.geSessionFactory().openSession();
-        List<T> t;
         try {
-            Criteria criteria = session.createCriteria(classe.getClass());
-            t = criteria.list();
-            return t;
+            Criteria criteria = session.createCriteria(classe);
+            return criteria.list();
         } finally {
             session.close();
         }
