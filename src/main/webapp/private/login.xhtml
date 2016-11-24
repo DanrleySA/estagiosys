@@ -10,28 +10,29 @@
     </h:head>
 
     <h:body>
-        <p:dialog header="Login" visible="true" closable="false" 
-                  draggable="false" resizable="false" width="420" responsive="true">
-            <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.invalid}" style="color: darkred"/>
-            <p:messages id="messages" autoUpdate="true" closable="true"/>
+        <f:metadata>
+            <f:event listener="#{loginBean.preRender()}" type="preRenderView"/>
+        </f:metadata>
+        <h:form id="login" prependId="false">
+            <p:dialog header="Login" visible="true" closable="false" responsive="true"
+                      draggable="false" resizable="false" width="420" >
 
-            <h:form id="login" prependId="false"
-                    onsubmit="action = '#{request.contextPath}/j_spring_security_check';">
+                <p:messages id="messages" autoUpdate="true" closable="true"/>
 
                 <h:panelGrid columns="2" cellpadding="5"> 
                     <h:outputLabel for="j_username" value="Email: " />
                     <p:inputText id="j_username" required="true" size="35" 
-                                 requiredMessage="Campo 'Email' obrigatório!"/>
+                                 requiredMessage="Campo 'Email' obrigatório!" value="#{loginBean.usuario}"/>
                     <h:outputLabel for="j_password" value="Senha: " />
                     <p:password id="j_password" required="true" size="35" 
                                 requiredMessage="Campo 'Senha' obrigatório"/>
                 </h:panelGrid>
                 <center>
                     <h:panelGrid columns="1">
-                        <p:commandButton value="Entrar" ajax="false" />
+                        <p:commandButton value="Entrar" ajax="false" action="#{loginBean.login()}" />
                     </h:panelGrid>
                 </center>    
-            </h:form>
-        </p:dialog>    
+            </p:dialog>   
+        </h:form>
     </h:body>
 </html>
