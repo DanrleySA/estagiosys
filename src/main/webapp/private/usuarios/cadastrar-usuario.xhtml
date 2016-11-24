@@ -21,34 +21,37 @@
                     <p:messages autoUpdate="true" closable="true" />
                     <p:panel header="Cadastrar usuário">
                         <h:form id="frm">
-                            <h:panelGrid columns="2" cellpadding="5">                
+                            <p:panelGrid columns="2" layout="grid" 
+                                         styleClass="ui-panelgrid-blank">
+
                                 <p:outputLabel value="Nome: "/>
-                                <p:inputText placeholder="Insira uma descrição para o produto"
+                                <p:inputText placeholder="Insira o nome do usuário"
                                              required="true" requiredMessage="O campo 'Nome' é obrigatório!"
                                              value="#{cadastroUsuarioBean.usuario.nome}"
-                                             style="width: 98%" />
+                                             style="width: 70%" maxlength="80" />
 
                                 <p:outputLabel value="Email: "/>  
 
                                 <p:inputText placeholder="Insira um email válido"
                                              required="true" requiredMessage="O campo 'Email' é obrigatório!"
                                              value="#{cadastroUsuarioBean.usuario.email}"
-                                             style="width: 98%" />
+                                             style="width: 70%" maxlength="255"/>
 
                                 <p:outputLabel value="Senha: "/>
-                                <p:inputText value="#{cadastroUsuarioBean.usuario.senha}" required="true"
-                                             requiredMessage="O campo 'Senha' é obrigatório!"
-                                             placeholder="Insira uma senha"/>
+                                <p:password  id="pwd1" value="#{cadastroUsuarioBean.usuario.senha}" required="true"
+                                             requiredMessage="O campo 'Senha' é obrigatório!" maxlength="20"
+                                             placeholder="Insira uma senha" style="width: 29%"/>
 
                                 <p:outputLabel value="Tipo: "/>
-                                <p:selectOneMenu>
+                                <p:selectOneMenu value="#{cadastroUsuarioBean.usuario.tipo}" required="true" >
                                     <f:selectItems value="#{cadastroUsuarioBean.tipoUsuario}" var="tipoUsuario" 
                                                    itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.descricao}" />
                                 </p:selectOneMenu>
 
-                                <p:commandButton value="Salvar" icon="fa fa-floppy-o"
-                                                 action="#{cadastroProdutoBean.salvar()}" update="frm"/>
-                            </h:panelGrid>
+                            </p:panelGrid>
+                            <p:separator/>
+                            <p:commandButton value="Salvar" icon="fa fa-floppy-o"
+                                             action="#{cadastroUsuarioBean.salvar()}" update="frm"/>
                         </h:form>
                     </p:panel>
                 </div>

@@ -7,6 +7,7 @@ package br.edu.unicatolica.bo;
 
 import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,6 +28,14 @@ public class UsuarioBO implements Serializable {
             instance = new UsuarioBO();
         }
         return instance;
+    }
+
+    public boolean validarUsuario(Usuario usuario) {
+        if (usuario.getNome().replace(" ", "").equals("")) {
+            FacesUtil.addErrorMessage("O campo 'Nome' não pode estar em branco");
+            return false;
+        }
+        return true;
     }
 
     public void salvarOuAtualizar(Usuario usuario) {

@@ -24,8 +24,13 @@ public class CadastroUsuarioBean implements Serializable {
     private Usuario usuario;
 
     public void salvar() {
-        UsuarioBO.getInstance().salvarOuAtualizar(usuario);
-        FacesUtil.addInfoMessage("Usuário cadastrado com sucesso");
+        if (UsuarioBO.getInstance().validarUsuario(usuario)) {
+            UsuarioBO.getInstance().salvarOuAtualizar(usuario);
+            FacesUtil.addInfoMessage("Usuário cadastrado com sucesso");
+        } else {
+
+        }
+
     }
 
     public Usuario getUsuario() {
