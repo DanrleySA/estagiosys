@@ -39,7 +39,7 @@
                 <p:dataTable id="tabela-produtos" 
                              value="#{consultaProdutoBean.produtos}"
                              emptyMessage="Nenhum produto encontrado" rows="9"
-                             reflow="true"
+                             reflow="true" paginatorPosition="bottom"
                              paginator="true" var="prod">
 
                     <p:column headerText="Código" sortBy="#{prod.id}" width="50">                       
@@ -77,7 +77,7 @@
                                                              target="#{consultaProdutoBean.produtoSelecionado}" />
 
                             </p:commandLink>
-                                
+
                             <p:tooltip value="Editar" for="editar-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                             <p:tooltip value="Excluir" for="excluir-prod" position="bottom" showEffect="clip" hideEffect="clip"/>
                         </center>
@@ -175,12 +175,12 @@
                                  value="#{cadastroProdutoBean.produto.descricao}" />
 
                     <p:outputLabel value="Preço: " for="prec"/>
-                    <p:inputText id="prec" value="#{cadastroProdutoBean.produto.valorUnitario}" 
-                                 label="Preço" required="true" 
-                                 requiredMessage="O campo 'Preço' é obrigatório!" size="10"
-                                 converterMessage="Informe um valor válido para o campo 'Preço'.">
-                        <f:convertNumber/>
-                    </p:inputText>
+                    <p:inputNumber id="prec" value="#{cadastroProdutoBean.produto.valorUnitario}" 
+                                   required="true" decimalSeparator=","  thousandSeparator="."
+                                   requiredMessage="O campo 'Preço' é obrigatório!" 
+                                   size="11">
+                        <p:keyFilter regEx="/[\d\.\s,]"/>
+                    </p:inputNumber>
 
                     <p:outputLabel value="Quantidade: " />
                     <p:spinner value="#{cadastroProdutoBean.produto.qtdEstoque}" min="0" size="3"/>

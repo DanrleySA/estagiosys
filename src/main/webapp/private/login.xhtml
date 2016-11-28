@@ -13,26 +13,29 @@
         <f:metadata>
             <f:event listener="#{loginBean.preRender()}" type="preRenderView"/>
         </f:metadata>
-        <h:form id="login" prependId="false">
-            <p:dialog header="Login" visible="true" closable="false" responsive="true"
-                      draggable="false" resizable="false" width="420" >
+        <div style="max-width: 500px; padding: auto; height: auto">
+            <h:form id="login" prependId="false">
+                <p:dialog header="Login" visible="true" closable="false" responsive="true"
+                          draggable="false" resizable="false" style="width: 100%">
 
-                <p:messages id="messages" autoUpdate="true" closable="true"/>
+                    <p:messages id="messages" autoUpdate="true" closable="true"/>
 
-                <h:panelGrid columns="2" cellpadding="5"> 
-                    <h:outputLabel for="j_username" value="Email: " />
-                    <p:inputText id="j_username" required="true" size="35" 
-                                 requiredMessage="Campo 'Email' obrigatório!" value="#{loginBean.usuario}"/>
-                    <h:outputLabel for="j_password" value="Senha: " />
-                    <p:password id="j_password" required="true" size="35" 
-                                requiredMessage="Campo 'Senha' obrigatório"/>
-                </h:panelGrid>
-                <center>
-                    <h:panelGrid columns="1">
-                        <p:commandButton value="Entrar" ajax="false" action="#{loginBean.login()}" />
+                    <h:panelGrid columns="2" cellpadding="5"> 
+                        <h:outputLabel for="j_username" value="Email: " />
+                        <p:inputText id="j_username" required="true" size="35" 
+                                     requiredMessage="Campo 'Email' obrigatório!" value="#{loginBean.usuario}"/>
+                        <h:outputLabel for="j_password" value="Senha: " />
+                        <p:password id="j_password" required="true" size="35" 
+                                    requiredMessage="Campo 'Senha' obrigatório"/>
                     </h:panelGrid>
-                </center>    
-            </p:dialog>   
-        </h:form>
+                    <center>
+                        <h:panelGrid columns="1">
+                            <p:commandButton value="Entrar" ajax="false" action="#{loginBean.login()}" />
+                        </h:panelGrid>
+                    </center>    
+                </p:dialog>   
+            </h:form>
+        </div>
+
     </h:body>
 </html>
