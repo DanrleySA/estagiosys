@@ -1,0 +1,21 @@
+/* 
+    Created on : 28/11/2016, 13:33:21
+    Author     : Danrley
+*/
+/* PANELGRID */
+.ui-panelgrid.panelgrid-noborder .ui-grid-responsive {
+    border: none;
+}
+
+@media ( max-width : 640px) {
+    .ui-panelgrid.panelgrid-noborder .ui-grid-responsive .ui-grid-row {
+        border: none;
+    }
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+

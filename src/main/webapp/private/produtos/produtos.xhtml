@@ -6,24 +6,63 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/WEB-INF/templates/layout.xhtml">
+
     <ui:define name="menu">
         <ui:include src="/WEB-INF/templates/menu.xhtml"/>
     </ui:define>    
     <ui:define name="conteudo">
-        <p:dataTable>
-            <p:column headerText="Código" sortBy="#{prod.id}">                       
-                <p:outputLabel value="#{prod.id}"/>
-            </p:column>
-            <p:column headerText="Descrição" sortBy="#{prod.descricao}">
-                <p:outputLabel value="#{prod.descricao}"/>
-            </p:column>
-            <p:column headerText="Preço" sortBy="#{prod.preco}">
-                <p:outputLabel value="#{prod.preco}"/>
-            </p:column>
-            <p:column headerText="Quantidade" sortBy="#{prod.qtdEstoque}">
-                <p:outputLabel value="#{prod.qtdEstoque}"/>
-            </p:column>
-        </p:dataTable>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="ui-g-1 ui-md-1 ui-lg-1"></div>
+
+                <div class="ui-g-10 ui-md-10 ui-lg-10">
+                    <p:panel header="Listar Produtos" styleClass="uncq-title-panel">
+                        <f:facet name="actions">
+                            <p:commandLink value="Novo Produto"
+                                           styleClass="link-navegacao" />
+                        </f:facet>
+                        <h:form id="frm-produto">
+                            <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank">
+                                <p:inputText size="30" placeholder="Pesquisar por descrição"
+                                             value="#{produtoBean.produtoFilter.descricao}">
+                                </p:inputText>
+
+                                <p:commandButton value="Pesquisar" id="pesq"
+                                                 icon="ui-icon-search" styleClass="botao-laranja"
+                                                 action="#{produtoBean.pesquisar()}"
+                                                 update="tabela-produtos"/> 
+                            </p:panelGrid>
+                            <br/>
+                            <p:dataTable id="tabela-produtos" emptyMessage="Nenhum produto encontrado" 
+                                         rows="9" reflow="true" paginatorPosition="bottom"
+                                         paginator="true" var="prod"
+                                         value="#{produtoBean.produtos}">
+
+                                <p:column headerText="Código" sortBy="#{prod.id}" width="10%">                       
+                                    <p:outputLabel value="#{prod.id}"/>
+                                </p:column>
+
+                                <p:column headerText="Descrição" sortBy="#{prod.descricao}">
+                                    <p:outputLabel value="#{prod.descricao.toUpperCase()}"/>
+                                </p:column>
+
+                                <p:column headerText="Preço" sortBy="#{prod.valorUnitario}" width="10%">
+                                    <p:outputLabel value="#{prod.valorUnitario}"/>
+                                </p:column>
+
+                                <p:column headerText="Qtde." sortBy="#{prod.qtdEstoque}" width="10%">
+                                    <p:outputLabel value="#{prod.qtdEstoque}"/>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+
+                </div>
+
+                <div class="ui-g-1 ui-md-1 ui-lg-1"></div>
+            </div>
+        </div>
     </ui:define>      
 
 </ui:composition>

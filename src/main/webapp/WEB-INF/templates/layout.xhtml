@@ -8,12 +8,19 @@
     <h:head>
         <title>Equals</title>
         <h:outputStylesheet library="css" name="layout.css"/>
+        <h:outputStylesheet library="css" name="component.css"/>
+        <h:outputStylesheet library="css" name="custom.css"/>
         <h:outputStylesheet library="iconfont" name="material-icons.css"/>
     </h:head>
     <h:body>
         <p:layout fullPage="true">            
-            <p:layoutUnit position="north" size="50" style="border: none;">
+            <p:layoutUnit position="north" size="100" style="border: none;">
                 <ui:insert name="menu"/>
+                <div>
+                    <label class="nome-usuario"><strong>Bem-vindo(a),
+                        #{usuarioBean.usuario.nome}!</strong></label>
+                </div>
+                
             </p:layoutUnit>
 
             <p:layoutUnit position="center" style="border: none;">               

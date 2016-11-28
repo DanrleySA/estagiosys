@@ -160,7 +160,7 @@
         </p:dialog>
 
         <!-- DIALOGO NOVO PRODUTO -->
-        <p:dialog widgetVar="dlgNovoProduto"
+        <p:dialog id="dlg-novo-produto" widgetVar="dlgNovoProduto"
                   resizable="false" closable="true" draggable="false" modal="true"
                   appendTo="@(body)" showEffect="clip" hideEffect="clip"  width="500"
                   closeOnEscape="true" responsive="true"
@@ -188,7 +188,7 @@
                 <center>
                     <p:separator/>
                     <h:panelGrid columns="3">
-                        <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos @this" actionListener="#{consultaProdutoBean.pesquisar()}" />
+                        <p:remoteCommand name="aoSalvar" update=":frm-produto:tabela-produtos @this dlg-novo-produto frm-novo-produto pnl-novo-produto" actionListener="#{consultaProdutoBean.pesquisar()}" />
                         <p:commandButton id="novo-produto" value="Cadastrar"
                                          actionListener="#{cadastroProdutoBean.salvar()}"
                                          oncomplete="aoSalvar()"                                          

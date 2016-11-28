@@ -21,6 +21,11 @@
 
     color: #fff;
 }
+/* TITLE-PANEL */
+.uncq-title-panel {
+    margin-top: 20px;
+    padding: 20px 0;
+}
 
 /* MENU */
 .aw-menu {
@@ -67,5 +72,14 @@
 
     font-size: 1.5em;
     color: #373737;
+}
+.link-navegacao {
+    float: right;
+    font-weight: normal;
+    color: #427fed !important;
+}
+
+.link-navegacao:hover {
+    text-decoration: underline;
 }
 

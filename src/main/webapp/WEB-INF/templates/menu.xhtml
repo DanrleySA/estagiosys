@@ -11,7 +11,7 @@
         <h:form>  
             <p:menubar>
                 <p:menuitem value="Home" icon="fa fa-home" url="/private/principal.xhtml"/>            
-                <p:menuitem value="Produto" icon="fa fa-coffee" url="/private/produtos/listar-produtos.xhtml"/> 
+                <p:menuitem value="Produto" icon="fa fa-coffee" url="/private/produtos/produtos.xhtml"/> 
                 <p:submenu label="Pedido" icon="fa fa-cart-arrow-down">
                     <p:menuitem value="Pesquisar" icon="ui-icon-search" url="/private/pedidos/listar-pedidos.xhtml"/>
                     <p:submenu label="Registrar" icon="fa fa-cart-plus" >
@@ -27,10 +27,6 @@
         </h:form>
     </div>
     <div style="float: right; margin-right: 110px; margin-top: 5px">
-        <span>
-            <strong>
-                Olá #{usuarioBean.usuario.nome}!
-            </strong> 
-        </span>
+        
     </div>
 </ui:composition>

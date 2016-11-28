@@ -16,20 +16,33 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class ConsultaProdutoBean implements Serializable {
+public class ProdutoBean implements Serializable {
 
     private Produto produto;
-    private ProdutoFilter produtoFilter = new ProdutoFilter();
+    private ProdutoFilter produtoFilter;
     private List<Produto> produtos;
     private Produto produtoSelecionado;
-
-    public ConsultaProdutoBean() {
-        limpar();
-    }
 
     @PostConstruct
     public void init() {
         pesquisar();
+    }
+
+    public ProdutoBean() {
+        limpar();
+    }
+
+    public void salvar() {
+        if (produto.getId() == null) {
+            ProdutoBO.getInstance().salvarOuAtualizar(produto);
+
+            FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
+        } else {
+            ProdutoBO.getInstance().salvarOuAtualizar(produto);
+
+            FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
+        }
+        limpar();
     }
 
     public void remover() {
@@ -46,7 +59,6 @@ public class ConsultaProdutoBean implements Serializable {
         produto = new Produto();
     }
 
-    //<editor-fold defaultstate="collapsed" desc="get and set">
     public Produto getProduto() {
         return produto;
     }
@@ -81,5 +93,5 @@ public class ConsultaProdutoBean implements Serializable {
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
     }
-//</editor-fold>
+
 }

@@ -10,8 +10,16 @@
 .ui-widget, .ui-widget .ui-widget {
     font-size: 15px !important;
 }
-a{
-    text-decoration: none;
+
+.nome-usuario {
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode",
+        "Lucida Sans", Tahoma, sans-serif;
+    font-size: 1.3em;
+    color: #000;
+    line-height: 80px;
+    transition: margin-left 0.5s;
+    margin-right: 15px;
+    float: right;
 }
 
 /* CONTENT */
