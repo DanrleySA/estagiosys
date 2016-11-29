@@ -18,4 +18,38 @@ a:-webkit-any-link {
     cursor: pointer;
 }
 
+/* INPUTTEXT */
+.ui-inputfield.ui-inputtext.ui-widget.ui-state-default.ui-corner-all.ui-state-focus
+{
+    border-color: rgba(252, 94, 0, 0.8);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.75), 0 0 8px
+        rgba(252, 94, 0, 0.8);
+}
+
+/* INPUTTEXTAREA */
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus,
+.ui-widget-header .ui-inputfield.ui-state-focus {
+    border-color: rgba(252, 94, 0, 0.8);
+    outline: 0;
+    outline: thin dotted \9; /* IE6-9 */
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+        rgba(252, 94, 0, 0.8);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+        rgba(252, 94, 0, 0.8);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px
+        rgba(252, 94, 0, 0.8);
+}
+
+/* INPUTMASK */
+.ui-inputfield.ui-inputmask.ui-widget.ui-state-default.ui-corner-all.ui-state-focus
+{
+    border-color: rgba(252, 94, 0, 0.8);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.75), 0 0 8px
+        rgba(252, 94, 0, 0.8);
+}
+/* DIALOG */
+.ui-column-title {
+    font-weight: bolder;
+}
+
 

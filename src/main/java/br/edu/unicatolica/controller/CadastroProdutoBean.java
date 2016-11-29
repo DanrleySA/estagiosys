@@ -23,15 +23,16 @@ public class CadastroProdutoBean implements Serializable {
 
     public void salvar() {
         if (produto.getId() == null) {
-            ProdutoBO.getInstance().salvarOuAtualizar(produto);
-
-            FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
+            if (ProdutoBO.getInstance().salvarOuAtualizar(produto)) {
+                FacesUtil.addInfoMessage("Produto cadastrado com sucesso!");
+                limpar();
+            }
         } else {
-            ProdutoBO.getInstance().salvarOuAtualizar(produto);
-
-            FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
+            if (ProdutoBO.getInstance().salvarOuAtualizar(produto)) {
+                FacesUtil.addInfoMessage("Produto atualizado com sucesso!");
+                limpar();
+            }
         }
-        limpar();
     }
 
     private void limpar() {

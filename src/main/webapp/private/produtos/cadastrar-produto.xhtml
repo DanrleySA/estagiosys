@@ -12,41 +12,62 @@
     </ui:define>  
 
     <ui:define name="conteudo">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="ui-g-3 ui-md-3 ui-lg-3"></div>
 
-        <p:messages autoUpdate="true" closable="true" />
-        <p:panel>
-            <f:facet name="actions">
-                <p:link value="Listar Produtos"
-                        outcome="listar-produtos.xhtml" styleClass="link-navegacao" />
-            </f:facet>
-        </p:panel>
-        <h:form id="frm">
-            <h:panelGrid columns="2" cellpadding="5">                
-                <p:outputLabel value="Descrição: " for="desc"
-                               styleClass="label-form" />
-                <p:inputText id="desc"
-                             placeholder="Insira uma descrição para o produto"
-                             required="true"
-                             requiredMessage="O campo 'Descrição' é obrigatório!"
-                             value="#{cadastroProdutoBean.produto.descricao}"
-                             style="width: 98%" />
+                <div class="ui-g-6 ui-md-6 ui-lg-6">
 
-                <p:outputLabel value="Preço: " for="prec"
-                               styleClass="label-form" />                  
+                    <p:messages autoUpdate="true" closable="true" />
 
-                <p:outputLabel value="Quantidade: " for="qtd"
-                               styleClass="label-form" />                
-                <p:inputNumber id="qtd"
-                               placeholder="Insira uma quantidade para o produto"
-                               required="true"
-                               requiredMessage="O campo 'Quantidade' é obrigatório!"
-                               value="#{cadastroProdutoBean.produto.qtdEstoque}"
-                               style="width: 98%" />
+                    <p:panel header="Cadastrar Produto" styleClass="uncq-title-panel">
+                        <f:facet name="actions">
+                            <p:link value="Listar Produtos"
+                                    outcome="listar-produtos.xhtml" styleClass="link-navegacao" />
+                        </f:facet>
 
-                <p:commandButton value="Salvar" class=""
-                                 action="#{cadastroProdutoBean.salvar()}" icon="ui" update="frm"/>
-            </h:panelGrid>
-        </h:form>
+                        <h:form id="frm">
+                            <h:panelGrid columns="1" style="width: 100%" cellpadding="5">
+                                <p:outputLabel value="Descrição do produto: " for="desc"
+                                               styleClass="label-form" />
+                                <p:inputText id="desc"
+                                             placeholder="Insira uma descrição para a categoria"
+                                             required="true"
+                                             requiredMessage="O campo 'Descrição' é obrigatório!"
+                                             value="#{cadastroProdutoBean.produto.descricao}"
+                                             style="width: 98%" />
+                            </h:panelGrid>
+                            <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank" 
+                                         style="width: 100% ">
+                                <p:outputLabel value="Preço: " for="prec"  styleClass="label-form"/>
+                                <p:inputNumber id="prec" required="true" style="width: 98%"
+                                               value="#{cadastroProdutoBean.produto.valorUnitario}" 
+                                               decimalSeparator=","  thousandSeparator="."
+                                               requiredMessage="O campo 'Preço' é obrigatório!">
+                                    <p:keyFilter regEx="/[\d\.\s,]"/>
+                                </p:inputNumber>
+
+                                <p:outputLabel value="Quantidade: " for="qtde" styleClass="label-form"/>
+                                <p:spinner id="qtde" min="0" size="3" required="true" 
+                                           requiredMessage="O campo 'Quantidade' é obrigatório!"
+                                           value="#{cadastroProdutoBean.produto.qtdEstoque}" />
+                            </p:panelGrid>
+
+                            <h:panelGrid columns="1" style="width: 100%" cellpadding="5">
+                                <hr />
+                                <p:commandButton value="Salvar" icon="fa fa-save"
+                                                 actionListener="#{cadastroProdutoBean.salvar()}"
+                                                 ajax="false"
+                                                 styleClass="botao-laranja" update="frm"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </p:panel>
+
+                </div>
+
+                <div class="ui-g-3 ui-md-3 ui-lg-3"></div>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

@@ -3,6 +3,7 @@ package br.edu.unicatolica.bo;
 import br.edu.unicatolica.dao.ProdutoDAO;
 import br.edu.unicatolica.entity.Produto;
 import br.edu.unicatolica.filter.ProdutoFilter;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,8 +26,26 @@ public class ProdutoBO implements Serializable {
         return instance;
     }
 
-    public void salvarOuAtualizar(Produto produto) {
-        ProdutoDAO.getInstance().salvarOuAtualizar(produto);
+    public boolean isValido(Produto produto) {
+        if (produto.getDescricao().replace(" ", "").equals("")) {
+            FacesUtil.addErrorMessage("O campo descrição não pode estar em branco");
+            return false;
+        }
+        if (produto.getValorUnitario().intValue() == 0) {
+            FacesUtil.addErrorMessage("O campo 'Preço' deve ser maior que R$ 0,00");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean salvarOuAtualizar(Produto produto) {
+        if (isValido(produto)) {
+            ProdutoDAO.getInstance().salvarOuAtualizar(produto);
+            
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void remover(Produto produto) {
