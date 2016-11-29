@@ -3,9 +3,13 @@ package br.edu.unicatolica.controller;
 import br.edu.unicatolica.bo.PedidoBO;
 import br.edu.unicatolica.bo.ProdutoBO;
 import br.edu.unicatolica.dao.UsuarioDAO;
+import br.edu.unicatolica.entity.EnderecoEntrega;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Produto;
+import br.edu.unicatolica.enumeration.FormaPagamento;
+import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
@@ -16,7 +20,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,36 +39,18 @@ public class CadastroPedidoBean implements Serializable {
     private List<Item> itens;
     private List<Produto> produtosAux;
     private Pedido pedido;
+    private boolean skip;
 
     @PostConstruct
     public void init() {
         pesquisarProdutos();
         produtosAux = produtos;
         pedido = new Pedido();
+        itens = new ArrayList<>();
+        System.out.println();
     }
 
-    public void salvar() {
-        try {
-            pedido.setItens(itens);
-            PedidoBO.getInstance().salvarOuAtualizar(pedido);
-            limpar();
-
-            FacesUtil.addInfoMessage("Pedido realizado com sucesso!");
-        } catch (Exception e) {
-            FacesUtil.addErrorMessage("Erro ao realizar pedido! " + e.getMessage());
-        }
-    }
-
-    public void carregarDadosPedido() {
-        pedido.setDataCriacao(new Date());
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
-    }
-
-    public void onDrop(DragDropEvent ddEvent) {
-        Produto produto = ((Produto) ddEvent.getData());
+    public void adicionarItem(Produto produto) {
 
         Item item = new Item();
         item.setProduto(produto);
@@ -75,11 +61,13 @@ public class CadastroPedidoBean implements Serializable {
         produtosAux.remove(produto);
         produtos.remove(produto);
 
-        pedido.setValorTotal((itens.size() == 1) ? produto.getValorUnitario() : pedido.getValorTotal().add(produto.getValorUnitario()));
+        pedido.setValorTotal((itens.size() == 1)
+                ? produto.getValorUnitario()
+                : pedido.getValorTotal().add(produto.getValorUnitario()));
         FacesUtil.addInfoMessage("Item adicionado ao carrinho!");
     }
 
-    public void remover(Item item) {
+    public void removerItem(Item item) {
         int index = 0;
         for (Item t : itens) {
             if (t.getProduto().equals(item.getProduto())) {
@@ -91,6 +79,33 @@ public class CadastroPedidoBean implements Serializable {
         produtos.add(item.getProduto());
         pedido.setValorTotal(pedido.getValorTotal().subtract(item.getValorUnitario()));
         FacesUtil.addInfoMessage("Item removido do carrinho!");
+    }
+
+    public void salvar() {
+        try {
+            for (Item t : itens) {
+                t.setPedido(pedido);
+                t.getProduto().setQtdEstoque(t.getProduto().getQtdEstoque() - t.getQuantidade());
+                ProdutoBO.getInstance().salvarOuAtualizar(t.getProduto());
+            }
+            pedido.setItens(itens);
+            PedidoBO.getInstance().salvarOuAtualizar(pedido);
+
+            limpar();
+
+            FacesUtil.addInfoMessage("Pedido realizado com sucesso!");
+        } catch (Exception e) {
+            FacesUtil.addErrorMessage("Erro ao realizar pedido! " + e.getMessage());
+        }
+    }
+
+    public void carregarDadosPedidoDelivery() {
+        pedido.setTipo(TipoPedido.DELIVERY);
+        pedido.setEndereco(new EnderecoEntrega());
+        pedido.setDataCriacao(new Date());
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
     }
 
     public void atualizarListaProdutosFiltrados() {
@@ -112,6 +127,10 @@ public class CadastroPedidoBean implements Serializable {
                 : pedido.getValorTotal().subtract(valorAntigo.subtract(item.getValorUnitario())));
     }
 
+    public void atualizarValorTotal() {
+
+    }
+
     public void pesquisarProdutos() {
         produtos = ProdutoBO.getInstance().getProdutosComEstoque();
     }
@@ -123,11 +142,17 @@ public class CadastroPedidoBean implements Serializable {
         itens = new ArrayList<Item>();
     }
 
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        } else {
+            return event.getNewStep();
+        }
+    }
+
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
     public Pedido getPedido() {
-        if (pedido == null) {
-            pedido = new Pedido();
-        }
         return pedido;
     }
 
@@ -147,9 +172,6 @@ public class CadastroPedidoBean implements Serializable {
     }
 
     public List<Item> getItens() {
-        if (itens == null) {
-            itens = new ArrayList<>();
-        }
         return itens;
     }
 
@@ -173,5 +195,24 @@ public class CadastroPedidoBean implements Serializable {
         this.produtosAux = produtosAux;
     }
 
+    public TipoPedido[] getTipos() {
+        return TipoPedido.values();
+    }
+
+    public UnidadeFederacao[] getUF() {
+        return UnidadeFederacao.values();
+    }
+
+    public FormaPagamento[] getFormaPagamento() {
+        return FormaPagamento.values();
+    }
+
 //</editor-fold>
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
 }

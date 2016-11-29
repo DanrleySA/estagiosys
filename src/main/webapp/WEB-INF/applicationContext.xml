@@ -16,7 +16,7 @@
     <http auto-config="false" use-expressions="true">
         <intercept-url pattern="/private/principal.xhtml" access="isAuthenticated()" />
         <intercept-url pattern="/private/usuarios/**" access="hasAnyRole('PROPRIETARIO')"/>
-        <intercept-url pattern="/private/produtos/**" access="hasAnyRole('PROPRIETARIO', 'ADMINISTRADORES')"/>
+        <intercept-url pattern="/private/produtos/**" access="hasAnyRole('PROPRIETARIO', 'ADMINISTRADORES', 'VENDEDORES')"/>
         <intercept-url pattern="/private/pedidos/**" access="hasAnyRole('PROPRIETARIO', 'ADMINISTRADORES', 'VENDEDORES')"/>
         <intercept-url pattern="/**" access="denyAll"/>
         

@@ -17,22 +17,22 @@
             <p:fieldset id="todosProdutos" legend="Produtos">
                 <h:panelGrid columns="6" >
                     <p:inputText size="30" placeholder="Pesquisar por descrição"
-                                 value="#{cadastroPedidoDeliveryBean.produtoFilter.descricao}">
+                                 value="#{cadastroPedidoBean.produtoFilter.descricao}">
                         <p:ajax event="keyup" update="tabela-produtos" 
-                                listener="#{cadastroPedidoDeliveryBean.atualizarListaProdutosFiltrados()}"/>
+                                listener="#{cadastroPedidoBean.atualizarListaProdutosFiltrados()}"/>
                     </p:inputText>
                     <p:spacer height="0" width="10" />
                     <p:commandButton value="Pesquisar" id="pesq"
                                      icon="ui-icon-search"
-                                     action="#{cadastroPedidoDeliveryBean.atualizarListaProdutosFiltrados()}"
+                                     action="#{cadastroPedidoBean.atualizarListaProdutosFiltrados()}"
                                      update="tabela-produtos"/> 
 
                     <p:spacer height="0" width="10" />
 
                     <p:outputLabel value="Tipo do pedido: " styleClass="label-form"/>
-                    <p:selectOneButton value="#{cadastroPedidoDeliveryBean.pedido.tipo}" 
+                    <p:selectOneButton value="#{cadastroPedidoBean.pedido.tipo}" 
                                        required="true" requiredMessage="Selecione o tipo do pedido primeiro!">
-                        <f:selectItems value="#{cadastroPedidoDeliveryBean.tipos}" var="tipo"
+                        <f:selectItems value="#{cadastroPedidoBean.tipos}" var="tipo"
                                        itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
                     </p:selectOneButton>
                 </h:panelGrid>
@@ -40,12 +40,12 @@
                 <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
                              reflow="true" rows="2" paginator="true" paginatorPosition="bottom"
                              emptyMessage="Nenhum produto a ser adicionado no pedido."
-                             value="#{cadastroPedidoDeliveryBean.produtos}">
+                             value="#{cadastroPedidoBean.produtos}">
 
                     <p:column style="width:15px">
                         <p:commandLink id="addItem" styleClass="fa fa-plus" 
                                        style="text-decoration: none"
-                                       actionListener="#{cadastroPedidoDeliveryBean.adicionarItem(prod)}"
+                                       actionListener="#{cadastroPedidoBean.adicionarItem(prod)}"
                                        update="@form"/>
                     </p:column>
 
@@ -68,18 +68,18 @@
                         style="margin-top:20px">
 
                 <h:outputText value="Adicione os itens no pedido!"
-                              rendered="#{empty cadastroPedidoDeliveryBean.itens}" style="font-size:24px;" />
+                              rendered="#{empty cadastroPedidoBean.itens}" style="font-size:24px;" />
 
                 <p:dataTable id="itens-pedido-tabela" var="item"
                              rows="5" paginator="true" 
                              reflow="true" paginatorPosition="bottom"
-                             value="#{cadastroPedidoDeliveryBean.itens}"
-                             rendered="#{not empty cadastroPedidoDeliveryBean.itens}">
+                             value="#{cadastroPedidoBean.itens}"
+                             rendered="#{not empty cadastroPedidoBean.itens}">
 
                     <p:column style="width:15px">
                         <p:commandLink styleClass="fa fa-minus" 
                                        style="text-decoration: none"
-                                       actionListener="#{cadastroPedidoDeliveryBean.removerItem(item)}"
+                                       actionListener="#{cadastroPedidoBean.removerItem(item)}"
                                        update="@form"/>
                     </p:column>
 
@@ -91,7 +91,7 @@
                         <p:spinner id="minMax" value="#{item.quantidade}" size="1"
                                    min="1" max="#{item.produto.qtdEstoque}">
                             <p:ajax event="change" update="itens-pedido-tabela" 
-                                    listener="#{cadastroPedidoDeliveryBean.atualizarValoresParciais(item)}"/>
+                                    listener="#{cadastroPedidoBean.atualizarValoresParciais(item)}"/>
                         </p:spinner>
                     </p:column>
 
@@ -101,12 +101,12 @@
 
                     <f:facet name="footer">
                         <h:outputText style="margin-right: 10px" 
-                                      value="Subtotal: #{cadastroPedidoDeliveryBean.pedido.valorTotal}"/>
+                                      value="Subtotal: #{cadastroPedidoBean.pedido.valorTotal}"/>
 
                         <p:commandButton value="Finalizar" 
-                                         onclick="#{cadastroPedidoDeliveryBean.carregarDadosPedidoDelivery()}"
+                                         onclick="#{cadastroPedidoBean.carregarDadosPedidoDelivery()}"
                                          update="dlg"
-                                         oncomplete="if (#{cadastroPedidoDeliveryBean.pedido.tipo == 'DELIVERY'}) 
+                                         oncomplete="if (#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}) 
                                          PF('dlg-confirmacao-delivery').show(); 
                                          else PF('dlg-confirmacao-comum').show();"/>
                     </f:facet>
@@ -132,41 +132,41 @@
                                          style="margin-top: 20px; margin-bottom: 10px">
 
                                 <p:outputLabel value="Data e hora: "/>
-                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.dataCriacao}">
+                                <h:outputText value="#{cadastroPedidoBean.pedido.dataCriacao}">
                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
                                 </h:outputText>
 
                                 <h:outputText value="Vendedor: "/>
-                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.vendedor.nome}"/>
+                                <h:outputText value="#{cadastroPedidoBean.pedido.vendedor.nome}"/>
 
                                 <p:outputLabel value="Valor frete: "/>
 
-                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
+                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorFrete}" 
                                                decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Desconto "/>
-                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorDesconto}" 
+                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
                                                decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Total: "/>
-                                <h:outputText id="valorTotal" value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                <h:outputText id="valorTotal" value="#{cadastroPedidoBean.pedido.valorTotal}">
                                     <f:convertNumber type="currency"/>
                                 </h:outputText>
 
                                 <p:outputLabel value="Forma de pagamento: "/>
-                                <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
-                                    <f:selectItems value="#{cadastroPedidoDeliveryBean.formaPagamento}"
+                                <p:selectOneMenu value="#{cadastroPedidoBean.pedido.formaPagamento}">
+                                    <f:selectItems value="#{cadastroPedidoBean.formaPagamento}"
                                                    var="formaPagamento" itemValue="#{formaPagamento}" 
                                                    itemLabel="#{formaPagamento.descricao}"/>
                                 </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
                                 <p:outputLabel value="Observação: "/>
-                                <p:inputTextarea value="#{cadastroPedidoDeliveryBean.pedido.observacao}" 
+                                <p:inputTextarea value="#{cadastroPedidoBean.pedido.observacao}" 
                                                  rows="8" cols="33" maxlength="255"/>
                             </p:panelGrid>
                         </div>
@@ -178,32 +178,32 @@
                                      style="margin-top: 20px; margin-bottom: 10px">
 
                             <p:outputLabel value="UF: " styleClass="label-form"/>
-                            <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.endereco.uf}" required="true" >
-                                <f:selectItems value="#{cadastroPedidoDeliveryBean.UF}" var="uf" 
+                            <p:selectOneMenu value="#{cadastroPedidoBean.pedido.endereco.uf}" required="true" >
+                                <f:selectItems value="#{cadastroPedidoBean.UF}" var="uf" 
                                                itemValue="#{uf}" itemLabel="#{uf}" />
                             </p:selectOneMenu>
                             <p:outputLabel value="CEP: " styleClass="label-form"/>
-                            <p:inputMask value="#{cadastroPedidoDeliveryBean.pedido.endereco.cep}" 
+                            <p:inputMask value="#{cadastroPedidoBean.pedido.endereco.cep}" 
                                          mask="99999-999" size="5" converter="cepConverter"/>
 
                             <p:outputLabel value="Cidade: " styleClass="label-form"/>
-                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.cidade}"
+                            <p:inputText value="#{cadastroPedidoBean.pedido.endereco.cidade}"
                                          size="15" required="true" requiredMessage="Campo 'Cidade' obrigatório!"/>
 
                             <p:outputLabel value="Número: " styleClass="label-form"/>
-                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.numero}"
+                            <p:inputText value="#{cadastroPedidoBean.pedido.endereco.numero}"
                                          size="3" maxlength="6" required="true" 
                                          requiredMessage="Campo 'Número' obrigatório!">
                                 <p:keyFilter regEx="/[\d\-]/"/>
                             </p:inputText>
 
                             <p:outputLabel value="Logradouro: " styleClass="label-form"/>
-                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.logradouro}"
+                            <p:inputText value="#{cadastroPedidoBean.pedido.endereco.logradouro}"
                                          required="true" requiredMessage="O campo 'Logradouro' é obrigatório!"
                                          maxlength="150" size="15" />
 
                             <p:outputLabel value="Complemento: " styleClass="label-form"/>
-                            <p:inputText value="#{cadastroPedidoDeliveryBean.pedido.endereco.complemento}"
+                            <p:inputText value="#{cadastroPedidoBean.pedido.endereco.complemento}"
                                          maxlength="150" size="15"/>      
                         </p:panelGrid>
                     </p:tab>
@@ -218,7 +218,7 @@
                         <center>
                             <h:panelGrid columns="3">
                                 <p:commandButton value="Finalizar" 
-                                                 actionListener="#{cadastroPedidoDeliveryBean.salvar()}"
+                                                 actionListener="#{cadastroPedidoBean.salvar()}"
                                                  oncomplete="PF('dlg-confirmacao').hide();"
                                                  update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 
@@ -247,42 +247,42 @@
                                          style="margin-top: 20px; margin-bottom: 10px">
 
                                 <p:outputLabel value="Data e hora: "/>
-                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.dataCriacao}">
+                                <h:outputText value="#{cadastroPedidoBean.pedido.dataCriacao}">
                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
                                 </h:outputText>
 
                                 <h:outputText value="Vendedor: "/>
-                                <h:outputText value="#{cadastroPedidoDeliveryBean.pedido.vendedor.nome}"/>
+                                <h:outputText value="#{cadastroPedidoBean.pedido.vendedor.nome}"/>
 
                                 <p:outputLabel value="Valor frete: "/>
 
-                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorFrete}" 
+                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorFrete}" 
                                                decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Desconto "/>
-                                <p:inputNumber value="#{cadastroPedidoDeliveryBean.pedido.valorDesconto}" 
+                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
                                                decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Total: "/>
                                 <h:outputText id="valorTotalComum" 
-                                              value="#{cadastroPedidoDeliveryBean.pedido.valorTotal}">
+                                              value="#{cadastroPedidoBean.pedido.valorTotal}">
                                     <f:convertNumber type="currency"/>
                                 </h:outputText>
 
                                 <p:outputLabel value="Forma de pagamento: "/>
-                                <p:selectOneMenu value="#{cadastroPedidoDeliveryBean.pedido.formaPagamento}">
-                                    <f:selectItems value="#{cadastroPedidoDeliveryBean.formaPagamento}"
+                                <p:selectOneMenu value="#{cadastroPedidoBean.pedido.formaPagamento}">
+                                    <f:selectItems value="#{cadastroPedidoBean.formaPagamento}"
                                                    var="formaPagamento" itemValue="#{formaPagamento}" 
                                                    itemLabel="#{formaPagamento.descricao}"/>
                                 </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
                                 <p:outputLabel value="Observação: "/>
-                                <p:inputTextarea value="#{cadastroPedidoDeliveryBean.pedido.observacao}" 
+                                <p:inputTextarea value="#{cadastroPedidoBean.pedido.observacao}" 
                                                  rows="8" cols="33" maxlength="255"/>
                             </p:panelGrid>
                         </div>
@@ -298,7 +298,7 @@
                         <center>
                             <h:panelGrid columns="3">
                                 <p:commandButton value="Finalizar" 
-                                                 actionListener="#{cadastroPedidoDeliveryBean.salvar()}"
+                                                 actionListener="#{cadastroPedidoBean.salvar()}"
                                                  oncomplete="PF('dlg-confirmacao-comum').hide();"
                                                  update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 
