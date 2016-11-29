@@ -41,7 +41,6 @@ public class Pedido implements Serializable, EntidadeBase {
     private List<Item> itens;
     private TipoPedido tipo;
     private EnderecoEntrega endereco;
-    private Mesa mesa;
 
     public Pedido() {
         setValorTotal(new BigDecimal("0.00"));
@@ -153,14 +152,6 @@ public class Pedido implements Serializable, EntidadeBase {
 
     public void setEndereco(EnderecoEntrega endereco) {
         this.endereco = endereco;
-    }
-
-    public Mesa getMesa() {
-        return mesa;
-    }
-
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
     }
 
     //<editor-fold defaultstate="collapsed" desc="equals and hashCode">

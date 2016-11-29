@@ -10,7 +10,7 @@ package br.edu.unicatolica.enumeration;
  * @author Danrley
  */
 public enum TipoPedido {
-    DELIVERY("Delivery"), MESA("Mesa");
+    DELIVERY("Delivery"), COMUM("Venda comum");
 
     private String descricao;
 

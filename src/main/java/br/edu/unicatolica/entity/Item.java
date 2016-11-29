@@ -72,7 +72,6 @@ public class Item implements Serializable, EntidadeBase {
         this.pedido = pedido;
     }
 
-    
     //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {

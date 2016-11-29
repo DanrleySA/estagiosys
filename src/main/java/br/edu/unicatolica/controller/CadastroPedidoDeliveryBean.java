@@ -195,6 +195,10 @@ public class CadastroPedidoDeliveryBean implements Serializable {
         this.produtosAux = produtosAux;
     }
 
+    public TipoPedido[] getTipos() {
+        return TipoPedido.values();
+    }
+
     public UnidadeFederacao[] getUF() {
         return UnidadeFederacao.values();
     }
