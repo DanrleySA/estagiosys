@@ -13,7 +13,14 @@
 
     <ui:define name="conteudo">
         <h:form>
+            <p:messages autoUpdate="true" closable="true"/>
             <p:panel header="Filtrar pedidos" styleClass="uncq-title-panel">
+                <f:facet name="actions">
+                    <p:link value="Novo Pedido"
+                            outcome="cadastrar-pedido.xhtml"       
+                            styleClass="link-navegacao" />
+                </f:facet>
+
                 <p:panelGrid columns="8" layout="grid" styleClass="ui-panelgrid-blank">
 
                     <p:outputLabel value="Vendedor:" for="vendedor" styleClass="label-form"/>
@@ -40,7 +47,7 @@
                                      update="tabela-pedidos"
                                      actionListener="#{consultaPedidoBean.pesquisarPedidos()}"/>
 
-                </p:panelGrid>
+                </p:panelGrid><br/>
 
                 <p:dataTable id="tabela-pedidos" value="#{consultaPedidoBean.pedidos}"
                              emptyMessage="Nenhum pedido encontrado"

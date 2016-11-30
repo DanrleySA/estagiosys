@@ -4,6 +4,7 @@ import br.edu.unicatolica.dao.PedidoDAO;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,11 @@ public class PedidoBO implements Serializable {
     }
 
     public List<Pedido> getPedidosComFiltro(Usuario vendedor, TipoPedido tipo, Date inicio, Date fim) {
+        if (fim.before(inicio)) {
+            FacesUtil.addErrorMessage("Data final (Até)' deve ser maior que a data inicial (De)!");
+            return null;
+        }
+
         if (fim != null) {
             fim.setHours(23);
             fim.setMinutes(59);
