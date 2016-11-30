@@ -47,7 +47,6 @@ public class CadastroPedidoBean implements Serializable {
         produtosAux = produtos;
         pedido = new Pedido();
         itens = new ArrayList<>();
-        System.out.println();
     }
 
     public void adicionarItem(Produto produto) {
@@ -88,7 +87,6 @@ public class CadastroPedidoBean implements Serializable {
                 t.getProduto().setQtdEstoque(t.getProduto().getQtdEstoque() - t.getQuantidade());
                 ProdutoBO.getInstance().salvarOuAtualizar(t.getProduto());
             }
-            pedido.setItens(itens);
             PedidoBO.getInstance().salvarOuAtualizar(pedido);
 
             limpar();
@@ -99,10 +97,15 @@ public class CadastroPedidoBean implements Serializable {
         }
     }
 
-    public void carregarDadosPedidoDelivery() {
-        pedido.setTipo(TipoPedido.DELIVERY);
+    public void carregarDadosPedido() {
+        pedido.setItens(itens);
         pedido.setEndereco(new EnderecoEntrega());
         pedido.setDataCriacao(new Date());
+        System.out.println(pedido.getItens().size());
+        for (Item it : pedido.getItens()) {
+            System.out.println(it.getProduto().getDescricao());
+        }
+
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));

@@ -105,8 +105,8 @@
                                       value="Subtotal: #{cadastroPedidoBean.pedido.valorTotal}"/>
 
                         <p:commandButton value="Finalizar" 
-                                         onclick="#{cadastroPedidoBean.carregarDadosPedidoDelivery()}"
-                                         update="dlg"
+                                         update="dlg-confirmar-delivery dlg-confirmar-comum dlg-visualizar-itens"
+                                         onclick="#{cadastroPedidoBean.carregarDadosPedido()}"
                                          oncomplete="if (#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}) 
                                          PF('dlg-confirmacao-delivery').show(); 
                                          else PF('dlg-confirmacao-comum').show();"/>
@@ -116,9 +116,9 @@
         </h:form>
 
         <!--DIALOGO DE CONFIRMACAO DE PEDIDO DO TIPO DELIVERY-->
-        <p:dialog id="dlg" widgetVar="dlg-confirmacao-delivery" responsive="true"
-                  closable="true" appendTo="@(body)"
-                  draggable="true" modal="true" width="700"
+        <p:dialog id="dlg-confirmar-delivery" widgetVar="dlg-confirmacao-delivery" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="false" modal="true" width="700"
                   showEffect="clip" hideEffect="clip"
                   resizable="false" header="Finalizar venda">
             <h:form>
@@ -209,21 +209,24 @@
                         </p:panelGrid>
                     </p:tab>
                     <p:tab id="confirmar-pedido-delivery" title="Confirmação">
-                        <p:panelGrid columns="4" layout="grid"
+                        <p:panelGrid columns="3" layout="grid"
                                      styleClass="ui-panelgrid-blank" 
                                      style="width: 98%">
-                            <p:commandButton icon="fa eye" value="Visualizar itens">
 
+                            <p:commandButton icon="fa fa-eye" value="Visualizar itens"
+                                             oncomplete="PF('dlg-visualizacao-itens').show();">
                             </p:commandButton>
+
                         </p:panelGrid>
                         <center>
+                            <p:separator/>
                             <h:panelGrid columns="3">
                                 <p:commandButton value="Finalizar" 
                                                  actionListener="#{cadastroPedidoBean.salvar()}"
-                                                 oncomplete="PF('dlg-confirmacao').hide();"
+                                                 oncomplete="PF('dlg-confirmacao-delivery').hide();"
                                                  update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 
-                                <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao').hide();"/>
+                                <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao-delivery').hide();"/>
                             </h:panelGrid>
                         </center>
                     </p:tab>
@@ -231,9 +234,10 @@
             </h:form>
         </p:dialog>
 
-        <p:dialog widgetVar="dlg-confirmacao-comum" responsive="true"
-                  closable="true" appendTo="@(body)" 
-                  draggable="true" modal="true" width="700"
+        <!--DIALOGO DE CONFIRMACAO DE PEDIDO DO TIPO COMUM-->
+        <p:dialog id="dlg-confirmar-comum" widgetVar="dlg-confirmacao-comum" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true"  
+                  draggable="false" modal="true" width="700"
                   showEffect="clip" hideEffect="clip"
                   resizable="false" header="Finalizar venda">
             <p:messages autoUpdate="true"/>
@@ -289,25 +293,52 @@
                         </div>
                     </p:tab>
                     <p:tab id="confirmar-pedido-comum" title="Confirmação">
-                        <p:panelGrid columns="4" layout="grid"
+                        <p:panelGrid columns="3" layout="grid"
                                      styleClass="ui-panelgrid-blank" 
                                      style="width: 98%">
-                            <p:commandButton icon="fa eye" value="Visualizar itens">
 
+                            <p:commandButton icon="fa fa-eye" value="Visualizar itens"
+                                             oncomplete="PF('dlg-visualizacao-itens').show();">
                             </p:commandButton>
+
                         </p:panelGrid>
                         <center>
+                            <p:separator/>
                             <h:panelGrid columns="3">
                                 <p:commandButton value="Finalizar" 
                                                  actionListener="#{cadastroPedidoBean.salvar()}"
                                                  oncomplete="PF('dlg-confirmacao-comum').hide();"
                                                  update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
 
-                                <p:commandButton value="Voltar" onclick="PF('dlg-confirmacao-comum').hide();"/>
+                                <p:commandButton value="Cancelar" onclick="PF('dlg-confirmacao-comum').hide();"/>
                             </h:panelGrid>
                         </center>
                     </p:tab>
                 </p:wizard>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="dlg-visualizar-itens" widgetVar="dlg-visualizacao-itens" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Visualizar itens">
+            <h:form>
+                <p:dataTable value="#{cadastroPedidoBean.pedido.itens}"
+                             reflow="true" var="itemPedido">
+
+                    <p:column headerText="Produto">
+                        <p:outputLabel value="#{itemPedido.produto.descricao}"/>
+                    </p:column>
+
+                    <p:column headerText="Qtde.">
+                        <p:outputLabel value="#{itemPedido.quantidade}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor ">
+                        <p:outputLabel value="#{itemPedido.valorUnitario}"/>
+                    </p:column>
+                </p:dataTable>
             </h:form>
         </p:dialog>
     </ui:define>
