@@ -13,12 +13,36 @@
 
     <ui:define name="conteudo">
         <h:form>
-            <p:panel>
-                <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank">
-                    
+            <p:panel header="Filtrar pedidos" styleClass="uncq-title-panel">
+                <p:panelGrid columns="8" layout="grid" styleClass="ui-panelgrid-blank">
+
+                    <p:outputLabel value="Vendedor:" for="vendedor" styleClass="label-form"/>
+                    <p:selectOneMenu id="vendedor" value="#{consultaPedidoBean.vendedor}">
+                        <f:selectItem itemLabel="Nenhum"/>
+                        <f:selectItems value="#{consultaPedidoBean.vendedores}" var="vendedor"
+                                       itemLabel="#{vendedor.nome}" itemValue="#{vendedor}"/>
+                    </p:selectOneMenu> 
+
+                    <p:outputLabel value="De: " for="de" styleClass="label-form"/>
+                    <p:calendar id="de" value="#{consultaPedidoBean.dataInicial}" locale="pt" pattern="dd/MM/yyyy"/>
+
+                    <p:outputLabel value="Até: " for="ate" styleClass="label-form"/>
+                    <p:calendar id="ate" value="#{consultaPedidoBean.dataFinal}" locale="pt" pattern="dd/MM/yyyy"/>
+
+                    <p:outputLabel value="Tipo do pedido: " for="tipo" styleClass="label-form"/>
+                    <p:selectOneMenu id="tipo" value="#{consultaPedidoBean.tipoSelecionado}">
+                        <f:selectItem itemLabel="Nenhum"/>
+                        <f:selectItems value="#{consultaPedidoBean.tipos}" var="tipo"
+                                       itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
+                    </p:selectOneMenu> 
+
+                    <p:commandButton value="Pesquisar: " 
+                                     update="tabela-pedidos"
+                                     actionListener="#{consultaPedidoBean.pesquisarPedidos()}"/>
+
                 </p:panelGrid>
 
-                <p:dataTable value="#{consultaPedidoBean.pedidos}"
+                <p:dataTable id="tabela-pedidos" value="#{consultaPedidoBean.pedidos}"
                              emptyMessage="Nenhum pedido encontrado"
                              rows="10" paginator="true" paginatorPosition="bottom"
                              reflow="true" var="ped">

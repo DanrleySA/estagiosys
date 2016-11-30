@@ -2,7 +2,10 @@ package br.edu.unicatolica.bo;
 
 import br.edu.unicatolica.dao.PedidoDAO;
 import br.edu.unicatolica.entity.Pedido;
+import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.enumeration.TipoPedido;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +37,15 @@ public class PedidoBO implements Serializable {
 
     public List<Pedido> getPedidos() {
         return PedidoDAO.getInstance().getListaEntidade(Pedido.class);
+    }
+
+    public List<Pedido> getPedidosComFiltro(Usuario vendedor, TipoPedido tipo, Date inicio, Date fim) {
+        if (fim != null) {
+            fim.setHours(23);
+            fim.setMinutes(59);
+            fim.setSeconds(59);
+        }
+        return PedidoDAO.getInstance().getPedidos(vendedor, tipo, inicio, fim);
     }
 
 }
