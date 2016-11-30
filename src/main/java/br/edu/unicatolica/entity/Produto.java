@@ -79,7 +79,7 @@ public class Produto implements EntidadeBase, Serializable {
         this.valorUnitario = valorUnitario;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="hasCode and equals">
+    //<editor-fold defaultstate="collapsed" desc="equals and hashCode">
     @Override
     public int hashCode() {
         int hash = 5;

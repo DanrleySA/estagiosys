@@ -13,32 +13,38 @@
 
     <ui:define name="conteudo">
         <h:form>
-            <p:dataTable value="#{consultaPedidoBean.pedidos}"
-                         emptyMessage="Nenhum pedido encontrado"
-                         rows="10" paginator="true" paginatorPosition="bottom"
-                         reflow="true" var="ped">
+            <p:panel>
+                <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank">
+                    
+                </p:panelGrid>
 
-                <p:column headerText="Código">
-                    <h:outputText value="#{ped.id}"/>
-                </p:column>
+                <p:dataTable value="#{consultaPedidoBean.pedidos}"
+                             emptyMessage="Nenhum pedido encontrado"
+                             rows="10" paginator="true" paginatorPosition="bottom"
+                             reflow="true" var="ped">
 
-                <p:column headerText="Vendedor">
-                    <h:outputText value="#{ped.vendedor.nome}"/>
-                </p:column>
+                    <p:column headerText="Código">
+                        <h:outputText value="#{ped.id}"/>
+                    </p:column>
 
-                <p:column headerText="Valor Total">
-                    <h:outputText value="#{ped.valorTotal}">
-                        <f:convertNumber currencySymbol="R$" pattern="0.00"/>
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Vendedor">
+                        <h:outputText value="#{ped.vendedor.nome}"/>
+                    </p:column>
 
-                <p:column headerText="Data e hora">
-                    <h:outputText value="#{ped.dataCriacao}">
-                        <f:convertDateTime pattern="HH:mm dd/mm/YYYY"/>
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Valor Total">
+                        <h:outputText value="#{ped.valorTotal}">
+                            <f:convertNumber currencySymbol="R$" pattern="0.00"/>
+                        </h:outputText>
+                    </p:column>
 
-            </p:dataTable>
+                    <p:column headerText="Data e hora">
+                        <h:outputText value="#{ped.dataCriacao}">
+                            <f:convertDateTime pattern="HH:mm dd/mm/YYYY"/>
+                        </h:outputText>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

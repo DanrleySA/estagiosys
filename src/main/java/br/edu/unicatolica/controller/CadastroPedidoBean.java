@@ -12,6 +12,7 @@ import br.edu.unicatolica.enumeration.TipoPedido;
 import br.edu.unicatolica.enumeration.UnidadeFederacao;
 import br.edu.unicatolica.filter.ProdutoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
+import br.edu.unicatolica.security.Seguranca;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -101,14 +102,7 @@ public class CadastroPedidoBean implements Serializable {
         pedido.setItens(itens);
         pedido.setEndereco(new EnderecoEntrega());
         pedido.setDataCriacao(new Date());
-        System.out.println(pedido.getItens().size());
-        for (Item it : pedido.getItens()) {
-            System.out.println(it.getProduto().getDescricao());
-        }
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        pedido.setVendedor(UsuarioDAO.getInstance().getUserPorEmail(((User) authentication.getPrincipal()).getUsername()));
+        pedido.setVendedor(new Seguranca().getUsuarioLogado().getUsuario());
     }
 
     public void atualizarListaProdutosFiltrados() {

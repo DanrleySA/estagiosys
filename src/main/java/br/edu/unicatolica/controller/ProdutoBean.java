@@ -59,6 +59,7 @@ public class ProdutoBean implements Serializable {
         produto = new Produto();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public Produto getProduto() {
         return produto;
     }
@@ -93,5 +94,6 @@ public class ProdutoBean implements Serializable {
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
     }
+//</editor-fold>
 
 }

@@ -1,11 +1,7 @@
 package br.edu.unicatolica.dao;
 
 import br.edu.unicatolica.entity.Pedido;
-import br.edu.unicatolica.hibernate.util.HibernateUtil;
 import java.io.Serializable;
-import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 
 /**
  *
@@ -25,5 +21,5 @@ public class PedidoDAO extends GenericoDAO<Pedido> implements Serializable {
         }
         return instance;
     }
-   
+
 }

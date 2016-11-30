@@ -46,7 +46,7 @@ public class ConsultaProdutoBean implements Serializable {
         produto = new Produto();
     }
 
-    //<editor-fold defaultstate="collapsed" desc="get and set">
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public Produto getProduto() {
         return produto;
     }

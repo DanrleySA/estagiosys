@@ -15,7 +15,7 @@
         <h:form id="frm-pedido">
             <p:growl id="msgs" autoUpdate="true" life="2000"/> 
             <p:fieldset id="todosProdutos" legend="Produtos">
-                <h:panelGrid columns="6" >
+                <p:panelGrid columns="6" layout="grid" styleClass="ui-panelgrid-blank">
                     <p:inputText size="30" placeholder="Pesquisar por descrição"
                                  value="#{cadastroPedidoBean.produtoFilter.descricao}">
                         <p:ajax event="keyup" update="tabela-produtos" 
@@ -36,7 +36,7 @@
                         <f:selectItems value="#{cadastroPedidoBean.tipos}" var="tipo"
                                        itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>
                     </p:selectOneButton>
-                </h:panelGrid>
+                </p:panelGrid>
                 <br/>
                 <p:dataTable id="tabela-produtos" var="prod" widgetVar="tabelaProdutos"
                              reflow="true" rows="2" paginator="true" paginatorPosition="bottom"
