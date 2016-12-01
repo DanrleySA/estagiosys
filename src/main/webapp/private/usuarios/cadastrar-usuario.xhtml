@@ -29,26 +29,25 @@
                             <p:panelGrid columns="2" layout="grid" 
                                          styleClass="ui-panelgrid-blank">
 
-                                <p:outputLabel value="Nome: "/>
-                                <p:inputText placeholder="Insira o nome do usuário"
+                                <p:outputLabel value="Nome: " for="nome" styleClass="label-form"/>
+                                <p:inputText id="nome" placeholder="Insira o nome do usuário"
                                              required="true" requiredMessage="O campo 'Nome' é obrigatório!"
                                              value="#{cadastroUsuarioBean.usuario.nome}"
                                              style="width: 70%" maxlength="80" />
 
-                                <p:outputLabel value="Email: "/>  
-
-                                <p:inputText placeholder="Insira um email válido"
+                                <p:outputLabel value="Email: " for="email" styleClass="label-form"/>  
+                                <p:inputText id="email" placeholder="Insira um email válido"
                                              required="true" requiredMessage="O campo 'Email' é obrigatório!"
                                              value="#{cadastroUsuarioBean.usuario.email}"
                                              style="width: 70%" maxlength="255"/>
 
-                                <p:outputLabel value="Senha: "/>
-                                <p:password  id="pwd1" value="#{cadastroUsuarioBean.usuario.senha}" required="true"
+                                <p:outputLabel value="Senha: " for="senha" styleClass="label-form"/>
+                                <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" required="true"
                                              requiredMessage="O campo 'Senha' é obrigatório!" maxlength="20"
                                              placeholder="Insira uma senha" style="width: 70%"/>
 
-                                <p:outputLabel value="Tipo: "/>
-                                <p:selectOneMenu value="#{cadastroUsuarioBean.usuario.tipo}" required="true" >
+                                <p:outputLabel value="Tipo: " for="tipo" styleClass="label-form"/>
+                                <p:selectOneMenu id="tipo" value="#{cadastroUsuarioBean.usuario.tipo}" required="true" >
                                     <f:selectItems value="#{cadastroUsuarioBean.tipoUsuario}" var="tipoUsuario" 
                                                    itemValue="#{tipoUsuario}" itemLabel="#{tipoUsuario.descricao}" />
                                 </p:selectOneMenu>
