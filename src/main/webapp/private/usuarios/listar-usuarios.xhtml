@@ -12,6 +12,83 @@
     </ui:define>  
 
     <ui:define name="conteudo">
-        
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <div class="ui-g-1 ui-md-1 ui-lg-1"></div>
+
+                <div class="ui-g-10 ui-md-10 ui-lg-10">
+                    <p:messages autoUpdate="true" closable="true"/>
+                    <p:panel header="Lista de Usuários" styleClass="uncq-title-panel">
+                        <f:facet name="actions">
+                            <p:link value="Novo Usuário"
+                                    outcome="cadastrar-usuario.xhtml"       
+                                    styleClass="link-navegacao" />
+                        </f:facet>
+                        <h:form id="frm-usuario">
+                            <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank">
+                                <p:inputText size="30" placeholder="Pesquisar por nome"
+                                             value="#{consultaProdutoBean.produtoFilter.descricao}">
+                                </p:inputText>
+                                <p:spacer height="0" width="10" />
+                                <p:commandButton value="Pesquisar" id="pesq" styleClass="botao-laranja"
+                                                 icon="ui-icon-search"
+                                                 action="#{consultaProdutoBean.pesquisar()}"
+                                                 update="tabela-usuarios"/> 
+                            </p:panelGrid>
+                            <br/>
+                            <p:dataTable id="tabela-usuarios" 
+                                         value="#{consultaUsuarioBean.usuarios}"
+                                         emptyMessage="Nenhum usuario encontrado" rows="7"
+                                         reflow="true" paginatorPosition="bottom"
+                                         paginator="true" var="user">
+
+                                <p:column headerText="Código" sortBy="#{user.id}" width="50">                       
+                                    <h:outputText value="#{user.id}"/>
+                                </p:column>
+                                <p:column headerText="Nome" sortBy="#{user.nome}">
+                                    <h:outputText value="#{user.nome}"/>
+                                </p:column>
+                                <p:column headerText="Email" sortBy="#{user.email}" width="150">
+                                    <h:outputText value="#{user.email}">
+                                        <f:convertNumber pattern="0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Tipo" sortBy="#{user.tipo.descricao}" width="150">
+                                    <h:outputText value="#{user.tipo}"/>
+                                </p:column>
+                                <p:column headerText="Ações" width="100">
+                                    <center>
+                                        <p:commandLink id="editar-prod"
+                                                       oncomplete="PF('dlgEdicaoProduto').show();">
+                                            <i class="material-icons">mode_edit</i>
+                                            <f:setPropertyActionListener value="#{user}"
+                                                                         target="#{cadastroProdutoBean.produto}" />
+                                        </p:commandLink>
+
+                                        <p:spacer width="10" />
+
+                                        <p:commandLink id="excluir-prod"
+                                                       oncomplete="PF('dlgExclusaoProduto').show();">
+                                            <i class="material-icons">delete_forever</i> 
+                                            <f:setPropertyActionListener value="#{prod}"
+                                                                         target="#{consultaProdutoBean.produtoSelecionado}" />
+
+                                        </p:commandLink>
+
+                                        <p:tooltip value="Editar" for="editar-prod" position="bottom" 
+                                                   showEffect="clip" hideEffect="clip"/>
+                                        <p:tooltip value="Excluir" for="excluir-prod" position="bottom" 
+                                                   showEffect="clip" hideEffect="clip"/>
+                                    </center>
+                                </p:column> 
+                            </p:dataTable>
+                        </h:form>
+                    </p:panel>
+
+                </div>
+
+                <div class="ui-g-1 ui-md-1 ui-lg-1"></div>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
