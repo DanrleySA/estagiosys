@@ -56,9 +56,6 @@ public class ConsultaProdutoBean implements Serializable {
     }
 
     public ProdutoFilter getProdutoFilter() {
-        if (produtoFilter == null) {
-            produtoFilter = new ProdutoFilter();
-        }
         return produtoFilter;
     }
 

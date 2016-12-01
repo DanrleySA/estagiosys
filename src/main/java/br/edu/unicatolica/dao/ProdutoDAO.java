@@ -37,7 +37,8 @@ public class ProdutoDAO extends GenericoDAO<Produto> implements Serializable {
             Criteria criteria = session.createCriteria(Produto.class);
 
             if (StringUtils.isNotBlank(produtoFilter.getDescricao())) {
-                criteria.add(Restrictions.ilike("descricao", produtoFilter.getDescricao(), MatchMode.ANYWHERE.ANYWHERE));
+                criteria.add(Restrictions.ilike("descricao", produtoFilter.getDescricao(),
+                        MatchMode.ANYWHERE.ANYWHERE));
             }
             return criteria.addOrder(Order.asc("descricao")).list();
         } finally {
