@@ -7,6 +7,7 @@ package br.edu.unicatolica.bo;
 
 import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.filter.UsuarioFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -50,8 +51,8 @@ public class UsuarioBO implements Serializable {
         UsuarioDAO.getInstance().remover(usuario);
     }
 
-    public List<Usuario> getUsuarios() {
-        return UsuarioDAO.getInstance().getListaEntidade(Usuario.class);
+    public List<Usuario> getUsuarios(UsuarioFilter usuarioFilter) {
+        return UsuarioDAO.getInstance().getUsuarios(usuarioFilter);
     }
 
 }

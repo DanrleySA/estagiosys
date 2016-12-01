@@ -2,6 +2,7 @@ package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.UsuarioBO;
 import br.edu.unicatolica.entity.Usuario;
+import br.edu.unicatolica.filter.UsuarioFilter;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 public class ConsultaUsuarioBean implements Serializable {
 
     private List<Usuario> usuarios;
+    private UsuarioFilter usuarioFilter = new UsuarioFilter();
 
     @PostConstruct
     public void init() {
@@ -24,7 +26,7 @@ public class ConsultaUsuarioBean implements Serializable {
     }
 
     public void pesquisar() {
-        usuarios = UsuarioBO.getInstance().getUsuarios();
+        usuarios = UsuarioBO.getInstance().getUsuarios(usuarioFilter);
     }
 
     public List<Usuario> getUsuarios() {
@@ -33,6 +35,14 @@ public class ConsultaUsuarioBean implements Serializable {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public UsuarioFilter getUsuarioFilter() {
+        return usuarioFilter;
+    }
+
+    public void setUsuarioFilter(UsuarioFilter usuarioFilter) {
+        this.usuarioFilter = usuarioFilter;
     }
 
 }

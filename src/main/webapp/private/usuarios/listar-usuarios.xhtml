@@ -27,18 +27,18 @@
                         <h:form id="frm-usuario">
                             <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank">
                                 <p:inputText size="30" placeholder="Pesquisar por nome"
-                                             value="#{consultaProdutoBean.produtoFilter.descricao}">
+                                             value="#{consultaUsuarioBean.usuarioFilter.nome}">
                                 </p:inputText>
                                 <p:spacer height="0" width="10" />
                                 <p:commandButton value="Pesquisar" id="pesq" styleClass="botao-laranja"
                                                  icon="ui-icon-search"
-                                                 action="#{consultaProdutoBean.pesquisar()}"
+                                                 action="#{consultaUsuarioBean.pesquisar()}"
                                                  update="tabela-usuarios"/> 
                             </p:panelGrid>
                             <br/>
                             <p:dataTable id="tabela-usuarios" 
                                          value="#{consultaUsuarioBean.usuarios}"
-                                         emptyMessage="Nenhum usuario encontrado" rows="7"
+                                         emptyMessage="Nenhum usuário encontrado." rows="7"
                                          reflow="true" paginatorPosition="bottom"
                                          paginator="true" var="user">
 
@@ -53,8 +53,8 @@
                                         <f:convertNumber pattern="0.00"/>
                                     </h:outputText>
                                 </p:column>
-                                <p:column headerText="Tipo" sortBy="#{user.tipo.descricao}" width="150">
-                                    <h:outputText value="#{user.tipo}"/>
+                                <p:column headerText="Tipo" sortBy="#{user.tipo}" width="150">
+                                    <h:outputText value="#{user.tipo.descricao}"/>
                                 </p:column>
                                 <p:column headerText="Ações" width="100">
                                     <center>
