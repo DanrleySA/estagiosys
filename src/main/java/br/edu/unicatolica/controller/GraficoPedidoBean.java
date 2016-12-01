@@ -40,7 +40,7 @@ public class GraficoPedidoBean implements Serializable {
         adicionarSerie("Meus pedidos", new Seguranca().getUsuarioLogado().getUsuario());
 
         this.model.setTitle("Todos pedidos x Meus pedidos");
-        this.model.setLegendPosition("n");
+        this.model.setLegendPosition("ne");
         Axis yAxis = this.model.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setLabel("Valor");
