@@ -35,11 +35,15 @@ public class UsuarioBO implements Serializable {
             FacesUtil.addErrorMessage("O campo 'Nome' não pode estar em branco");
             return false;
         }
+
         return true;
     }
 
     public void salvarOuAtualizar(Usuario usuario) {
-        UsuarioDAO.getInstance().salvarOuAtualizar(usuario);
+        if (validarUsuario(usuario)) {
+            UsuarioDAO.getInstance().salvarOuAtualizar(usuario);
+            FacesUtil.addInfoMessage("Usuário cadastrado com sucesso");
+        }
     }
 
     public void remover(Usuario usuario) {

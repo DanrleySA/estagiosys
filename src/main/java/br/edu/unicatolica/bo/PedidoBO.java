@@ -41,16 +41,18 @@ public class PedidoBO implements Serializable {
     }
 
     public List<Pedido> getPedidosComFiltro(Usuario vendedor, TipoPedido tipo, Date inicio, Date fim) {
-        if (fim.before(inicio)) {
-            FacesUtil.addErrorMessage("Data final (Até)' deve ser maior que a data inicial (De)!");
-            return null;
+        if (fim != null && inicio != null) {
+            if (fim.before(inicio)) {
+                FacesUtil.addErrorMessage("Data final (Até)' deve ser maior que a data inicial (De)!");
+                return null;
+            }
+            if (fim != null) {
+                fim.setHours(23);
+                fim.setMinutes(59);
+                fim.setSeconds(59);
+            }
         }
 
-        if (fim != null) {
-            fim.setHours(23);
-            fim.setMinutes(59);
-            fim.setSeconds(59);
-        }
         return PedidoDAO.getInstance().getPedidos(vendedor, tipo, inicio, fim);
     }
 
