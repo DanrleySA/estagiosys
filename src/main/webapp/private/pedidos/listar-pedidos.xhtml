@@ -12,7 +12,7 @@
     </ui:define>   
 
     <ui:define name="conteudo">
-        <h:form>
+        <h:form id="frm-pedido">
             <p:messages autoUpdate="true" closable="true"/>
             <p:panel header="Filtrar pedidos" styleClass="uncq-title-panel">
                 <f:facet name="actions">
@@ -52,14 +52,19 @@
                 <p:dataTable id="tabela-pedidos" value="#{consultaPedidoBean.pedidos}"
                              emptyMessage="Nenhum pedido encontrado"
                              rows="10" paginator="true" paginatorPosition="bottom"
-                             reflow="true" var="ped">
+                             reflow="true" var="ped" >
 
-                    <p:column headerText="Código">
+                    <p:column headerText="Código" style="width: 10%">
                         <h:outputText value="#{ped.id}"/>
                     </p:column>
 
                     <p:column headerText="Vendedor">
                         <h:outputText value="#{ped.vendedor.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Forma de pagamento">
+                        <h:outputText value="#{ped.formaPagamento.descricao}">
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Valor Total">
@@ -70,12 +75,229 @@
 
                     <p:column headerText="Data e hora">
                         <h:outputText value="#{ped.dataCriacao}">
-                            <f:convertDateTime pattern="HH:mm dd/mm/YYYY"/>
+                            <f:convertDateTime pattern="HH:mm dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
 
+                    <p:column headerText="Ações" style="width: 10%">
+                        <center>
+                            <p:commandLink id="editar-ped"
+                                           oncomplete="PF('dlgVisEdiPedido').show();" 
+                                           update="dlg-visu-pedido">
+                                <i class="material-icons">mode_edit</i>
+                                <f:setPropertyActionListener value="#{ped}"
+                                                             target="#{cadastroPedidoBean.pedido}" />
+                            </p:commandLink>
+
+                            <p:spacer width="10" />
+
+                            <p:commandLink id="excluir-ped"
+                                           oncomplete="PF('dlgExclusaoPedido').show();"
+                                           update="frm-dlg-excluir-pedido:pnlExcluirPedido">
+                                <i class="material-icons">delete_forever</i> 
+                                <f:setPropertyActionListener value="#{ped}"
+                                                             target="#{consultaPedidoBean.pedidoSelecionado}" />
+
+                            </p:commandLink>
+
+                            <p:tooltip value="Editar" for="editar-ped" position="bottom" 
+                                       showEffect="clip" hideEffect="clip"/>
+                            <p:tooltip value="Excluir" for="excluir-ped" position="bottom" 
+                                       showEffect="clip" hideEffect="clip"/>
+                        </center>
+                    </p:column>
                 </p:dataTable>
             </p:panel>
         </h:form>
+
+        <p:confirmDialog widgetVar="dlgExclusaoPedido" closable="true" 
+                         closeOnEscape="true" header="Excluir Pedido"
+                         hideEffect="clip" showEffect="clip" width="350"
+                         responsive="true" appendTo="@(body)" 
+                         message="Deseja realmente cancelar o pedido?">
+
+            <h:form id="frm-dlg-excluir-pedido">
+                <h:panelGrid id="pnlExcluirPedido" columns="4" 
+                             style="width: 100%" cellpadding="5">
+                    <p:outputLabel value="Código do pedido: " 
+                                   for="cod-ped" styleClass="label-form"/>
+                    <h:outputText id="cod-ped" 
+                                  value="#{consultaPedidoBean.pedidoSelecionado.id}"/>
+                </h:panelGrid>   
+                <center>
+                    <p:separator/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Excluir" actionListener="#{consultaPedidoBean.remover()}"
+                                         oncomplete="PF('dlgExclusaoPedido').hide();" ajax="false"
+                                         update=":frm-pedido:tabela-pedidos" styleClass="botao-confirmacao"/>
+
+                        <p:commandButton value="Cancelar" oncomplete="PF('dlgExclusaoPedido').hide();" 
+                                         styleClass="botao-cancelar"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:confirmDialog>
+
+        <!--DIALOGO DE VISUALIZAR/EDITAR PEDIDO-->
+        <p:dialog id="dlg-visu-pedido" widgetVar="dlgVisEdiPedido" 
+                  resizable="false" showEffect="clip" hideEffect="clip"
+                  modal="true" appendTo="@(body)" draggable="false" width="450"
+                  closable="true" closeOnEscape="true" responsive="true"
+                  header="Visualizar/Editar pedido">
+
+            <h:form id="frm-visedi-pedido">
+                <h:panelGrid id="pnl-visedi-pedido" columns="1" cellpadding="5" style="width: 100%">
+                    <p:commandButton value="Visualizar itens" icon="fa fa-eye"
+                                     update="dlg-visualizar-itens"
+                                     oncomplete="PF('dlg-visualizacao-itens').show();"/>
+
+                    <p:commandButton value="Informações e valores do pedido" icon="fa fa-eye"
+                                     update="dlg-visualizar-info"
+                                     oncomplete="PF('dlg-visualizacao-informacoes').show();"/>
+
+                    <p:commandButton rendered="#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}"
+                                     value="Endereço" icon="fa fa-eye"
+                                     update="dlg-visualizar-ende"
+                                     oncomplete="PF('dlg-visualizacao-ende').show();"/>
+                    <p:separator/>
+                    <center>
+                        <h:panelGrid columns="3">
+                            <p:commandButton value="Voltar" onclick="PF('dlg-visu-pedido').hide();"/>
+                        </h:panelGrid>
+                    </center>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!--DIALOGO DE VISUALIZAR INFORMAÇÕES-->
+        <p:dialog id="dlg-visualizar-info" widgetVar="dlg-visualizacao-informacoes" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Visualizar itens">
+
+            <h:form id="frm-informaçoes">
+                <div class="ui-fluid">
+                    <p:messages autoUpdate="false" />
+
+                    <p:panelGrid id="masterPanel" columns="4"
+                                 layout="grid" styleClass="ui-panelgrid-blank" 
+                                 style="margin-top: 20px; margin-bottom: 10px">
+
+                        <p:outputLabel value="Data e hora: "/>
+                        <h:outputText value="#{cadastroPedidoBean.pedido.dataCriacao}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
+                        </h:outputText>
+
+                        <h:outputText value="Vendedor: "/>
+                        <h:outputText value="#{cadastroPedidoBean.pedido.vendedor.nome}"/>
+
+                        <p:outputLabel value="Valor frete: "/>
+                        <p:inputNumber value="#{cadastroPedidoBean.pedido.valorFrete}" 
+                                       decimalSeparator="," thousandSeparator="."
+                                       size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
+                        </p:inputNumber>
+
+                        <h:outputText value="Valor Desconto "/>
+                        <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
+                                       decimalSeparator="," thousandSeparator="."
+                                       size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
+                        </p:inputNumber>
+
+                        <h:outputText value="Valor Total: "/>
+                        <h:outputText id="valorTotal" value="#{cadastroPedidoBean.pedido.valorTotal}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+
+                        <p:outputLabel value="Forma de pagamento: "/>
+                        <p:selectOneMenu value="#{cadastroPedidoBean.pedido.formaPagamento}">
+                            <f:selectItems value="#{cadastroPedidoBean.formaPagamento}"
+                                           var="formaPagamento" itemValue="#{formaPagamento}" 
+                                           itemLabel="#{formaPagamento.descricao}"/>
+                        </p:selectOneMenu> 
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
+                        <p:outputLabel value="Observação: "/>
+                        <p:inputTextarea value="#{cadastroPedidoBean.pedido.observacao}" 
+                                         rows="8" cols="33" maxlength="255"/>
+                    </p:panelGrid>
+                </div>
+            </h:form>
+
+        </p:dialog>
+
+        <!--DIALOGO DE VISUALIZAR ENDEREÇO-->
+        <p:dialog id="dlg-visualizar-ende" widgetVar="dlg-visualizacao-ende" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Endereço">
+            <h:form>
+                <p:panelGrid id="endereco-grid" columns="4"
+                             layout="grid" styleClass="ui-panelgrid-blank" 
+                             style="margin-top: 20px; margin-bottom: 10px">
+
+                    <p:outputLabel value="UF: " styleClass="label-form"/>
+                    <p:outputLabel value="#{cadastroPedidoBean.pedido.endereco.uf}"/>
+
+                    <p:outputLabel value="CEP: " styleClass="label-form"/>
+                    <p:inputMask value="#{cadastroPedidoBean.pedido.endereco.cep}" 
+                                 mask="99999-999" size="5" converter="cepConverter"/>
+
+                    <p:outputLabel value="Cidade: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.cidade}"
+                                 size="15" required="true" requiredMessage="Campo 'Cidade' obrigatório!"/>
+
+                    <p:outputLabel value="Número: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.numero}"
+                                 size="3" maxlength="6" required="true" 
+                                 requiredMessage="Campo 'Número' obrigatório!">
+                        <p:keyFilter regEx="/[\d\-]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Logradouro: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.logradouro}"
+                                 required="true" requiredMessage="O campo 'Logradouro' é obrigatório!"
+                                 maxlength="150" size="15" />
+
+                    <p:outputLabel value="Complemento: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.complemento}"
+                                 maxlength="150" size="15"/> 
+
+                    <p:outputLabel value="Bairro: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.bairro}"
+                                 maxlength="150" size="15"/>   
+                </p:panelGrid>
+            </h:form>
+
+        </p:dialog>
+
+
+        <!--DIALOGO DE VISUALIZAR ITES-->
+        <p:dialog id="dlg-visualizar-itens" widgetVar="dlg-visualizacao-itens" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Visualizar itens">
+            <h:form>
+                <p:dataTable value="#{cadastroPedidoBean.pedido.itens}"
+                             reflow="true" var="itemPedido">
+
+                    <p:column headerText="Produto">
+                        <p:outputLabel value="#{itemPedido.produto.descricao}"/>
+                    </p:column>
+
+                    <p:column headerText="Qtde.">
+                        <p:outputLabel value="#{itemPedido.quantidade}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor ">
+                        <p:outputLabel value="#{itemPedido.valorUnitario}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>

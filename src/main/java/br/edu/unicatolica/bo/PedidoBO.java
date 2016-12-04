@@ -1,6 +1,7 @@
 package br.edu.unicatolica.bo;
 
 import br.edu.unicatolica.dao.PedidoDAO;
+import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
@@ -33,6 +34,10 @@ public class PedidoBO implements Serializable {
     }
 
     public void remover(Pedido pedido) {
+        for (Item t : pedido.getItens()) {
+            t.getProduto().setQtdEstoque(t.getProduto().getQtdEstoque() + t.getQuantidade());
+            ProdutoBO.getInstance().salvarOuAtualizar(t.getProduto());
+        }
         PedidoDAO.getInstance().remover(pedido);
     }
 

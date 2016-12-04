@@ -2,7 +2,6 @@ package br.edu.unicatolica.controller;
 
 import br.edu.unicatolica.bo.PedidoBO;
 import br.edu.unicatolica.bo.ProdutoBO;
-import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.EnderecoEntrega;
 import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
@@ -22,10 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FlowEvent;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
 /**
  *
@@ -41,6 +36,7 @@ public class CadastroPedidoBean implements Serializable {
     private List<Produto> produtosAux;
     private Pedido pedido;
     private boolean skip;
+    private TipoPedido tipo;
 
     @PostConstruct
     public void init() {
@@ -48,6 +44,10 @@ public class CadastroPedidoBean implements Serializable {
         produtosAux = produtos;
         pedido = new Pedido();
         itens = new ArrayList<>();
+    }
+
+    public boolean isDelivey() {
+        return pedido.getTipo().equals(TipoPedido.DELIVERY);
     }
 
     public void adicionarItem(Produto produto) {
@@ -146,6 +146,14 @@ public class CadastroPedidoBean implements Serializable {
         } else {
             return event.getNewStep();
         }
+    }
+
+    public TipoPedido getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoPedido tipo) {
+        this.tipo = tipo;
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">

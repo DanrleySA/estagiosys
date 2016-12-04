@@ -20,6 +20,7 @@ public class EnderecoEntrega implements Serializable {
     private String cidade;
     private UnidadeFederacao uf;
     private String cep;
+    private String bairro;
 
     @Column(length = 150)
     public String getLogradouro() {
@@ -72,6 +73,15 @@ public class EnderecoEntrega implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    @Column(length = 150)
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
 }

@@ -171,7 +171,7 @@
                         </div>
                     </p:tab>
 
-                    <p:tab id="endereco" title="Endereço" >
+                    <p:tab id="endereco" title="Endereço" rendered="#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}" >
                         <p:panelGrid id="endereco-grid" columns="4"
                                      layout="grid" styleClass="ui-panelgrid-blank" 
                                      style="margin-top: 20px; margin-bottom: 10px">
@@ -203,7 +203,11 @@
 
                             <p:outputLabel value="Complemento: " styleClass="label-form"/>
                             <p:inputText value="#{cadastroPedidoBean.pedido.endereco.complemento}"
-                                         maxlength="150" size="15"/>      
+                                         maxlength="150" size="15"/> 
+
+                            <p:outputLabel value="Bairro: " styleClass="label-form"/>
+                            <p:inputText value="#{cadastroPedidoBean.pedido.endereco.bairro}"
+                                         maxlength="150" size="15"/>   
                         </p:panelGrid>
                     </p:tab>
                     <p:tab id="confirmar-pedido-delivery" title="Confirmação">
@@ -212,6 +216,10 @@
                                      style="width: 98%">
 
                             <p:commandButton icon="fa fa-eye" value="Visualizar itens"
+                                             oncomplete="PF('dlg-visualizacao-itens').show();">
+                            </p:commandButton>
+
+                            <p:commandButton icon="fa fa-eye" value="Visualizar endereço"
                                              oncomplete="PF('dlg-visualizacao-itens').show();">
                             </p:commandButton>
 
@@ -295,7 +303,7 @@
                                      styleClass="ui-panelgrid-blank" 
                                      style="width: 98%">
 
-                            <p:commandButton icon="fa fa-eye" value="Visualizar itens" style="width: 10px"
+                            <p:commandButton icon="fa fa-eye" value="Visualizar itens"
                                              oncomplete="PF('dlg-visualizacao-itens').show();">
                             </p:commandButton>
 
@@ -339,6 +347,7 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>
+
     </ui:define>
 </ui:composition>
 

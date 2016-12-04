@@ -10,6 +10,7 @@ import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,7 @@ import javax.faces.bean.ViewScoped;
 public class ConsultaPedidoBean implements Serializable {
 
     private List<Pedido> pedidos;
+    private Pedido pedidoSelecionado;
     private Usuario vendedor;
     private Date dataInicial;
     private Date dataFinal;
@@ -33,6 +35,12 @@ public class ConsultaPedidoBean implements Serializable {
 
     public void pesquisarPedidos() {
         pedidos = PedidoBO.getInstance().getPedidosComFiltro(vendedor, tipoSelecionado, dataInicial, dataFinal);
+    }
+
+    public void remover() {
+        PedidoBO.getInstance().remover(pedidoSelecionado);
+        FacesUtil.addInfoMessage("Pedido cancelado com sucesso!");
+        pesquisarPedidos();
     }
 
     public List<Pedido> getPedidos() {
@@ -84,6 +92,14 @@ public class ConsultaPedidoBean implements Serializable {
 
     public void setTipoSelecionado(TipoPedido tipoSelecionado) {
         this.tipoSelecionado = tipoSelecionado;
+    }
+
+    public Pedido getPedidoSelecionado() {
+        return pedidoSelecionado;
+    }
+
+    public void setPedidoSelecionado(Pedido pedidoSelecionado) {
+        this.pedidoSelecionado = pedidoSelecionado;
     }
 
 }
