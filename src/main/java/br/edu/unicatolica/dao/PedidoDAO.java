@@ -4,6 +4,7 @@ import br.edu.unicatolica.entity.DataValor;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.filter.PedidoFilter;
 import br.edu.unicatolica.hibernate.util.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -39,22 +40,22 @@ public class PedidoDAO extends GenericoDAO<Pedido> implements Serializable {
         return instance;
     }
 
-    public List<Pedido> getPedidos(Usuario vendedor, TipoPedido tipo, Date inicio, Date fim) {
+    public List<Pedido> getPedidos(PedidoFilter pedidoFilter) {
         Session session = HibernateUtil.geSessionFactory().openSession();
         try {
             Criteria criteria = session.createCriteria(Pedido.class);
-            if (vendedor != null) {
-                criteria.add(Restrictions.eq("vendedor", vendedor));
+            if (pedidoFilter.getVendedor() != null) {
+                criteria.add(Restrictions.eq("vendedor", pedidoFilter.getVendedor()));
                 criteria.addOrder(Order.desc("vendedor"));
             }
 
-            if (tipo != null) {
-                criteria.add(Restrictions.eq("tipo", tipo));
+            if (pedidoFilter.getTipo() != null) {
+                criteria.add(Restrictions.eq("tipo", pedidoFilter.getTipo()));
                 criteria.addOrder(Order.desc("valorTotal"));
             }
 
-            if (inicio != null && fim != null) {
-                criteria.add(Restrictions.between("dataCriacao", inicio, fim));
+            if (pedidoFilter.getDataInicial() != null && pedidoFilter.getDataFinal() != null) {
+                criteria.add(Restrictions.between("dataCriacao", pedidoFilter.getDataInicial(), pedidoFilter.getDataFinal()));
                 criteria.addOrder(Order.desc("dataCriacao"));
             }
 

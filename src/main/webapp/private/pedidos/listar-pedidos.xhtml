@@ -24,20 +24,20 @@
                 <p:panelGrid columns="8" layout="grid" styleClass="ui-panelgrid-blank">
 
                     <p:outputLabel value="Vendedor:" for="vendedor" styleClass="label-form"/>
-                    <p:selectOneMenu id="vendedor" value="#{consultaPedidoBean.vendedor}">
+                    <p:selectOneMenu id="vendedor" value="#{consultaPedidoBean.pedidoFilter.vendedor}">
                         <f:selectItem itemLabel="Nenhum"/>
                         <f:selectItems value="#{consultaPedidoBean.vendedores}" var="vendedor"
                                        itemLabel="#{vendedor.nome}" itemValue="#{vendedor}"/>
                     </p:selectOneMenu> 
 
                     <p:outputLabel value="De: " for="de" styleClass="label-form"/>
-                    <p:calendar id="de" value="#{consultaPedidoBean.dataInicial}" locale="pt" pattern="dd/MM/yyyy"/>
+                    <p:calendar id="de" value="#{consultaPedidoBean.pedidoFilter.dataInicial}" locale="pt" pattern="dd/MM/yyyy"/>
 
                     <p:outputLabel value="Até: " for="ate" styleClass="label-form"/>
-                    <p:calendar id="ate" value="#{consultaPedidoBean.dataFinal}" locale="pt" pattern="dd/MM/yyyy"/>
+                    <p:calendar id="ate" value="#{consultaPedidoBean.pedidoFilter.dataFinal}" locale="pt" pattern="dd/MM/yyyy"/>
 
                     <p:outputLabel value="Tipo do pedido: " for="tipo" styleClass="label-form"/>
-                    <p:selectOneMenu id="tipo" value="#{consultaPedidoBean.tipoSelecionado}">
+                    <p:selectOneMenu id="tipo" value="#{consultaPedidoBean.pedidoFilter.tipo}">
                         <f:selectItem itemLabel="Nenhum"/>
                         <f:selectItems value="#{consultaPedidoBean.tipos}" var="tipo"
                                        itemLabel="#{tipo.descricao}" itemValue="#{tipo}"/>

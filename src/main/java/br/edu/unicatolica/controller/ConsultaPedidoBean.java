@@ -10,10 +10,10 @@ import br.edu.unicatolica.dao.UsuarioDAO;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.filter.PedidoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -28,13 +28,10 @@ public class ConsultaPedidoBean implements Serializable {
 
     private List<Pedido> pedidos;
     private Pedido pedidoSelecionado;
-    private Usuario vendedor;
-    private Date dataInicial;
-    private Date dataFinal;
-    private TipoPedido tipoSelecionado;
+    private PedidoFilter pedidoFilter = new PedidoFilter();
 
     public void pesquisarPedidos() {
-        pedidos = PedidoBO.getInstance().getPedidosComFiltro(vendedor, tipoSelecionado, dataInicial, dataFinal);
+        pedidos = PedidoBO.getInstance().getPedidosComFiltro(pedidoFilter);
     }
 
     public void remover() {
@@ -58,40 +55,8 @@ public class ConsultaPedidoBean implements Serializable {
         return UsuarioDAO.getInstance().getListaEntidade(Usuario.class);
     }
 
-    public Usuario getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Usuario vendedor) {
-        this.vendedor = vendedor;
-    }
-
-    public Date getDataInicial() {
-        return dataInicial;
-    }
-
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-
-    public Date getDataFinal() {
-        return dataFinal;
-    }
-
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
-    }
-
     public TipoPedido[] getTipos() {
         return TipoPedido.values();
-    }
-
-    public TipoPedido getTipoSelecionado() {
-        return tipoSelecionado;
-    }
-
-    public void setTipoSelecionado(TipoPedido tipoSelecionado) {
-        this.tipoSelecionado = tipoSelecionado;
     }
 
     public Pedido getPedidoSelecionado() {
@@ -100,6 +65,14 @@ public class ConsultaPedidoBean implements Serializable {
 
     public void setPedidoSelecionado(Pedido pedidoSelecionado) {
         this.pedidoSelecionado = pedidoSelecionado;
+    }
+
+    public PedidoFilter getPedidoFilter() {
+        return pedidoFilter;
+    }
+
+    public void setPedidoFilter(PedidoFilter pedidoFilter) {
+        this.pedidoFilter = pedidoFilter;
     }
 
 }

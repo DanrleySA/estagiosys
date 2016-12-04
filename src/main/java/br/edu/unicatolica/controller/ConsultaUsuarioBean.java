@@ -22,11 +22,6 @@ public class ConsultaUsuarioBean implements Serializable {
     private UsuarioFilter usuarioFilter = new UsuarioFilter();
     private Usuario usuarioSelecionado;
 
-    @PostConstruct
-    public void init() {
-        pesquisar();
-    }
-
     public void pesquisar() {
         usuarios = UsuarioBO.getInstance().getUsuarios(usuarioFilter);
     }

@@ -5,6 +5,7 @@ import br.edu.unicatolica.entity.Item;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
 import br.edu.unicatolica.enumeration.TipoPedido;
+import br.edu.unicatolica.filter.PedidoFilter;
 import br.edu.unicatolica.jsf.util.FacesUtil;
 import java.io.Serializable;
 import java.util.Date;
@@ -45,20 +46,20 @@ public class PedidoBO implements Serializable {
         return PedidoDAO.getInstance().getListaEntidade(Pedido.class);
     }
 
-    public List<Pedido> getPedidosComFiltro(Usuario vendedor, TipoPedido tipo, Date inicio, Date fim) {
-        if (fim != null && inicio != null) {
-            if (fim.before(inicio)) {
+    public List<Pedido> getPedidosComFiltro(PedidoFilter pedidoFilter) {
+        if (pedidoFilter.getDataFinal() != null && pedidoFilter.getDataInicial() != null) {
+            if (pedidoFilter.getDataFinal().before(pedidoFilter.getDataInicial())) {
                 FacesUtil.addErrorMessage("Data final (Até)' deve ser maior que a data inicial (De)!");
                 return null;
             }
-            if (fim != null) {
-                fim.setHours(23);
-                fim.setMinutes(59);
-                fim.setSeconds(59);
+            if (pedidoFilter.getDataFinal() != null) {
+                pedidoFilter.getDataFinal().setHours(23);
+                pedidoFilter.getDataFinal().setMinutes(59);
+                pedidoFilter.getDataFinal().setSeconds(59);
             }
         }
 
-        return PedidoDAO.getInstance().getPedidos(vendedor, tipo, inicio, fim);
+        return PedidoDAO.getInstance().getPedidos(pedidoFilter);
     }
 
 }
