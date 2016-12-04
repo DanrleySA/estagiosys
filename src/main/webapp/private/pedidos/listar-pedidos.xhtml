@@ -50,7 +50,7 @@
                 </p:panelGrid><br/>
 
                 <p:dataTable id="tabela-pedidos" value="#{consultaPedidoBean.pedidos}"
-                             emptyMessage="Nenhum pedido encontrado"
+                             emptyMessage="Nenhum pedido encontrado" 
                              rows="10" paginator="true" paginatorPosition="bottom"
                              reflow="true" var="ped" >
 
@@ -79,7 +79,7 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column headerText="Ações" style="width: 10%">
+                    <p:column headerText="Ações" style="width: 10%" exportable="false">
                         <center>
                             <p:commandLink id="editar-ped"
                                            oncomplete="PF('dlgVisEdiPedido').show();" 
@@ -107,6 +107,26 @@
                         </center>
                     </p:column>
                 </p:dataTable>
+
+                <h:panelGrid columns="3">
+                    <h:commandLink id="export-xls">
+                        <p:graphicImage library="images" name="excel.png" width="24"/>
+                        <p:dataExporter type="xls" target="tabela-pedidos" fileName="pedidos" />
+                    </h:commandLink>
+
+                    <p:spacer height="0" width="10"/>
+
+                    <h:commandLink id="export-pdf">
+                        <p:graphicImage library="images" name="pdf.png" width="24"/>
+                        <p:dataExporter type="pdf" target="tabela-pedidos" fileName="pedidos"/>
+                    </h:commandLink>
+                </h:panelGrid>
+
+                <p:tooltip value="Exportar para xls" for="export-xls" position="bottom" 
+                           showEffect="clip" hideEffect="clip"/>
+                <p:tooltip value="Exportar para pdf" for="export-pdf" position="bottom" 
+                           showEffect="clip" hideEffect="clip"/>
+
             </p:panel>
         </h:form>
 

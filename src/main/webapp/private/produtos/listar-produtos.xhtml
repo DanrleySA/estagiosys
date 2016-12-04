@@ -56,7 +56,7 @@
                                 <p:column headerText="Qtde" sortBy="#{prod.qtdEstoque}" width="50">
                                     <h:outputText value="#{prod.qtdEstoque}"/>
                                 </p:column>
-                                <p:column headerText="Ações" width="100">
+                                <p:column headerText="Ações" width="100" exportable="false">
                                     <center>
                                         <p:commandLink id="editar-prod"
                                                        oncomplete="PF('dlgEdicaoProduto').show();"
@@ -84,6 +84,25 @@
                                     </center>
                                 </p:column> 
                             </p:dataTable>
+                            <h:panelGrid columns="3">
+                                <h:commandLink id="export-xls">
+                                    <p:graphicImage library="images" name="excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="tabela-produtos" fileName="produtos" />
+                                </h:commandLink>
+
+                                <p:spacer height="0" width="10"/>
+
+                                <h:commandLink id="export-pdf">
+                                    <p:graphicImage library="images" name="pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="tabela-produtos" fileName="produtos"/>
+                                </h:commandLink>
+                            </h:panelGrid>
+
+                            <p:tooltip value="Exportar para xls" for="export-xls" position="bottom" 
+                                       showEffect="clip" hideEffect="clip"/>
+                            <p:tooltip value="Exportar para pdf" for="export-pdf" position="bottom" 
+                                       showEffect="clip" hideEffect="clip"/>
+
                         </h:form>
                     </p:panel>
 
