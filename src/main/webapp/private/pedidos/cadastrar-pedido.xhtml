@@ -105,9 +105,7 @@
                         <p:commandButton value="Finalizar" 
                                          update="dlg-confirmar-delivery dlg-confirmar-comum dlg-visualizar-itens"
                                          onclick="#{cadastroPedidoBean.carregarDadosPedido()}"
-                                         oncomplete="if (#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}) 
-                                         PF('dlg-confirmacao-delivery').show(); 
-                                         else PF('dlg-confirmacao-comum').show();"/>
+                                         oncomplete="PF('dlg-confirmacao-delivery').show();"/>
                     </f:facet>
                 </p:dataTable>
             </p:fieldset>
@@ -220,7 +218,9 @@
                             </p:commandButton>
 
                             <p:commandButton icon="fa fa-eye" value="Visualizar endereço"
-                                             oncomplete="PF('dlg-visualizacao-itens').show();">
+                                             rendered="#{cadastroPedidoBean.pedido.tipo == 'DELIVERY'}"
+                                             update="dlg-visualizar-ende"
+                                             oncomplete="PF('dlg-visualizacao-ende').show();">
                             </p:commandButton>
 
                         </p:panelGrid>
@@ -240,90 +240,7 @@
             </h:form>
         </p:dialog>
 
-        <!--DIALOGO DE CONFIRMACAO DE PEDIDO DO TIPO COMUM-->
-        <p:dialog id="dlg-confirmar-comum" widgetVar="dlg-confirmacao-comum" responsive="true"
-                  closable="true" appendTo="@(body)" closeOnEscape="true"  
-                  draggable="false" modal="true" width="700"
-                  showEffect="clip" hideEffect="clip"
-                  resizable="false" header="Finalizar venda">
-            <p:messages autoUpdate="true"/>
-            <h:form>
-                <p:wizard widgetVar="wiz-comum" >
-                    <p:tab id="dados-pedido-comum" title="Dados" >
-                        <div class="ui-fluid">
-                            <p:messages autoUpdate="false" />
-
-                            <p:panelGrid columns="4"
-                                         layout="grid" styleClass="ui-panelgrid-blank" 
-                                         style="margin-top: 20px; margin-bottom: 10px">
-
-                                <p:outputLabel value="Data e hora: "/>
-                                <h:outputText value="#{cadastroPedidoBean.pedido.dataCriacao}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Fortaleza"/>
-                                </h:outputText>
-
-                                <h:outputText value="Vendedor: "/>
-                                <h:outputText value="#{cadastroPedidoBean.pedido.vendedor.nome}"/>
-
-                                <p:outputLabel value="Valor frete: "/>
-
-                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorFrete}" 
-                                               decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
-                                </p:inputNumber>
-
-                                <h:outputText value="Valor Desconto "/>
-                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
-                                               decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
-                                </p:inputNumber>
-
-                                <h:outputText value="Valor Total: "/>
-                                <h:outputText id="valorTotalComum" 
-                                              value="#{cadastroPedidoBean.pedido.valorTotal}">
-                                    <f:convertNumber type="currency"/>
-                                </h:outputText>
-
-                                <p:outputLabel value="Forma de pagamento: "/>
-                                <p:selectOneMenu value="#{cadastroPedidoBean.pedido.formaPagamento}">
-                                    <f:selectItems value="#{cadastroPedidoBean.formaPagamento}"
-                                                   var="formaPagamento" itemValue="#{formaPagamento}" 
-                                                   itemLabel="#{formaPagamento.descricao}"/>
-                                </p:selectOneMenu> 
-                            </p:panelGrid>
-                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" >
-                                <p:outputLabel value="Observação: "/>
-                                <p:inputTextarea value="#{cadastroPedidoBean.pedido.observacao}" 
-                                                 rows="8" cols="33" maxlength="255"/>
-                            </p:panelGrid>
-                        </div>
-                    </p:tab>
-                    <p:tab id="confirmar-pedido-comum" title="Confirmação">
-                        <p:panelGrid columns="3" layout="grid"
-                                     styleClass="ui-panelgrid-blank" 
-                                     style="width: 98%">
-
-                            <p:commandButton icon="fa fa-eye" value="Visualizar itens"
-                                             oncomplete="PF('dlg-visualizacao-itens').show();">
-                            </p:commandButton>
-
-                        </p:panelGrid>
-                        <center>
-                            <p:separator/>
-                            <h:panelGrid columns="3">
-                                <p:commandButton value="Finalizar" 
-                                                 actionListener="#{cadastroPedidoBean.salvar()}"
-                                                 oncomplete="PF('dlg-confirmacao-comum').hide();"
-                                                 update=":frm-pedido:itens-pedido-tabela :frm-pedido:tabela-produtos"/>
-
-                                <p:commandButton value="Cancelar" onclick="PF('dlg-confirmacao-comum').hide();"/>
-                            </h:panelGrid>
-                        </center>
-                    </p:tab>
-                </p:wizard>
-            </h:form>
-        </p:dialog>
-
+        <!--DIALOGO DE VISUALIZAR ITENS-->
         <p:dialog id="dlg-visualizar-itens" widgetVar="dlg-visualizacao-itens" responsive="true"
                   closable="true" appendTo="@(body)" closeOnEscape="true" 
                   draggable="true" modal="true" width="700"
@@ -346,6 +263,51 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
+        </p:dialog>
+
+        <!--DIALOGO DE VISUALIZAR ENDEREÇO-->
+        <p:dialog id="dlg-visualizar-ende" widgetVar="dlg-visualizacao-ende" responsive="true"
+                  closable="true" appendTo="@(body)" closeOnEscape="true" 
+                  draggable="true" modal="true" width="700"
+                  showEffect="clip" hideEffect="clip"
+                  resizable="false" header="Endereço">
+            <h:form>
+                <p:panelGrid id="endereco-grid" columns="4"
+                             layout="grid" styleClass="ui-panelgrid-blank" 
+                             style="margin-top: 20px; margin-bottom: 10px">
+
+                    <p:outputLabel value="UF: " styleClass="label-form"/>
+                    <p:outputLabel value="#{cadastroPedidoBean.pedido.endereco.uf}"/>
+
+                    <p:outputLabel value="CEP: " styleClass="label-form"/>
+                    <p:inputMask value="#{cadastroPedidoBean.pedido.endereco.cep}" 
+                                 mask="99999-999" size="5" converter="cepConverter"/>
+
+                    <p:outputLabel value="Cidade: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.cidade}"
+                                 size="15" required="true" requiredMessage="Campo 'Cidade' obrigatório!"/>
+
+                    <p:outputLabel value="Número: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.numero}"
+                                 size="3" maxlength="6" required="true" 
+                                 requiredMessage="Campo 'Número' obrigatório!">
+                        <p:keyFilter regEx="/[\d\-]/"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Logradouro: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.logradouro}"
+                                 required="true" requiredMessage="O campo 'Logradouro' é obrigatório!"
+                                 maxlength="150" size="15" />
+
+                    <p:outputLabel value="Complemento: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.complemento}"
+                                 maxlength="150" size="15"/> 
+
+                    <p:outputLabel value="Bairro: " styleClass="label-form"/>
+                    <p:inputText value="#{cadastroPedidoBean.pedido.endereco.bairro}"
+                                 maxlength="150" size="15"/>   
+                </p:panelGrid>
+            </h:form> 
         </p:dialog>
 
     </ui:define>
