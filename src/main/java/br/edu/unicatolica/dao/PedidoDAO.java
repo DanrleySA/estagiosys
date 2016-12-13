@@ -3,7 +3,6 @@ package br.edu.unicatolica.dao;
 import br.edu.unicatolica.entity.DataValor;
 import br.edu.unicatolica.entity.Pedido;
 import br.edu.unicatolica.entity.Usuario;
-import br.edu.unicatolica.enumeration.TipoPedido;
 import br.edu.unicatolica.filter.PedidoFilter;
 import br.edu.unicatolica.hibernate.util.HibernateUtil;
 import java.io.Serializable;

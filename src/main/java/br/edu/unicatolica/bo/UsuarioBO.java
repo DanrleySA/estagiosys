@@ -43,7 +43,11 @@ public class UsuarioBO implements Serializable {
     public void salvarOuAtualizar(Usuario usuario) {
         if (validarUsuario(usuario)) {
             UsuarioDAO.getInstance().salvarOuAtualizar(usuario);
-            FacesUtil.addInfoMessage("Usuário cadastrado com sucesso");
+            if (usuario.getId() == null) {
+                FacesUtil.addInfoMessage("Usuário cadastrado com sucesso!");
+            } else {
+                FacesUtil.addInfoMessage("Usuário atualizado com sucesso!");
+            }
         }
     }
 

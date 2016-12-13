@@ -24,7 +24,6 @@ public class CadastroUsuarioBean implements Serializable {
 
     public void salvar() {
         UsuarioBO.getInstance().salvarOuAtualizar(usuario);
-
     }
 
     public Usuario getUsuario() {

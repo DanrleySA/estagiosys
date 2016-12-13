@@ -36,11 +36,11 @@
                                                  update="tabela-usuarios"/> 
                             </p:panelGrid>
                             <br/>
-                            <p:dataTable id="tabela-usuarios" 
+                            <p:dataTable id="tabela-usuarios" paginator="true"
                                          value="#{consultaUsuarioBean.usuarios}"
                                          emptyMessage="Nenhum usuário encontrado." rows="7"
                                          reflow="true" paginatorPosition="bottom"
-                                         paginator="true" var="user">
+                                         var="user">
 
                                 <p:column headerText="Código" sortBy="#{user.id}" width="50">                       
                                     <h:outputText value="#{user.id}"/>
@@ -68,17 +68,18 @@
 
                                         <p:spacer width="10" />
 
-                                        <p:commandLink id="excluir-prod"
-                                                       oncomplete="PF('dlgExclusaoProduto').show();">
+                                        <p:commandLink id="excluir-usu"
+                                                       oncomplete="PF('dlgExclusaoUsuario').show();"
+                                                       update="frm-dlg-excluir-usuario:pnlExcluirUsuario">
                                             <i class="material-icons">delete_forever</i> 
-                                            <f:setPropertyActionListener value="#{prod}"
-                                                                         target="#{consultaProdutoBean.produtoSelecionado}" />
+                                            <f:setPropertyActionListener value="#{user}"
+                                                                         target="#{consultaUsuarioBean.usuarioSelecionado}" />
 
                                         </p:commandLink>
 
-                                        <p:tooltip value="Editar" for="editar-prod" position="bottom" 
+                                        <p:tooltip value="Editar" for="editar-usu" position="bottom" 
                                                    showEffect="clip" hideEffect="clip"/>
-                                        <p:tooltip value="Excluir" for="excluir-prod" position="bottom" 
+                                        <p:tooltip value="Excluir" for="excluir-usu" position="bottom" 
                                                    showEffect="clip" hideEffect="clip"/>
                                     </center>
                                 </p:column> 
@@ -118,25 +119,25 @@
 
             <h:form id="frm-editar-usuario">
                 <h:panelGrid id="pnlEdicaoUsuario" columns="1" cellpadding="5" style="width: 100%">
-                        <p:outputLabel value="Nome: " for="nome" styleClass="label-form"/>
-                        <p:inputText id="nome"
-                                     placeholder="Insira o nome do usuário"
-                                     required="true" style="width: 100%; margin-top: 10px"
-                                     requiredMessage="O campo 'Nome' é obrigatório!"
-                                     value="#{cadastroUsuarioBean.usuario.nome}"/>
-                        <p:outputLabel value="Email: " for="email"  styleClass="label-form"/>
-                        <p:inputText id="email"
-                                     placeholder="Insira o email do usuário"
-                                     required="true" style="width: 100%; margin-top: 10px"
-                                     requiredMessage="O campo 'Email' é obrigatório!"
-                                     value="#{cadastroUsuarioBean.usuario.email}"/>
+                    <p:outputLabel value="Nome: " for="nome" styleClass="label-form"/>
+                    <p:inputText id="nome"
+                                 placeholder="Insira o nome do usuário"
+                                 required="true" style="width: 100%; margin-top: 10px"
+                                 requiredMessage="O campo 'Nome' é obrigatório!"
+                                 value="#{cadastroUsuarioBean.usuario.nome}"/>
+                    <p:outputLabel value="Email: " for="email"  styleClass="label-form"/>
+                    <p:inputText id="email"
+                                 placeholder="Insira o email do usuário"
+                                 required="true" style="width: 100%; margin-top: 10px"
+                                 requiredMessage="O campo 'Email' é obrigatório!"
+                                 value="#{cadastroUsuarioBean.usuario.email}"/>
 
-                        <p:outputLabel value="Senha: " for="senha" styleClass="label-form"/>
-                        <p:inputText id="senha"
-                                     placeholder="Insira a senha do usuário"
-                                     required="true" style="width: 100%; margin-top: 10px"
-                                     requiredMessage="O campo 'Senha' é obrigatório!"
-                                     value="#{cadastroUsuarioBean.usuario.senha}"/>
+                    <p:outputLabel value="Senha: " for="senha" styleClass="label-form"/>
+                    <p:inputText id="senha"
+                                 placeholder="Insira a senha do usuário"
+                                 required="true" style="width: 100%; margin-top: 10px"
+                                 requiredMessage="O campo 'Senha' é obrigatório!"
+                                 value="#{cadastroUsuarioBean.usuario.senha}"/>
                 </h:panelGrid>
                 <center>
                     <p:separator/>
@@ -156,5 +157,34 @@
                 </center>
             </h:form>
         </p:dialog>
+
+        <!-- DIALOGO EXCLUSÃO USUARIO -->
+        <p:confirmDialog widgetVar="dlgExclusaoUsuario" closable="true" 
+                         closeOnEscape="true" header="Excluir Usuário"
+                         hideEffect="clip" showEffect="clip" width="350"
+                         responsive="true" appendTo="@(body)" 
+                         message="Deseja realmente excluir o usuário?">
+
+            <h:form id="frm-dlg-excluir-usuario">
+                <h:panelGrid id="pnlExcluirUsuario" columns="1" 
+                             style="width: 100%" cellpadding="5">
+                    <p:outputLabel value="Nome do usuário: " 
+                                   for="nomeE" styleClass="label-form"/>
+                    <h:outputText id="nomeE" 
+                                  value="#{consultaUsuarioBean.usuarioSelecionado.nome}"/>
+                </h:panelGrid>   
+                <center>
+                    <p:separator/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Excluir" actionListener="#{consultaUsuarioBean.remover()}"
+                                         oncomplete="PF('dlgExclusaoUsuario').hide();"
+                                         update=":frm-usuario:tabela-usuarios" styleClass="botao-confirmacao"/>
+
+                        <p:commandButton value="Cancelar" oncomplete="PF('dlgExclusaoUsuario').hide();" 
+                                         styleClass="botao-cancelar"/>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </p:confirmDialog>
     </ui:define>
 </ui:composition>

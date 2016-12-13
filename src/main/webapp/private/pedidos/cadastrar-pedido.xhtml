@@ -103,7 +103,7 @@
                                       value="Subtotal: #{cadastroPedidoBean.pedido.valorTotal}"/>
 
                         <p:commandButton value="Finalizar" 
-                                         update="dlg-confirmar-delivery dlg-confirmar-comum dlg-visualizar-itens"
+                                         update="dlg-confirmar-delivery dlg-visualizar-itens"
                                          onclick="#{cadastroPedidoBean.carregarDadosPedido()}"
                                          oncomplete="PF('dlg-confirmacao-delivery').show();"/>
                     </f:facet>

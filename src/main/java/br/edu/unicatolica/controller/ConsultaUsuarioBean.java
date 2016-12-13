@@ -26,7 +26,7 @@ public class ConsultaUsuarioBean implements Serializable {
         usuarios = UsuarioBO.getInstance().getUsuarios(usuarioFilter);
     }
 
-    public void remover(Usuario usuarioSelecionado) {
+    public void remover() {
         UsuarioBO.getInstance().remover(usuarioSelecionado);
         usuarios.remove(usuarioSelecionado);
         FacesUtil.addInfoMessage("Usuário removido com sucesso!");
