@@ -219,12 +219,6 @@
                                        size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
                         </p:inputNumber>
 
-                        <h:outputText value="Valor Desconto "/>
-                        <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
-                                       decimalSeparator="," thousandSeparator="."
-                                       size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
-                        </p:inputNumber>
-
                         <h:outputText value="Valor Total: "/>
                         <h:outputText id="valorTotal" value="#{cadastroPedidoBean.pedido.valorTotal}">
                             <f:convertNumber type="currency"/>
@@ -294,7 +288,7 @@
         </p:dialog>
 
 
-        <!--DIALOGO DE VISUALIZAR ITES-->
+        <!--DIALOGO DE VISUALIZAR ITENS-->
         <p:dialog id="dlg-visualizar-itens" widgetVar="dlg-visualizacao-itens" responsive="true"
                   closable="true" appendTo="@(body)" closeOnEscape="true" 
                   draggable="true" modal="true" width="700"

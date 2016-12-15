@@ -111,7 +111,7 @@
             </p:fieldset>
         </h:form>
 
-        <!--DIALOGO DE CONFIRMACAO DE PEDIDO DO TIPO DELIVERY-->
+        <!--DIALOGO DE CONFIRMACAO DE PEDIDO-->
         <p:dialog id="dlg-confirmar-delivery" widgetVar="dlg-confirmacao-delivery" responsive="true"
                   closable="true" appendTo="@(body)" closeOnEscape="true" 
                   draggable="false" modal="true" width="700"
@@ -140,13 +140,9 @@
 
                                 <p:inputNumber value="#{cadastroPedidoBean.pedido.valorFrete}" 
                                                decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
-                                </p:inputNumber>
-
-                                <h:outputText value="Valor Desconto "/>
-                                <p:inputNumber value="#{cadastroPedidoBean.pedido.valorDesconto}" 
-                                               decimalSeparator="," thousandSeparator="."
-                                               size="5" maxValue="#{cadastroPedidoBean.pedido.valorTotal}">
+                                               size="5">
+                                    <p:ajax event="change" listener="#{cadastroPedidoBean.atualizarValorTotal()}" 
+                                            update="valorTotal" />
                                 </p:inputNumber>
 
                                 <h:outputText value="Valor Total: "/>

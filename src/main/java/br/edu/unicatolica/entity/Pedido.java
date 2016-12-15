@@ -34,7 +34,6 @@ public class Pedido implements Serializable, EntidadeBase {
     private Long id;
     private String observacao;
     private BigDecimal valorFrete;
-    private BigDecimal valorDesconto;
     private BigDecimal valorTotal;
     private Date dataCriacao;
     private FormaPagamento formaPagamento;
@@ -46,7 +45,6 @@ public class Pedido implements Serializable, EntidadeBase {
     public Pedido() {
         setValorTotal(new BigDecimal("0.00"));
         setValorFrete(new BigDecimal("0.00"));
-        setValorDesconto(new BigDecimal("0.00"));
         itens = new ArrayList<>();
     }
 
@@ -115,15 +113,6 @@ public class Pedido implements Serializable, EntidadeBase {
 
     public void setValorFrete(BigDecimal valorFrete) {
         this.valorFrete = valorFrete;
-    }
-
-    @Column(nullable = false, precision = 10, scale = 2)
-    public BigDecimal getValorDesconto() {
-        return valorDesconto;
-    }
-
-    public void setValorDesconto(BigDecimal valorDesconto) {
-        this.valorDesconto = valorDesconto;
     }
 
     @Enumerated(EnumType.STRING)
